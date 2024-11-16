@@ -137,28 +137,35 @@
 
     function visualizeCooccurrenceMatrix(matrix) {
         const tags = Object.keys(matrix);
-        const margin = { top: 80, right: 20, bottom: 20, left: 80 };
+        const margin = { top: 80, right: 100, bottom: 100, left: 80 };
         const size = 800;
         const innerSize = size - margin.left - margin.right;
-        const cellSize = innerSize / tags.length;
+        const cellSize = innerSize / (tags.length + 1);
 
         const svg = d3.select("#heatmap")
             .append("svg")
             .attr("width", size)
             .attr("height", size);
 
-        // Create a group for the heatmap content with margin
+        // Calculate row and column sums
+        const rowSums = tags.map(tag1 => 
+            tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
+            );
+        const colSums = tags.map(tag2 => 
+            tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
+        );
+
         const heatmapGroup = svg.append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Helper function to create axis labels
         function createAxisLabels(svg, tags, cellSize, margin, isXAxis) {
+            // stuff for both axis
             const labelGroup = svg.append("g")
                 .attr("transform", `translate(${margin.left},${margin.top})`);
-            
-            // stuff for both axis
+            const labelsData = [...tags, "Sum"];
             const labels = labelGroup.selectAll(isXAxis ? ".x-label" : ".y-label")
-                .data(tags)
+                .data(labelsData)
                 .enter().append("text")
                 .attr("class", isXAxis ? "x-label" : "y-label")
                 .style("font-size", "10px")
@@ -174,6 +181,7 @@
                         const x = (i * cellSize) + cellSize/2;
                         return `rotate(-45, ${x}, -10)`;
                     });
+            
             // stuff for y axis
             } else {
                 labels
@@ -186,58 +194,64 @@
             return labels;
         }
 
-        // Create x and y axis labels
         const xLabels = createAxisLabels(svg, tags, cellSize, margin, true);
         const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
 
-        // Create color scales
-        const maxValue = d3.max(tags.flatMap(tag1 =>
+        // Create color scales - only using matrix values, not sums
+        const maxValue = d3.max(tags.flatMap(tag1 => 
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
+        
         const colorScale = d3.scaleSequential(d3.interpolateBuPu)
             .domain([0, maxValue]);
         const colorScaleHighlight = d3.scaleSequential(d3.interpolatePurples)
             .domain([0, maxValue]); 
 
-        // Function to handle hover effects
-        function applyHoverEffects(d, highlight = true) {
-            // Update empty cells
-            cells.style("fill", cell => {
-                if (highlight) {
-                    return (cell.x === d.x || cell.y === d.y)
-                        ? colorScaleHighlight(cell.value + 3)
-                        : colorScale(cell.value * 0.3);
-                }
-                return colorScale(cell.value);
-            });
-
-            // Update cells with text
-            texts.style("opacity", text => {
-                if (highlight) {
-                    return (text.x === d.x || text.y === d.y) ? 1 : 0.3;
-                }
-                return 1;
-            });
-
-            // Update axis labels
-            xLabels
-                .classed("labelHighlight", (_, i) => i === d.x);
-            yLabels
-                .classed("labelHighlight", (_, i) => i === d.y);
-        }
-
-        // Create data array once for both cells and texts
-        const cellData = tags.flatMap((tag1, i) =>
+        // Separate color scale for sums
+        const sumColorScale = d3.scaleSequential(d3.interpolateGreys)
+            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
+        const cellData = [
+            // Original matrix data
+            ...tags.flatMap((tag1, i) =>
                 tags.map((tag2, j) => ({
                     tag1,
                     tag2,
                     value: matrix[tag1][tag2] || 0,
                     x: j,
-                    y: i
+                    y: i,
+                    isSum: false
                 }))
-        );
+            ),
+            // Row sums
+            ...tags.map((tag, i) => ({
+                tag1: tag,
+                tag2: 'Sum',
+                value: rowSums[i],
+                x: tags.length,
+                y: i,
+                isSum: true
+            })),
+            // Column sums
+            ...tags.map((tag, i) => ({
+                tag1: 'Sum',
+                tag2: tag,
+                value: colSums[i],
+                x: i,
+                y: tags.length,
+                isSum: true
+            })),
+            // Total sum cell
+            {
+                tag1: 'Sum',
+                tag2: 'Sum',
+                value: d3.sum(rowSums),
+                x: tags.length,
+                y: tags.length,
+                isSum: true
+            }
+        ];
 
-        // Add cells with hover effects
+        // Add the 2D array data to the cells
         const cells = heatmapGroup.selectAll(".cell")
             .data(cellData)
             .enter().append("rect")
@@ -246,9 +260,9 @@
             .attr("y", d => d.y * cellSize)
             .attr("width", cellSize)
             .attr("height", cellSize)
-            .style("fill", d => colorScale(d.value));
+            .style("fill", d => d.isSum ? sumColorScale(d.value) : colorScale(d.value));
         
-        // Add value labels in cells
+        // Add the text labels to the cells where necessary
         const texts = heatmapGroup.selectAll(".cell-value")
             .data(cellData)
             .enter().append("text")
@@ -258,20 +272,49 @@
             .attr("dy", ".35em")
             .attr("text-anchor", "middle")
             .style("font-size", "10px")
+            .style("fill", d => {
+                // Ensure text color contrasts with background color
+                const backgroundColor = d.isSum ? sumColorScale(d.value) : colorScale(d.value);
+                const rgb = d3.color(backgroundColor).rgb();
+                const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b);
+                return luminance > 180 ? "black" : "white";
+            })
             .text(d => d.value > 0 ? d.value : '');
 
-        // Add hover effects to both cells and texts
+        // Helper function to deal with hover effects.
+        function applyHoverEffects(d, highlight = true) {
+            if (!d) return;
+            
+            cells.style("fill", cell => {
+                if (!highlight) return cell.isSum ? sumColorScale(cell.value) : colorScale(cell.value);
+                if (cell.isSum) return sumColorScale(cell.value);
+                return (cell.x === d.x || cell.y === d.y)
+                    ? colorScaleHighlight(cell.value + 3)
+                    : colorScale(cell.value * 0.3);
+            });
+
+            texts.style("opacity", text => {
+                if (!highlight) return 1;
+                if (text.isSum) return 1;
+                return (text.x === d.x || text.y === d.y) ? 1 : 0.3;
+            });
+
+            xLabels.classed("labelHighlight", (_, i) => i === d.x);
+            yLabels.classed("labelHighlight", (_, i) => i === d.y);
+        }
+
+        // Add hover effects to cells and text
         [cells, texts].forEach(selection => {
             selection
             .on("mouseover", (event, d) => applyHoverEffects(d, true))
             .on("mouseout", () => applyHoverEffects(null, false));
         });
 
-        // Function to adjust text size within cells
+        // Adjust text size to fit within cells
         function adjustTextSize() {
             texts.each(function() {
                 const text = d3.select(this);
-                const maxSize = cellSize * 0.8; // 80% of cell size
+                const maxSize = cellSize * 0.8;
                 const currentSize = parseFloat(text.style("font-size"));
                 const textWidth = this.getBBox().width;
                 
@@ -281,8 +324,6 @@
                 }
             });
         }
-
-        // Call the adjustment function
         adjustTextSize();
     }
 
