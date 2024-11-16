@@ -147,14 +147,6 @@
             .attr("width", size)
             .attr("height", size);
 
-        // Calculate row and column sums
-        const rowSums = tags.map(tag1 => 
-            tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
-            );
-        const colSums = tags.map(tag2 => 
-            tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
-        );
-
         // Helper function to create axis labels
         function createAxisLabels(svg, tags, cellSize, margin, isXAxis) {
             // stuff for both axis
@@ -191,22 +183,32 @@
             return labels;
         }
 
+        // Create x and y axis labels
         const xLabels = createAxisLabels(svg, tags, cellSize, margin, true);
         const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
 
-        // Create color scales - only using matrix values, not sums
+        // Calculate row and column sums
+        const rowSums = tags.map(tag1 => 
+            tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
+            );
+        const colSums = tags.map(tag2 => 
+            tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
+        );
+
+        // Create sum color scales
+        const sumColorScale = d3.scaleSequential(d3.interpolateGreys)
+            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);        
+
+        // Create matrix color scales
         const maxValue = d3.max(tags.flatMap(tag1 => 
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
-        
         const cellColorScale = d3.scaleSequential(d3.interpolateBuPu)
             .domain([0, maxValue]);
         const highlightColorScale = d3.scaleSequential(d3.interpolatePurples)
             .domain([0, maxValue]); 
 
-        // Separate color scale for sums
-        const sumColorScale = d3.scaleSequential(d3.interpolateGreys)
-            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
+
         const cellData = [
             // Original matrix data
             ...tags.flatMap((tag1, i) =>
