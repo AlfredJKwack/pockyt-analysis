@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <style>
+        .container {
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .visualization {
+            min-width: 300px;
+            margin: 20px;
+        }
+        .word-cloud text:hover {
+            fill: #ff4081;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tag Analysis Visualizations</h1>
+    <div class="container">
+        <div class="visualization">
+            <h2>Tag Frequency Chart</h2>
+            <div id="chart"></div>
+        </div>  
+        <div class="visualization">
+            <h2>Tag Cloud</h2>
+            <div id="cloud"></div>
+        </div>
+        <div class="visualization">
+            <h2>Pocket entries</h2>
+            <div id="list"></div>
+        </div>
+        
+    </div>
+
+
+    <script>
+    function prepTagData(data) {
+        // Process data: count occurrences of each tag
+        const tagCounts = {};
+        const itemList = [];
+        data.forEach(item => {
+            if (item.tags) {
+                item.tags.forEach(tag => {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                });
+                itemList.push(item);
+            }
+        });
+        console.log(tagCounts);
+        return tagCounts;
+    }
+
+    function visualizeTagFrequencyH(data) {
+        const tags = Object.entries(prepTagData(data)).map(([tag, count]) => ({ tag, count }));
+        tags.sort((a, b) => d3.descending(a.count, b.count));
+
+        
+        const width = 800, height = 400, barPadding = 5;
+        const svg = d3.select("#chart").append("svg").attr("width", width).attr("height", height);
+
+        const xScale = d3.scaleBand().domain(tags.map(d => d.tag)).range([0, width]).padding(0.1);
+        const yScale = d3.scaleLinear().domain([0, d3.max(tags, d => d.count)]).range([height, 0]);
+
+        // Create bars for tag frequency
+        const barGroup = svg.selectAll(".barGroup")
+            .data(tags)
+            .enter().append("g")
+            .attr("class", "barGroup"); 
+
+        barGroup.append("rect")
+            .attr("class", "bar")
+            .attr("fill", "steelblue")
+            .attr("x", d => xScale(d.tag))
+            .attr("y", d => yScale(d.count))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => height - yScale(d.count))
+            .on("click", function(event, d) {
+                d3.selectAll(".bar").classed("selected", false);
+                d3.select(this).classed("selected", true);
+                updateList(d.tag, data);
+            });
+
+        // Append text labels
+        barGroup.append("text")
+            .attr("class", "label")
+            .attr("x", d => xScale(d.tag) + (xScale.bandwidth()))
+            .attr("y", d => yScale(d.count))
+            .style("writing-mode", "sideways-lr")
+            .attr('dy', '-0.5em')
+            .attr('text-anchor', 'end')
+            .style('font-size', '10px')            
+            .text(d => d.tag);
+    
+        // Initial population of unfiltered list
+        updateList(null, data);
+    }
+
+    function visualizeTagFrequency(data) {
+        const tags = Object.entries(prepTagData(data)).map(([tag, count]) => ({ tag, count }));
+        tags.sort((a, b) => d3.descending(a.count, b.count));
+
+        const barHeight = 13;
+        const marginTop = 30;
+        const marginRight = 50;
+        const marginBottom = 10;
+        const marginLeft = 0;
+        const width = 928;
+        const height = Math.ceil((tags.length + 0.1) * barHeight) + marginTop + marginBottom;        
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const xScale = d3.scaleLinear()
+            .domain([0, d3.max(tags, d => d.count)])
+            .range([marginLeft, width - marginRight]);
+
+        const yScale = d3.scaleBand()
+            .domain(tags.map(d => d.tag))
+            .range([marginTop, height - marginBottom])
+            .padding(0.1);;
+        
+
+        // Create bars for tag frequency
+        const barGroup = svg.selectAll(".barGroup")
+            .data(tags)
+            .enter().append("g")
+            .attr("class", "barGroup")
+            .attr("viewBox", [0, 0, width, height])
+            .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
+
+        barGroup.append("rect")
+            .attr("class", "bar")
+            .attr("fill", "steelblue")
+            .attr("x", d => xScale(0))
+            .attr("y", d => yScale(d.tag))
+            .attr("width", d => (xScale(d.count) - xScale(0)))
+            .attr("height", yScale.bandwidth())
+            .on("click", function(event, d) {
+                d3.selectAll(".bar").classed("selected", false);
+                d3.select(this).classed("selected", true);
+                updateList(d.tag, data);
+            });
+
+        // Append text labels
+        barGroup.append("text")
+            .attr("class", "label")
+            .attr("x", d => xScale(d.count))
+            .attr("y", d => yScale(d.tag)+ yScale.bandwidth() /2 )
+            .attr("dy", "0.35em")
+            .attr("dx", 13)
+            .attr('text-anchor', 'start')
+            .style('font-size', '10px')            
+            .text(d => d.tag);
+    
+        // svg.append("g")
+        //     .attr("transform", `translate(${marginLeft}, 0)`)
+        //     .call(d3.axisLeft(yScale).tickSizeOuter(0));
+
+        // Initial population of unfiltered list
+        updateList(null, data);
+    }
+
+    // Update the list of items based on selected tag
+    function updateList(selectedTag, data) {
+        let itemList = [];
+        itemList = data;
+        const filteredItems = selectedTag ? itemList.filter(item => 
+            item.tags && item.tags.includes(selectedTag)
+        ) : itemList;
+        const listElement = d3.select("#list");
+        listElement.html("");
+        filteredItems.forEach(item => {
+            listElement.append("li").text(item.title || "No Title");
+        });
+    }
+
+    function createTagCloud(data) {
+        const tags = Object.entries(prepTagData(data))
+            .map(([text, size]) => ({ text, size }));
+        
+        const width = 800, height = 400;
+        
+        const layout = d3.layout.cloud()
+            .size([width, height])
+            .words(tags)
+            .padding(5)
+            .rotate(() => 0)
+            .fontSize(d => Math.sqrt(d.size) * 10)
+            .on("end", draw);
+
+        function draw(words) {
+            const svg = d3.select("#cloud")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${width/2},${height/2})`)
+                .attr("class", "word-cloud");
+
+            svg.selectAll("text")
+                .data(words)
+                .enter()
+                .append("text")
+                .style("font-size", d => `${d.size}px`)
+                .style("fill", () => d3.interpolateRainbow(Math.random()))
+                .attr("text-anchor", "middle")
+                .attr("transform", d => `translate(${d.x},${d.y})`)
+                .text(d => d.text)
+                .on("click", function(event, d) {
+                    updateList(d.text);
+                });
+        }
+
+        layout.start();
+    }
+
+    async function loadJsonFile(filePath) {
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error loading JSON file:', error);
+        throw error;
+    }
+    }
+
+    // Update the initialization to create both visualizations
+loadJsonFile('pocket-data.json')
+        .then(data => {
+            visualizeTagFrequency(data);
+            createTagCloud(data);
+        })
+   .catch(error => console.error(error));
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
