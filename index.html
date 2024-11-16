@@ -258,7 +258,7 @@
             .attr("class", "cell")
             .attr("x", d => d.x * cellSize)
             .attr("y", d => d.y * cellSize)
-            .attr("width", cellSize)
+            .attr("width", d => d.tag2 === 'Sum' ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .attr("height", cellSize)
             .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
         
