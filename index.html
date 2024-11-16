@@ -155,9 +155,6 @@
             tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
         );
 
-        const heatmapGroup = svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
-
         // Helper function to create axis labels
         function createAxisLabels(svg, tags, cellSize, margin, isXAxis) {
             // stuff for both axis
@@ -250,6 +247,9 @@
                 isSum: true
             }
         ];
+
+        const heatmapGroup = svg.append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Add the 2D array data to the cells
         const cells = heatmapGroup.selectAll(".cell")
