@@ -202,9 +202,9 @@
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
         
-        const colorScale = d3.scaleSequential(d3.interpolateBuPu)
+        const cellColorScale = d3.scaleSequential(d3.interpolateBuPu)
             .domain([0, maxValue]);
-        const colorScaleHighlight = d3.scaleSequential(d3.interpolatePurples)
+        const highlightColorScale = d3.scaleSequential(d3.interpolatePurples)
             .domain([0, maxValue]); 
 
         // Separate color scale for sums
@@ -260,7 +260,7 @@
             .attr("y", d => d.y * cellSize)
             .attr("width", cellSize)
             .attr("height", cellSize)
-            .style("fill", d => d.isSum ? sumColorScale(d.value) : colorScale(d.value));
+            .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
         
         // Add the text labels to the cells where necessary
         const texts = heatmapGroup.selectAll(".cell-value")
@@ -274,7 +274,7 @@
             .style("font-size", "10px")
             .style("fill", d => {
                 // Ensure text color contrasts with background color
-                const backgroundColor = d.isSum ? sumColorScale(d.value) : colorScale(d.value);
+                const backgroundColor = d.isSum ? sumColorScale(d.value) : cellColorScale(d.value);
                 const rgb = d3.color(backgroundColor).rgb();
                 const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b);
                 return luminance > 180 ? "black" : "white";
@@ -286,11 +286,11 @@
             if (!d) return;
             
             cells.style("fill", cell => {
-                if (!highlight) return cell.isSum ? sumColorScale(cell.value) : colorScale(cell.value);
+                if (!highlight) return cell.isSum ? sumColorScale(cell.value) : cellColorScale(cell.value);
                 if (cell.isSum) return sumColorScale(cell.value);
                 return (cell.x === d.x || cell.y === d.y)
-                    ? colorScaleHighlight(cell.value + 3)
-                    : colorScale(cell.value * 0.3);
+                    ? highlightColorScale(cell.value + 3)
+                    : cellColorScale(cell.value * 0.3);
             });
 
             texts.style("opacity", text => {
