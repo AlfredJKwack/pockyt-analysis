@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+  <title>D3: Crosshair</title>
+  <style type="text/css">
+    svg {
+      font: 11px sans-serif;
+    }
+    .line .crosshair {
+      fill: none;
+      stroke-width: 1px;
+    }
+    .line #crosshairX {
+      stroke: red;
+    }
+    .line #crosshairY {
+      stroke: blue;
+    }
+    .overlay {
+      fill: none;
+      stroke: black;
+      pointer-events: all;
+      stroke-width: 2px;
+    }
+    svg {
+      shape-rendering: crispEdges;
+    }
+  </style>
+</head>
+
+<body>
+</body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script type="text/javascript">
+  var generateData = function generateData(size) {
+    var random = d3.random.normal(0, 100);
+    var array = [];
+    for (var i = 0; i < 2; i++) {
+      array.push([random(), random()]);
+    }
+    return array;
+  };
+
+  var renderGraph = function renderGraph(width, height, data) {
+    // create canvas
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    var xDomain = d3.extent(data, function(d) {
+      return d[0];
+    });
+    var yDomain = d3.extent(data, function(d) {
+      return d[1];
+    });
+
+    var xScale = d3.scale.linear().range([0, width]).domain(xDomain);
+    var yScale = d3.scale.linear().range([height, 0]).domain(yDomain);
+
+    var g = svg.append("g");
+
+    var label = g.append("text")
+      .attr("x", width - 5)
+      .attr("y", height - 5)
+      .style("text-anchor", "end");
+
+    // create crosshairs
+    var crosshair = g.append("g")
+      .attr("class", "line");
+
+    // create horizontal line
+    crosshair.append("line")
+      .attr("id", "crosshairX")
+      .attr("class", "crosshair");
+
+    // create vertical line
+    crosshair.append("line")
+      .attr("id", "crosshairY")
+      .attr("class", "crosshair");
+
+    g.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width)
+      .attr("height", height)
+      .on("mouseover", function() {
+        crosshair.style("display", null);
+      })
+      .on("mouseout", function() {
+        crosshair.style("display", "none");
+        label.text("");
+      })
+      .on("mousemove", function() {
+        var mouse = d3.mouse(this);
+        var x = mouse[0];
+        var y = mouse[1];
+
+        crosshair.select("#crosshairX")
+          .attr("x1", mouse[0])
+          .attr("y1", yScale(yDomain[0]))
+          .attr("x2", mouse[0])
+          .attr("y2", yScale(yDomain[1]));
+
+        crosshair.select("#crosshairY")
+          .attr("x1", xScale(xDomain[0]))
+          .attr("y1", mouse[1])
+          .attr("x2", xScale(xDomain[1]))
+          .attr("y2", mouse[1]);
+
+        label.text(function() {
+          return "x=" + x + ", y=" + y;
+        });
+      })
+      .on("click", function() {
+        console.log(d3.mouse(this));
+      });;
+  };
+
+  renderGraph(640, 480, generateData(100));
+</script>
+
+</html>

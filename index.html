@@ -20,6 +20,22 @@
             fill: #ff4081;
             cursor: pointer;
         }
+        #heatmap .cell:hover,
+        #heatmap .cell-value {
+            cursor: pointer;
+        }
+        #heatmap .labelHighlight{
+            font-weight: bold;
+            fill: ff4081;
+        }
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }    
     </style>
 </head>
 <body>
@@ -135,47 +151,83 @@
         const heatmapGroup = svg.append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Add x-axis labels (rotated for better readability)
-        const xLabels = svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`)
-            .selectAll(".x-label")
-            .data(tags)
+        // Helper function to create axis labels
+        function createAxisLabels(svg, tags, cellSize, margin, isXAxis) {
+            const labelGroup = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+            
+            // stuff for both axis
+            const labels = labelGroup.selectAll(isXAxis ? ".x-label" : ".y-label")
+                .data(tags)
                 .enter().append("text")
-            .attr("class", "x-label")
-            .attr("x", (d, i) => (i * cellSize) + cellSize/2)
-            .attr("y", -10)
-            .attr("text-anchor", "start")
-            .attr("transform", (d, i) => {
-                const x = (i * cellSize) + cellSize/2;
-                return `rotate(-45, ${x}, -10)`;
-            })
-            .style("font-size", "10px")
-            .text(d => d);
+                .attr("class", isXAxis ? "x-label" : "y-label")
+                .style("font-size", "10px")
+                .text(d => d);
 
-        // Add y-axis labels
-        const yLabels = svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`)
-            .selectAll(".y-label")
-            .data(tags)
-            .enter().append("text")
-            .attr("class", "y-label")
-            .attr("x", -10)
-            .attr("y", (d, i) => (i * cellSize) + cellSize/2)
-            .attr("text-anchor", "end")
-            .attr("alignment-baseline", "middle")
-            .style("font-size", "10px")
-            .text(d => d);
+            // stuff for x axis
+            if (isXAxis) {
+                labels
+                    .attr("x", (d, i) => (i * cellSize) + cellSize/2)
+                    .attr("y", -10)
+                    .attr("text-anchor", "start")
+                    .attr("transform", (d, i) => {
+                        const x = (i * cellSize) + cellSize/2;
+                        return `rotate(-45, ${x}, -10)`;
+                    });
+            // stuff for y axis
+            } else {
+                labels
+                    .attr("x", -10)
+                    .attr("y", (d, i) => (i * cellSize) + cellSize/2)
+                    .attr("text-anchor", "end")
+                    .attr("alignment-baseline", "middle");
+            }
 
-        // Create color scale
+            return labels;
+        }
+
+        // Create x and y axis labels
+        const xLabels = createAxisLabels(svg, tags, cellSize, margin, true);
+        const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
+
+        // Create color scales
         const maxValue = d3.max(tags.flatMap(tag1 =>
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
-        const colorScale = d3.scaleSequential(d3.interpolateBlues)
+        const colorScale = d3.scaleSequential(d3.interpolateBuPu)
             .domain([0, maxValue]);
+        const colorScaleHighlight = d3.scaleSequential(d3.interpolatePurples)
+            .domain([0, maxValue]); 
 
-        // Add cells
-        const cells = heatmapGroup.selectAll(".cell")
-            .data(tags.flatMap((tag1, i) =>
+        // Function to handle hover effects
+        function applyHoverEffects(d, highlight = true) {
+            // Update empty cells
+            cells.style("fill", cell => {
+                if (highlight) {
+                    return (cell.x === d.x || cell.y === d.y)
+                        ? colorScaleHighlight(cell.value + 3)
+                        : colorScale(cell.value * 0.3);
+                }
+                return colorScale(cell.value);
+            });
+
+            // Update cells with text
+            texts.style("opacity", text => {
+                if (highlight) {
+                    return (text.x === d.x || text.y === d.y) ? 1 : 0.3;
+                }
+                return 1;
+            });
+
+            // Update axis labels
+            xLabels
+                .classed("labelHighlight", (_, i) => i === d.x);
+            yLabels
+                .classed("labelHighlight", (_, i) => i === d.y);
+        }
+
+        // Create data array once for both cells and texts
+        const cellData = tags.flatMap((tag1, i) =>
                 tags.map((tag2, j) => ({
                     tag1,
                     tag2,
@@ -183,7 +235,11 @@
                     x: j,
                     y: i
                 }))
-            ))
+        );
+
+        // Add cells with hover effects
+        const cells = heatmapGroup.selectAll(".cell")
+            .data(cellData)
             .enter().append("rect")
             .attr("class", "cell")
             .attr("x", d => d.x * cellSize)
@@ -191,18 +247,10 @@
             .attr("width", cellSize)
             .attr("height", cellSize)
             .style("fill", d => colorScale(d.value));
-
+        
         // Add value labels in cells
         const texts = heatmapGroup.selectAll(".cell-value")
-            .data(tags.flatMap((tag1, i) =>
-                tags.map((tag2, j) => ({
-                    tag1,
-                    tag2,
-                    value: matrix[tag1][tag2] || 0,
-                    x: j,
-                    y: i
-                }))
-            ))
+            .data(cellData)
             .enter().append("text")
             .attr("class", "cell-value")
             .attr("x", d => (d.x + 0.5) * cellSize)
@@ -212,12 +260,19 @@
             .style("font-size", "10px")
             .text(d => d.value > 0 ? d.value : '');
 
-            // Function to adjust text size within cells
+        // Add hover effects to both cells and texts
+        [cells, texts].forEach(selection => {
+            selection
+            .on("mouseover", (event, d) => applyHoverEffects(d, true))
+            .on("mouseout", () => applyHoverEffects(null, false));
+        });
+
+        // Function to adjust text size within cells
         function adjustTextSize() {
             texts.each(function() {
                 const text = d3.select(this);
                 const maxSize = cellSize * 0.8; // 80% of cell size
-                    const currentSize = parseFloat(text.style("font-size"));
+                const currentSize = parseFloat(text.style("font-size"));
                 const textWidth = this.getBBox().width;
                 
                 if (textWidth > maxSize) {
@@ -225,7 +280,7 @@
                     text.style("font-size", `${newSize}px`);
                 }
             });
-        }   
+        }
 
         // Call the adjustment function
         adjustTextSize();
