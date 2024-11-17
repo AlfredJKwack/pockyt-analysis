@@ -38,29 +38,37 @@
     </style>
 </head>
 <body>
-    <h1>Tag Analysis Visualizations</h1>
     <div class="container">
+        <h1>Tag Visualizations</h1> 
         <div class="visualization">
             <h2>Co-occurence heat map</h2>
-            <div id="heatmap"></div>
+            <div id="heatmap""></div>
         </div>        
-        <div class="visualization">
+        <div class="pocket-data my-5">
             <h2>Pocket entries</h2>
             <div id="list"></div>
         </div>
+        <div class="credits my-5">
+            <h2>Credits</h2>
+            <div>The good people of <a href="https://getpocket.com/">Pocket</a> for providing a great tool to save and organize my reading.</div>
+            <div>The <a href="https://d3js.org/">D3.js</a> community for providing the tools to visualize the data.</div>
+        </div>        
         
     </div>
 
 
     <script>
     function preprocessData(data) {
-        return data.map(item => ({
-            id: item.id,
-            title: item.title,
-            tags: item.tags || [],
+        return data
+            .filter(item => item.time_added)
+            .map(item => ({
+                id: item.id,
+                title: item.title,
+                tags: item.tags || [], 
             time_added: new Date(item.time_added * 1000),
             link: item.link
-        }));
+            }))
+            .sort((a, b) => b.time_added - a.time_added);
     }        
 
     // Update the list of items based on selected tag
@@ -73,29 +81,34 @@
         // Update the DOM
         const listElement = d3.select("#list");
         listElement.html("");
-        filteredItems.forEach(item => {
+        filteredItems.forEach((item, index) => {
             listElement.append("div")
-                .attr("class", "mb-3")
+                .attr("class", `row py-2 ${index % 2 === 0 ? 'bg-light' : ''}`)
                 .each(function(d) {
+                    const formattedDate = item.time_added.toLocaleDateString('en-GB', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                    }).replace(/ /g, '-');
                     const div = d3.select(this);
-                    // Add title with link
-                    div.append("a")
-                        .attr("href", item.link)
-                        .attr("target", "_blank")
-                        .text(item.title || "No Title");
-                
                     // Add date
-                    div.append("span")
-                        .attr("class", "date ms-2")
-                        .text(item.time_added.toLocaleDateString());
+                    div.append("div")
+                        .attr("class", "date col-md-2")
+                        .text(formattedDate);
+                
+                    // Add title with link
+                    div.append("div")
+                        .attr("class", "col-md-6")
+                        .append("a")
+                            .attr("href", item.link)
+                            .attr("target", "_blank")
+                            .text(item.title || "No Title");
                 
                     // Add tags
                     const tagContainer = div.append("div")
-                        .attr("class", "mt-1");
+                        .attr("class", "col-md-4");
                 
                     item.tags.forEach(tag => {
                         tagContainer.append("span")
-                            .attr("class", "tag badge bg-secondary me-1")
+                            .attr("class", "ms-1 badge rounded-pill text-bg-success")
                             .text(tag);
                     });
                 });
@@ -387,7 +400,8 @@
     }
 
     // Update the initialization to create both visualizations
-loadJsonFile('pocket-data.json')
+    window.addEventListener('load', () => {
+        loadJsonFile('pocket-data.json')
         .then(data => {
             const preprocessedData = preprocessData(data);
             updateList(null, preprocessedData); // Initialize the list with all items
@@ -395,7 +409,9 @@ loadJsonFile('pocket-data.json')
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
             visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);            
         })
-   .catch(error => console.error(error));
+        .catch(error => console.error(error));    
+    });
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
