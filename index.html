@@ -37,18 +37,14 @@
         }
         .edge-bundle-node text {
             font-size: 10px;
+            cursor: pointer;
         }
-        
+        .edge-bundle-node text:hover {
+            font-weight: bold;
+        } 
         .edge-bundle-link {
-            fill: none;
-            stroke: #ccc;
-            stroke-opacity: 0.4;
+            cursor: pointer;
         }
-        
-        .edge-bundle-link:hover {
-            stroke: #000;
-            stroke-opacity: 1;
-        }        
     </style>
 </head>
 <body>
@@ -405,17 +401,17 @@
 
     function createHierarchicalEdgeBundle(matrix, preprocessedData) {
         const tags = Object.keys(matrix);
+        const baseLinkColor = "#9BCD9B";
+        const highlightLinkColor = "#cc5500";
         const width = 954;
         const radius = width / 2;
-
         const line = d3.lineRadial()
-            .curve(d3.curveBundle.beta(0.85))
+            .curve(d3.curveBundle.beta(0.3))
             .radius(d => d.y)
             .angle(d => d.x);
 
         const tree = d3.cluster()
             .size([2 * Math.PI, radius - 100]);
-
         // Create links data structure
         const links = [];
         tags.forEach(source => {
@@ -460,22 +456,29 @@
             .attr("x", d => d.x < Math.PI ? 6 : -6)
             .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
             .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
-            .text(d => d.data.name)
-            .on("mouseover", (...args) => {
-                const d = args[1];
+            .html(d => d.x >= Math.PI 
+                ? `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`
+                : `<tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan> ${d.data.name}`
+            )
+            .on("mouseover", (event, d) => {
                 link.style("mix-blend-mode", null);
-                d3.select(args[0].parentNode).selectAll(".edge-bundle-link")
-                    .filter(l => l.source.data.name === d.data.name || l.target.data.name === d.data.name)
-                    .raise()
-                    .style("stroke", "#000")
-                    .style("stroke-opacity", 1);
+                const relevantLinks = link.filter(l => 
+                    l.source === d.data.name || l.target === d.data.name
+                );
+                relevantLinks
+                    .style("stroke", highlightLinkColor)
+                    .style("stroke-opacity", 1)
+                    .each(function() {
+                        this.parentNode.appendChild(this);
+                    });
             })
             .on("mouseout", () => {
                 link.style("mix-blend-mode", "multiply")
-                    .style("stroke", "#ccc")
+                    .style("stroke", baseLinkColor)
                     .style("stroke-opacity", 0.4);
             })
             .on("click", (event, d) => {
+                // Filter by tag name when clicking on a label
                 updateList([d.data.name], preprocessedData);
             });
 
@@ -490,7 +493,24 @@
                 const target = hierarchy.leaves().find(node => node.data.name === d.target);
                 return line(createLinkPath(source, target));
             })
-            .style("stroke-width", d => Math.sqrt(d.value));
+            .style("stroke-width", d => Math.sqrt(d.value))
+            .style("mix-blend-mode", "multiply")
+            .style("stroke", baseLinkColor)
+            .style("stroke-opacity", 0.4)         
+            .on("mouseover", function() {
+                d3.select(this)
+                    .style("stroke", highlightLinkColor)
+                    .style("stroke-opacity", 1);
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                    .style("stroke", baseLinkColor)
+                    .style("stroke-opacity", 0.4);
+            })
+            .on("click", (event, d) => {
+                // Filter by both connected tags when clicking on a link
+                updateList([d.source, d.target], preprocessedData);
+            });
 
         function createLinkPath(source, target) {
             return [
