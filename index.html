@@ -72,20 +72,29 @@
 
 
     <script>
+    /**
+     * Preprocesses raw data into a standardized format with id, title, tags, time_added, and link.
+     * @param {Object[]} data - Raw data array
+     * @returns {Object[]} Processed and sorted data array
+     */
     function preprocessData(data) {
         return data
             .filter(item => item.time_added)
             .map(item => ({
                 id: item.id,
                 title: item.title,
-                tags: item.tags || [], 
+                tags: item.tags || [],
             time_added: new Date(item.time_added * 1000),
             link: item.link
             }))
             .sort((a, b) => b.time_added - a.time_added);
-    }        
+    }
 
-    // Update the list of items based on selected tag
+    /**
+     * Updates the displayed list of items based on tag selection
+     * @param {string[]} selectedTags - Array of selected tag names
+     * @param {Object[]} data - Processed data array
+     */
     function updateList(selectedTags, data) {
         // Filter items based on selected tags
         const filteredItems = selectedTags && selectedTags.length > 0
@@ -107,7 +116,7 @@
                     div.append("div")
                         .attr("class", "date col-md-2")
                         .text(formattedDate);
-                
+
                     // Add title with link
                     div.append("div")
                         .attr("class", "col-md-6")
@@ -115,11 +124,11 @@
                             .attr("href", item.link)
                             .attr("target", "_blank")
                             .text(item.title || "No Title");
-                
+
                     // Add tags
                     const tagContainer = div.append("div")
                         .attr("class", "col-md-4");
-                
+
                     item.tags.forEach(tag => {
                         tagContainer.append("span")
                             .attr("class", "ms-1 badge rounded-pill text-bg-success")
@@ -129,6 +138,11 @@
         });
     }
 
+    /**
+     * Analyzes tag co-occurrence in the dataset
+     * @param {Object[]} data - Processed data array
+     * @returns {Object[]} Array of tag pairs and their co-occurrence counts
+     */    
     function analyzeTagCooccurrence(data) {
         const pairs = [];
         data.forEach(item => {
@@ -152,8 +166,13 @@
             const [tag1, tag2] = key.split('|');
             return { Tag1: tag1, Tag2: tag2, Cooccurrence: count };
         });
-    }    
+    }
 
+    /**
+     * Generates a matrix of tag co-occurrences
+     * @param {Object[]} cooccurrenceData - Co-occurrence data
+     * @returns {Object} Matrix of tag co-occurrences
+     */    
     function generateCooccurrenceMatrix(cooccurrenceData) {
         // Create initial matrix
         const matrix = {};
@@ -166,7 +185,7 @@
         // Create ordered matrix
         const orderedMatrix = {};
         const sortedTags = Object.keys(matrix).sort();
-        
+
         sortedTags.forEach(tag1 => {
             orderedMatrix[tag1] = {};
             sortedTags.forEach(tag2 => {
@@ -175,8 +194,13 @@
         });
 
         return orderedMatrix;
-    }    
+    }
 
+    /**
+     * Creates an interactive heatmap visualization of tag co-occurrences
+     * @param {Object} matrix - Co-occurrence matrix
+     * @param {Object[]} preprocessedData - Processed data array
+     */
     function visualizeCooccurrenceMatrix(matrix, preprocessedData) {
         const tags = Object.keys(matrix);
         const margin = { top: 80, right: 100, bottom: 100, left: 80 };
@@ -212,7 +236,7 @@
                         const x = (i * cellSize) + cellSize/2;
                         return `rotate(-45, ${x}, -10)`;
                     });
-            
+
             // stuff for y axis
             } else {
                 labels
@@ -230,10 +254,10 @@
         const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
 
         // Calculate row and column sums
-        const rowSums = tags.map(tag1 => 
+        const rowSums = tags.map(tag1 =>
             tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
             );
-        const colSums = tags.map(tag2 => 
+        const colSums = tags.map(tag2 =>
             tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
         );
 
@@ -242,13 +266,13 @@
             .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
 
         // Create matrix color scales
-        const maxValue = d3.max(tags.flatMap(tag1 => 
+        const maxValue = d3.max(tags.flatMap(tag1 =>
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
         const cellColorScale = d3.scaleSequential(d3.interpolateGreens)
             .domain([0, maxValue]);
         const highlightColorScale = d3.scaleSequential(d3.interpolateOranges)
-            .domain([0, maxValue]); 
+            .domain([0, maxValue]);
 
 
         const cellData = [
@@ -305,7 +329,7 @@
             .attr("width", d => (d.tag2 === 'Sum' && d.tag1 !== 'Sum')  ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .attr("height", d => (d.tag1 === 'Sum' && d.tag2 !== 'Sum') ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
-        
+
         // Add the text labels to the cells where necessary
         const texts = heatmapGroup.selectAll(".cell-value")
             .data(cellData)
@@ -348,7 +372,7 @@
         // Helper function to deal with hover effects.
         function applyHoverEffects(d, highlight = true) {
             if (!d) return;
-            
+
             cells.style("fill", cell => {
                 if (cell.isSum) return sumColorScale(cell.value);
                 return (cell.x === d.x || cell.y === d.y)
@@ -374,7 +398,7 @@
                 const maxSize = cellSize * 0.8;
                 const currentSize = parseFloat(text.style("font-size"));
                 const textWidth = this.getBBox().width;
-                
+
                 if (textWidth > maxSize) {
                     const newSize = (maxSize / textWidth) * currentSize;
                     text.style("font-size", `${newSize}px`);
@@ -384,7 +408,12 @@
         adjustTextSize();
     }
 
-    function createHierarchicalEdgeBundle(matrix, preprocessedData) {
+    /**
+     * Creates a hierarchical edge bundle visualization of tag relationships
+     * @param {Object} matrix - Co-occurrence matrix
+     * @param {Object[]} preprocessedData - Processed data array
+     */    
+    function visualizeHierarchicalEdgeBundle(matrix, preprocessedData) {
         const tags = Object.keys(matrix);
         const baseLinkColor = "#9BCD9B";
         const highlightLinkColor = "#cc5500";
@@ -441,13 +470,13 @@
             .attr("x", d => d.x < Math.PI ? 6 : -6)
             .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
             .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
-            .html(d => d.x >= Math.PI 
+            .html(d => d.x >= Math.PI
                 ? `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`
                 : `<tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan> ${d.data.name}`
             )
             .on("mouseover", (event, d) => {
                 link.style("mix-blend-mode", null);
-                const relevantLinks = link.filter(l => 
+                const relevantLinks = link.filter(l =>
                     l.source === d.data.name || l.target === d.data.name
                 );
                 relevantLinks
@@ -481,7 +510,7 @@
             .style("stroke-width", d => Math.sqrt(d.value))
             .style("mix-blend-mode", "multiply")
             .style("stroke", baseLinkColor)
-            .style("stroke-opacity", 0.4)         
+            .style("stroke-opacity", 0.4)
             .on("mouseover", function() {
                 d3.select(this)
                     .style("stroke", highlightLinkColor)
@@ -510,21 +539,29 @@
         }
     }
 
+    /**
+     * Loads and parses a JSON file
+     * @param {string} filePath - Path to JSON file
+     * @returns {Promise<Object>} - JSON data object
+     * @throws {Error} On HTTP or parsing errors
+     */
     async function loadJsonFile(filePath) {
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+            const response = await fetch(filePath);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error loading JSON file:', error);
+            throw error;
         }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error loading JSON file:', error);
-        throw error;
-    }
     }
 
-    // Update the initialization to create both visualizations
+    /**
+     * Main function for this application
+     */
     window.addEventListener('load', () => {
         loadJsonFile('pocket-data.json')
         .then(data => {
@@ -533,11 +570,10 @@
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
             visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);
-            createHierarchicalEdgeBundle(cooccurrenceMatrix, preprocessedData);
+            visualizeHierarchicalEdgeBundle(cooccurrenceMatrix, preprocessedData);
         })
         .catch(error => console.error(error));    
     });
-
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
