@@ -34,7 +34,21 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-        }    
+        }
+        .edge-bundle-node text {
+            font-size: 10px;
+        }
+        
+        .edge-bundle-link {
+            fill: none;
+            stroke: #ccc;
+            stroke-opacity: 0.4;
+        }
+        
+        .edge-bundle-link:hover {
+            stroke: #000;
+            stroke-opacity: 1;
+        }        
     </style>
 </head>
 <body>
@@ -43,7 +57,11 @@
         <div class="visualization">
             <h2>Co-occurence heat map</h2>
             <div id="heatmap""></div>
-        </div>        
+        </div>
+        <div class="visualization">
+            <h2>Tag Relationships</h2>
+            <div id="edge-bundle"></div>
+        </div>           
         <div class="pocket-data my-5">
             <h2>Pocket entries</h2>
             <div id="list"></div>
@@ -385,6 +403,108 @@
         adjustTextSize();
     }
 
+    function createHierarchicalEdgeBundle(matrix, preprocessedData) {
+        const tags = Object.keys(matrix);
+        const width = 954;
+        const radius = width / 2;
+
+        const line = d3.lineRadial()
+            .curve(d3.curveBundle.beta(0.85))
+            .radius(d => d.y)
+            .angle(d => d.x);
+
+        const tree = d3.cluster()
+            .size([2 * Math.PI, radius - 100]);
+
+        // Create links data structure
+        const links = [];
+        tags.forEach(source => {
+            tags.forEach(target => {
+                if (source !== target && matrix[source][target] > 0) {
+                    links.push({
+                        source,
+                        target,
+                        value: matrix[source][target]
+                    });
+                }
+            });
+        });
+
+        // Create hierarchical data structure
+        const root = {
+            name: "root",
+            children: tags.map(tag => ({
+                name: tag,
+                size: d3.sum(Object.values(matrix[tag]))
+            }))
+        };
+
+        const hierarchy = d3.hierarchy(root);
+        tree(hierarchy);
+
+        const svg = d3.select("#edge-bundle")
+            .append("svg")
+            .attr("viewBox", [-width/2, -width/2, width, width])
+            .attr("width", width)
+            .attr("height", width);
+
+        const node = svg.append("g")
+            .selectAll(".edge-bundle-node")
+            .data(hierarchy.leaves())
+            .join("g")
+            .attr("class", "edge-bundle-node")
+            .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
+
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", d => d.x < Math.PI ? 6 : -6)
+            .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
+            .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+            .text(d => d.data.name)
+            .on("mouseover", (...args) => {
+                const d = args[1];
+                link.style("mix-blend-mode", null);
+                d3.select(args[0].parentNode).selectAll(".edge-bundle-link")
+                    .filter(l => l.source.data.name === d.data.name || l.target.data.name === d.data.name)
+                    .raise()
+                    .style("stroke", "#000")
+                    .style("stroke-opacity", 1);
+            })
+            .on("mouseout", () => {
+                link.style("mix-blend-mode", "multiply")
+                    .style("stroke", "#ccc")
+                    .style("stroke-opacity", 0.4);
+            })
+            .on("click", (event, d) => {
+                updateList([d.data.name], preprocessedData);
+            });
+
+        const link = svg.append("g")
+            .attr("fill", "none")
+            .selectAll(".edge-bundle-link")
+            .data(links)
+            .join("path")
+            .attr("class", "edge-bundle-link")
+            .attr("d", d => {
+                const source = hierarchy.leaves().find(node => node.data.name === d.source);
+                const target = hierarchy.leaves().find(node => node.data.name === d.target);
+                return line(createLinkPath(source, target));
+            })
+            .style("stroke-width", d => Math.sqrt(d.value));
+
+        function createLinkPath(source, target) {
+            return [
+                source,
+                source.parent,
+                target.parent,
+                target
+            ].map(node => ({
+                x: node.x,
+                y: node.y
+            }));
+        }
+    }
+
     async function loadJsonFile(filePath) {
     try {
         const response = await fetch(filePath);
@@ -407,7 +527,8 @@
             updateList(null, preprocessedData); // Initialize the list with all items
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
-            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);            
+            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);
+            createHierarchicalEdgeBundle(cooccurrenceMatrix, preprocessedData);
         })
         .catch(error => console.error(error));    
     });
