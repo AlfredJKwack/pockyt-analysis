@@ -26,7 +26,6 @@
         }
         #heatmap .labelHighlight{
             font-weight: bold;
-            fill: ff4081;
         }
         .noselect {
             -webkit-touch-callout: none;
@@ -83,7 +82,6 @@
                 itemList.push(item);
             }
         });
-        console.log(tagCounts);
         return tagCounts;
     }
 
@@ -196,7 +194,7 @@
         );
 
         // Create sum color scales
-        const sumColorScale = d3.scaleSequential(d3.interpolatePurples)
+        const sumColorScale = d3.scaleSequential(d3.interpolateOranges)
             .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
 
         // Create matrix color scales
@@ -291,12 +289,7 @@
                 if (cell.isSum) return sumColorScale(cell.value);
                 return (cell.x === d.x || cell.y === d.y)
                     ? highlightColorScale(cell.value + 3)
-                    : cellColorScale(cell.value * 0.3);
-            });
-
-            texts.style("opacity", text => {
-                if (text.isSum) return 1;
-                return (text.x === d.x || text.y === d.y) ? 1 : 0.3;
+                    : cellColorScale(cell.value);
             });
 
             xLabels.classed("labelHighlight", (_, i) => i === d.x);
@@ -525,7 +518,6 @@ loadJsonFile('pocket-data.json')
             createTagCloud(data);
             const preprocessedData = preprocessData(data);
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
-            console.log("Tag Co-occurrence Pairs:", cooccurrenceData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
             visualizeCooccurrenceMatrix(cooccurrenceMatrix);            
         })
