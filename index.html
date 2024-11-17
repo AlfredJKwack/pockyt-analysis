@@ -147,7 +147,7 @@
             .attr("width", size)
             .attr("height", size);
 
-        // Helper function to create axis labels
+        // Helper function to create axis tag labels
         function createAxisLabels(svg, tags, cellSize, margin, isXAxis) {
             // stuff for both axis
             const labelGroup = svg.append("g")
@@ -196,16 +196,16 @@
         );
 
         // Create sum color scales
-        const sumColorScale = d3.scaleSequential(d3.interpolateGreys)
-            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);        
+        const sumColorScale = d3.scaleSequential(d3.interpolatePurples)
+            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
 
         // Create matrix color scales
         const maxValue = d3.max(tags.flatMap(tag1 => 
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
-        const cellColorScale = d3.scaleSequential(d3.interpolateBuPu)
+        const cellColorScale = d3.scaleSequential(d3.interpolateGreens)
             .domain([0, maxValue]);
-        const highlightColorScale = d3.scaleSequential(d3.interpolatePurples)
+        const highlightColorScale = d3.scaleSequential(d3.interpolateOranges)
             .domain([0, maxValue]); 
 
 
@@ -260,8 +260,8 @@
             .attr("class", "cell")
             .attr("x", d => d.x * cellSize)
             .attr("y", d => d.y * cellSize)
-            .attr("width", d => d.tag2 === 'Sum' ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
-            .attr("height", cellSize)
+            .attr("width", d => (d.tag2 === 'Sum' && d.tag1 !== 'Sum')  ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
+            .attr("height", d => (d.tag1 === 'Sum' && d.tag2 !== 'Sum') ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
         
         // Add the text labels to the cells where necessary
@@ -288,7 +288,6 @@
             if (!d) return;
             
             cells.style("fill", cell => {
-                if (!highlight) return cell.isSum ? sumColorScale(cell.value) : cellColorScale(cell.value);
                 if (cell.isSum) return sumColorScale(cell.value);
                 return (cell.x === d.x || cell.y === d.y)
                     ? highlightColorScale(cell.value + 3)
@@ -296,7 +295,6 @@
             });
 
             texts.style("opacity", text => {
-                if (!highlight) return 1;
                 if (text.isSum) return 1;
                 return (text.x === d.x || text.y === d.y) ? 1 : 0.3;
             });
