@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getPocket API Docs : Authentication</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <style>
+        .container {
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .content{
+            margin-top: 3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+
+
+                <h2 class="noTopPad">Pocket Authentication API Documentation</h2>
+
+                <p>
+                The Pocket Authentication API uses a variant of OAuth 2.0 for authentication. OAuth 2.0 is meant to be straightforward to implement, and also provides increased security for user authentication because 3rd party client apps no longer need to request or store a user's login information to authenticate with Pocket.
+                </p>
+
+                <h3>General Guidelines</h3>
+
+                <ul>
+                    <li>All calls to the Pocket Authentication API should be done over HTTPS.</li>
+                    <li>All calls to the Pocket Authentication API should be POST - we do not support GET.</li>
+                    <li>The Content-Type header indicates the format of your request. This includes the type of data (e.g. JSON or form-urlencoded) and the character set (e.g. UTF8).
+                        <ul>
+                            <li>The Pocket Authentication API supports two formats:
+                                <ul>
+                                    <li><span class="codefont">application/x-www-form-urlencoded</span> (DEFAULT)</li>
+                                    <li><span class="codefont">application/json</span></li>
+                                </ul>
+                            </li>
+                            <li>You must also pass the character set after the format, separated by a semicolon. The HTTP 1.1 specification states the default for this is ISO-8859-1, which is probably not what you want. For example, a full header for UTF8-encoded data would look like one of these:
+                                <ul>
+                                    <li><span class="codefont">Content-Type: application/x-www-form-urlencoded; charset=UTF8</span></li>
+                                    <li><span class="codefont">Content-Type: application/json; charset=UTF8</span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>The X-Accept header indicates the format you would like to receive the response, the Pocket Authentication API supports two formats:
+                        <ul>
+                            <li><span class="codefont">application/x-www-form-urlencoded</span> (DEFAULT)</li>
+                            <li><span class="codefont">application/json</span></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Step 1: Obtain a platform consumer key</h3>
+                <p>Registering your app with Pocket associates it with a <strong>platform consumer key</strong>. This key identifies your app to Pocket's API.</p>
+                <p>If you have not obtained a consumer key yet, you can register for one at <a href="http://getpocket.com/developer/apps/new">http://getpocket.com/developer/apps/new</a>.</p>
+                <p>A Pocket consumer key looks like: <span class="codefont">1234-abcd1234abcd1234abcd1234</span></p>
+                <div class="note"><strong>Important note:</strong> If you have a previous apikey from Read It Later/Pocket - that will no longer work. You will need a new consumer key.</div>
+
+                <h3>Step 2: Obtain a request token</h3>
+                <p>To begin the Pocket authorization process, your application must obtain a request token from our servers by making a POST request.</p>
+
+                <h6>Method URL:</h6>
+                <p>
+                    <span class="codefont">https://getpocket.com/v3/oauth/request</span>
+                </p>
+
+                <h6>Parameters</h6>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td class="required">consumer_key</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>The consumer key for your application (see Step 1).</td>
+                    </tr>
+                    <tr>
+                        <td class="required">redirect_uri</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>The URL to be called when the authorization process has been completed. This URL should direct back to your application. See the Platform Specific Notes section for details about setting up custom urls for the redirect_uri on iOS and Android.</td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>string</td>
+                        <td><em>optional</em></td>
+                        <td>A string of metadata used by your app. This string will be returned in all subsequent authentication responses.</td>
+                    </tr>
+                </tbody></table>
+                <div class="note"><strong>Important note:</strong> In all the examples that follow, some HTTP headers have been removed to simplify the display.</div>
+
+                <h6>Example request (<span class="codefont">x-www-form-urlencoded</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/oauth/request</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Accept: application/x-www-form-urlencoded
+
+consumer_key=1234-abcd1234abcd1234abcd1234&amp;
+redirect_uri=pocketapp1234:authorizationFinished</pre></div>
+
+                <h6>Example response (<span class="codefont">x-www-form-urlencoded</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/x-www-form-urlencoded
+Status: 200 OK
+
+code=dcba4321-dcba-4321-dcba-4321dc</pre></div>
+
+                <h6>Example request (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/oauth/request</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json; charset=UTF-8
+X-Accept: application/json
+
+{"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"redirect_uri":"pocketapp1234:authorizationFinished"}</pre></div>
+
+                <h6>Example response (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"code":"dcba4321-dcba-4321-dcba-4321dc"}</pre></div>
+
+                <p>This request token (the "code" in the response) must be stored for use in step 5. For web applications, it should be associated with the user's session or other persistent state.</p>
+                <p>If the HTTP status of the response is 200, then the request completed successfully. Otherwise, an error occurred. When there is an error, the HTTP Header will contain details of the error using three fields: HTTP Status Code, X-Error-Code and X-Error.</p>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <th class="required">HTTP Status</th>
+                        <th class="required">X-Error-Code</th>
+                        <th class="required">X-Error</th>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>138</td>
+                        <td>Missing consumer key.</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>140</td>
+                        <td>Missing redirect url.</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>152</td>
+                        <td>Invalid consumer key.</td>
+                    </tr>
+                    <tr>
+                        <td>50X</td>
+                        <td>199</td>
+                        <td>Pocket server issue.</td>
+                    </tr>
+                </tbody></table>
+
+                <h3>Step 3: Redirect user to Pocket to continue authorization</h3>
+                <p>Once you have a request token, you need to redirect the user to Pocket to authorize your application's request token.</p>
+                <p>When redirecting the user, you need to include two pieces of information: (1) the request token you received in Step 2; and (2) the redirect_uri. As a reminder, the redirect_uri is the URL to be called when the user has completed the authorization within Pocket. This URL should direct back to your application.</p>
+                <p>There are two ways to redirect the user to Pocket:</p>
+                <ol>
+                <li>If you are on iOS and are able to detect the presence of the URL scheme <span class="codefont">pocket-oauth-v1</span>, you should redirect the user to the Pocket app like this:<br><br>
+                <span class="codefont">pocket-oauth-v1:///authorize?request_token=YOUR_REQUEST_TOKEN&amp;redirect_uri=YOUR_REDIRECT_URI</span><br><br>
+                Example using above:<br>
+                <span class="codefont">pocket-oauth-v1:///authorize?request_token=dcba4321-dcba-4321-dcba-4321dc&amp;redirect_uri=pocketapp1234:authorizationFinished</span></li>
+                <li>If you are on any other platform -or- are not able to detect the URL scheme, you redirect the user to the Pocket web site like this:<br><br>
+                <span class="codefont">https://getpocket.com/auth/authorize?request_token=YOUR_REQUEST_TOKEN&amp;redirect_uri=YOUR_REDIRECT_URI</span><br>
+                Example using above:<br>
+                <span class="codefont">https://getpocket.com/auth/authorize?request_token=dcba4321-dcba-4321-dcba-4321dc&amp;redirect_uri=pocketapp1234:authorizationFinished</span></li>
+                </ol>
+                <p>If you are using the Pocket web site, two additional notes to be aware of:</p>
+                <ul>
+                <li>We have a mobile and desktop version of the authorization page. Our servers will try to detect what type of device the user is using and redirect accordingly. In cases where we do not detect screen size (such as on Windows Phone), you can use <span class="codefont">?mobile=1</span> to force the mobile version.</li>
+                <li>In iOS 9, please modify the SDK to send the user to the URL in the Safari View Controller (using the SFSafariViewController class), rather than the default browser. If the app is running iOS 8 or earlier, opening the URL via the default browser is required. If you would like to present this page in a webview or screen within your application, please contact <a href="mailto:api@getpocket.com">api@getpocket.com</a> with your request so we can consider making an exception.</li>
+                </ul>
+                <p>Regardless of whether you send the user to the Pocket app or website, one of three things will happen when the user arrives:</p>
+                <ol>
+                <li><strong>If the user is signed in to Pocket and has already approved your app (on this or any other platform):</strong> The user will be immediately authenticated and the provided redirect_uri will be called.</li>
+                <li><strong>If the user is signed in to Pocket, but has not yet approved your app:</strong> The user will see an authorization request screen or web page that provides the details of your application and the type of access requested. The user will have the option of accepting or denying the request. Once the user has made their decision, the provided redirect_uri will be called.</li>
+                <li><strong>If the user is not signed in to Pocket:</strong> The user will first be prompted to sign in to their Pocket account. If that account has already granted access to your application (on this or any other platform), the redirect_uri will be called immediately. Otherwise, the user will see the authorization request screen or web page as described above.</li>
+                </ol>
+                <p><em>Note: During testing, you can clear the tokens associated with your test user, by going to: <a href="http://getpocket.com/connected_accounts" target="_blank">http://getpocket.com/connected_accounts</a>.</em></p>
+
+                <h3>Step 4: Receive the callback from Pocket</h3>
+                <p>When the user has authorized (or rejected) your application's request token, Pocket will return the user to your application by opening the redirect_uri that you provided in your call to /v3/oauth/request (Step 2).</p>
+
+                <h3>Step 5: Convert a request token into a Pocket access token</h3>
+                <p>The final step to authorize Pocket with your application is to convert the request token into a Pocket access token. The Pocket access token is the user specific token that you will use to make further calls to the Pocket API.</p>
+                <p>When your application receives the callback to the redirect_uri supplied in /v3/oauth/request (step 4),  you should present some UI to indicate that your application is logging in and make a POST request.</p>
+                <h6>Method URL:</h6>
+                <p>
+                    <span class="codefont">https://getpocket.com/v3/oauth/authorize</span>
+                </p>
+
+                <h6>Parameters</h6>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td class="required">consumer_key</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>The consumer key for your application (see Step 1).</td>
+                    </tr>
+                    <tr>
+                        <td class="required">code</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>The request token supplied in the code field of the /v3/oauth/request call.</td>
+                    </tr>
+                </tbody></table>
+                <h6>Example request (<span class="codefont">x-www-form-urlencoded</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/oauth/authorize</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Accept: application/x-www-form-urlencoded
+
+consumer_key=1234-abcd1234abcd1234abcd1234&amp;
+code=dcba4321-dcba-4321-dcba-4321dc</pre></div>
+
+                <h6>Example response (<span class="codefont">x-www-form-urlencoded</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/x-www-form-urlencoded
+Status: 200 OK
+
+access_token=5678defg-5678-defg-5678-defg56&amp;
+username=pocketuser</pre></div>
+
+                <h6>Example request (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/oauth/authorize</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json; charset=UTF-8
+X-Accept: application/json
+
+{"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"code":"dcba4321-dcba-4321-dcba-4321dc"}</pre></div>
+
+                <h6>Example response (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"access_token":"5678defg-5678-defg-5678-defg56",
+"username":"pocketuser"}</pre></div>
+                <p>The username of the user represented by the access token is provided for presentation in your UI to convey the username of the authenticated user.</p>
+                <p>If you optionally supplied a state parameter with the original /v3/oauth/request POST, you will also receive that same value in the response.</p>
+                <p>If the HTTP status of the response is 200, then the request completed successfully. Otherwise, an error occurred. When there is an error, the HTTP Header will contain details of the error using three fields: HTTP Status Code, X-Error-Code and X-Error.</p>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <th class="required">HTTP Status
+                        </th><th class="required">X-Error-Code
+                        </th><th class="required">X-Error
+                    </th></tr>
+                    <tr>
+                        <td>400</td>
+                        <td>138</td>
+                        <td>Missing consumer key.</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>152</td>
+                        <td>Invalid consumer key.</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>181</td>
+                        <td>Invalid redirect uri.</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>182</td>
+                        <td>Missing code.</td>
+                    </tr>
+                    <tr>
+                        <td>400</td>
+                        <td>185</td>
+                        <td>Code not found.</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>158</td>
+                        <td>User rejected code.</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>159</td>
+                        <td>Already used code.</td>
+                    </tr>
+                    <tr>
+                        <td>50X</td>
+                        <td>199</td>
+                        <td>Pocket server issue.</td>
+                    </tr>
+                </tbody></table>
+
+                <h3>Step 6: Make authenticated requests to Pocket</h3>
+                <p>Once you have a Pocket access token, you can make authenticated requests to the Pocket v3 API. To do this, you supply two additional parameters to any API request:</p>
+                <ul>
+                <li><span class="codefont">consumer_key:</span> Your application's Consumer Key (obtained in Step 1)</li>
+                <li><span class="codefont">access_token:</span> The specific user's Pocket access token (obtained in Step 5)</li>
+                </ul>
+
+                <h6>Example request (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/add</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json; charset=UTF-8
+X-Accept: application/json
+
+{"url":"http:\/\/pocket.co\/s8Kga",
+"title":"iTeaching: The New Pedagogy (How the iPad is Inspiring Better Ways of
+Teaching)",
+"time":1346976937,
+"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"access_token":"5678defg-5678-defg-5678-defg56"}</pre></div>
+
+                <h6>Example response (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"status":1}</pre></div>
+
+            <h3>Best Practices</h3>
+            <ul>
+            <li>When the user taps a "Login" or "connect with Pocket" button in your application, you should present some UI to indicate that your application is preparing to login and make a request to obtain a request token from Pocket.</li>
+            <li>Native mobile applications should register a unique URI scheme and supply a redirect URI using that scheme if the platform you are developing on supports this setup.</li>
+            <li>If you support multiple platforms (e.g. iPhone, iPad, and Mac OS X), you are <strong>strongly encouraged</strong> to use separate consumer keys for each. You can set them up in a parent/child configuration, so that your credentials are related. Users who authorize one application will authorize all of them.</li>
+            <li>If you detect the user has a Pocket app installed on their device that supports OAuth login, you are <strong>strongly encouraged</strong> to send the user to the Pocket app to handle authorization.</li>
+            <li>If you send the user to the Pocket website to handle authentication, you are <strong>must not</strong> open that web page as a screen or a popup within your application. Instead, open a new page in the user's default web browser. For security purposes, using an in application screen or pop up may result in your Pocket access being disabled.</li>
+            </ul>
+
+            <h3>Implementing the Pocket Authentication API on iOS/Mac</h3>
+            <h6>Registering a custom url scheme for your REDIRECT_URI on iOS</h6>
+            <p>Once you have the consumer key for the platform you are supporting, the application must register a URL scheme to receive login callbacks. By default, this is "pocketapp" plus your application's ID (which you can find at the beginning of the consumer key before the hyphen). So if your consumer key is 42-abcdef, your app ID is 42, and your URL scheme will be "pocketapp42".</p>
+            <p>If your app has no URL schemes, you can copy and paste the block below into your Info.plist, updating it with the app's scheme:</p>
+                <div class="code"><pre>&lt;key&gt;CFBundleURLTypes&lt;/key&gt;
+&lt;array&gt;
+    &lt;dict&gt;
+        &lt;key&gt;CFBundleURLName&lt;/key&gt;
+        &lt;string&gt;com.getpocket.sdk&lt;/string&gt;
+        &lt;key&gt;CFBundleURLSchemes&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;[INSERT URL SCHEME]&lt;/string&gt;
+        &lt;/array&gt;
+    &lt;/dict&gt;
+&lt;/array&gt;</pre></div>
+
+            <h3>Implementing the Pocket Authentication API on Android</h3>
+            <p>If your app already has sharing functionality using an Intent.ACTION_SEND action, with a text mimeType, then 'Add to Pocket' will automatically appear in the Share Via menu/chooser for any users that have Pocket installed.</p>
+            <h6>Registering a custom url scheme for your REDIRECT_URI on Android:</h6>
+            <p>Once you have the consumer key for the platform you are supporting, the application must register a URL scheme to receive login callbacks. By default, this is "pocketapp" plus your application's ID (which you can find at the beginning of the consumer key before the hyphen). So if your consumer key is 42-abcdef, your app ID is 42, and your URL scheme will be "pocketapp42".</p>
+            <p>This can easily be done by declaring an intent-filter in your app's manifest file.</p>
+            <p>If your redirect_uri is 'pocketapp1234:' you would add the following filter to the application that you want to be opened when the authorization page finishes.</p>
+                <div class="code"><pre>&lt;intent-filter&gt;
+	 &lt;action android:name="android.intent.action.VIEW" /&gt;
+	 &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+	 &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
+	 &lt;data android:scheme="pocketapp1234" /&gt;
+&lt;/intent-filter&gt;</pre></div>
+            <p><strong>Note: In the manifest declaration for scheme do not include a ":" at the end of the scheme.</strong></p>
+            <p>See the Intent Filter documentation for more information: <a href="http://developer.android.com/guide/components/intents-filters.html#ifs" target="_blank">http://developer.android.com/guide/components/intents-filters.html#ifs</a></p>
+        </div>
+
+        <div class="content">
+
+
+                <h2 class="noTopPad">Response, Status, and Error Codes</h2>
+
+                <p>
+                Each call to the API will return a number of informational headers. These headers will include information on the result of the request, errors, and rate limits.
+                </p>
+
+                <h6>Example Response Headers (for an Error):</h6>
+                <div class="code"><pre>Status: 400 Bad Request
+X-Error: Missing API Key
+X-Error-Code: 132
+X-Limit-User-Limit: 100
+X-Limit-User-Remaining: 43
+X-Limit-User-Reset: 25
+X-Limit-Key-Limit: 5000
+X-Limit-Key-Remaining: 3520
+X-Limit-Key-Reset: 25
+                </pre></div>
+
+                <h4>Error Messages:</h4>
+
+                <p>
+                    If there was an error, the <em>X-Error</em> header in the HTTP response will include a description of the problem. In most cases, it is a best practice to display this message to the user. We also include a <em>X-Error-Code</em> - this numeric code can be helpful when communicating with Pocket support about an error condition.
+                </p>
+
+
+                <h4>Status Codes:</h4>
+
+                <p>As described above, the X-Error message will describe exactly what went wrong. However, the HTTP status code will provide a basic idea of what the problem was:</p>
+
+                <ul>
+                    <li>200 - Request was successful</li>
+                    <li>400 - Invalid request, please make sure you follow the documentation for proper syntax</li>
+                    <li>401 - Problem authenticating the user</li>
+                    <li>403 - User was authenticated, but access denied due to lack of permission or rate limiting</li>
+                    <li>503 - Pocket's sync server is down for scheduled maintenance.</li>
+                </ul>
+
+
+                <h4>Rate Limits</h4>
+
+                <p>
+                    Please view the <a href="/developer/docs/rate-limits">Rate Limit Documentation</a> for a detailed look at rate limits and rate limit error responses.
+                </p>
+
+        </div>
+    </div>
+</body>
+</html>
+    

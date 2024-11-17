@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getPocket API Docs - Retrieving a User's Pocket Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <style>
+        .container {
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .content{
+            margin-top: 3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+            
+        <div class="content">
+
+
+                <h2 class="noTopPad">Pocket API: Retrieving a User's Pocket Data</h2>
+
+                <p>Pocket's /v3/get endpoint is a single call that is incredibly versatile. A few examples of the types of requests you can make:</p>
+                <ul>
+                    <li>Retrieve a user’s list of unread items</li>
+                    <li>Sync data that has changed since the last time your app checked</li>
+                    <li>Retrieve paged results sorted by the most recent saves</li>
+                    <li>Retrieve just videos that the user has saved</li>
+                    <li>Search for a given keyword in item’s title and url</li>
+                    <li>Retrieve all items for a given domain</li>
+                    <li>and more</li>
+                </ul>
+
+                <h6>Required Permissions</h6>
+                <p>In order to use the /v3/get endpoint, your consumer key must have the <strong>"Retrieve"</strong> permission.</p>
+
+                <h3>Retrieving a User's Pocket Data</h3>
+                <p>To retrieve item(s) from a user’s Pocket list, you’ll make a request to the /v3/get endpoint.</p>
+
+                <h6>Method URL</h6>
+                <p><span class="codefont">https://getpocket.com/v3/get</span></p>
+
+                <h6>Required Parameters</h6>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td class="required">consumer_key</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>Your application's Consumer Key</td>
+                    </tr>
+                    <tr>
+                        <td class="required">access_token</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>The user's Pocket access token</td>
+                    </tr>
+                </tbody></table>
+
+                <h6>Optional Parameters</h6>
+                <table class="parameters" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td>state</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>favorite</td>
+                        <td>0 or 1</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>tag</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>contentType</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>sort</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>detailType</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>See below for valid values</td>
+                    </tr>
+                    <tr>
+                        <td>search</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>Only return items whose title or url contain the <em>search</em> string</td>
+                    </tr>
+                    <tr>
+                        <td>domain</td>
+                        <td>string</td>
+                        <td></td>
+                        <td>Only return items from a particular <em>domain</em></td>
+                    </tr>
+                    <tr>
+                        <td>since</td>
+                        <td>timestamp</td>
+                        <td></td>
+                        <td>Only return items modified since the given <em>since</em> unix timestamp</td>
+                    </tr>
+                    <tr>
+                        <td>count</td>
+                        <td>integer</td>
+                        <td></td>
+                        <td>Only return <em>count</em> number of items. Note: There is a 30 item per request limit, any requests that go beyond this will be truncated to 30.</td>
+                    </tr>
+                    <tr>
+                        <td>offset</td>
+                        <td>integer</td>
+                        <td></td>
+                        <td>Used only with count; start returning from <em>offset</em> position of results</td>
+                    </tr>
+                  <tr>
+                        <td>total</td>
+                        <td>0 or 1</td>
+                        <td></td>
+                        <td>Use with offset and count to determine if there are more pages of results to retrieve.</td>
+                    </tr>
+                </tbody></table>
+                <strong>state</strong>
+                <ul>
+                <li>unread = only return unread items</li>
+                <li>archive = only return archived items</li>
+                <li>all = return both unread and archived items <em>(default)</em></li>
+                </ul>
+                <strong>favorite</strong>
+                <ul>
+                <li>0 = only return un-favorited items</li>
+                <li>1 = only return favorited items</li>
+                </ul>
+                <strong>tag</strong>
+                <ul>
+                <li><em>tag_name</em> = only return items tagged with <em>tag_name</em></li>
+                <li>_untagged_ = only return untagged items</li>
+                </ul>
+                <strong>contentType</strong>
+                <ul>
+                <li>article = only return articles</li>
+                <li>video = only return videos or articles with embedded videos</li>
+                <li>image = only return images</li>
+                </ul>
+                <strong>sort</strong>
+                <ul>
+                <li>newest = return items in order of newest to oldest</li>
+                <li>oldest = return items in order of oldest to newest</li>
+                <li>title = return items in order of title alphabetically</li>
+                <li>site = return items in order of url alphabetically</li>
+                </ul>
+                <strong>detailType</strong>
+                <ul>
+                <li>simple = return basic information about each item, including title, url, status, and more</li>
+                <li>complete = return all data about each item, including tags, images, authors, videos, and more</li>
+                </ul>
+
+
+                <h6>Example request (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/get</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json
+
+{"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"access_token":"5678defg-5678-defg-5678-defg56",
+"count":"10",
+"detailType":"complete"}</pre></div>
+
+
+                <h6>Example response (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"status":1,"list":{"229279689":{"item_id":"229279689",
+"resolved_id":"229279689",
+"given_url":"http:\/\/www.grantland.com\/blog\/the-triangle\/post\/_\/id\/38347\/ryder-cup-preview",
+"given_title":"The Massive Ryder Cup Preview - The Triangle Blog - Grantland",
+"favorite":"0",
+"status":"0",
+"resolved_title":"The Massive Ryder Cup Preview",
+"resolved_url":"http:\/\/www.grantland.com\/blog\/the-triangle\/post\/_\/id\/38347\/ryder-cup-preview",
+"excerpt":"The list of things I love about the Ryder Cup is so long that it could fill a (tedious) novel, and golf fans can probably guess most of them.",
+"is_article":"1",
+"has_video":"1",
+"has_image":"1",
+"word_count":"3197",
+"images":{"1":{"item_id":"229279689","image_id":"1",
+    "src":"http:\/\/a.espncdn.com\/combiner\/i?img=\/photo\/2012\/0927\/grant_g_ryder_cr_640.jpg&amp;w=640&amp;h=360",
+    "width":"0","height":"0","credit":"Jamie Squire\/Getty Images","caption":""}},
+"videos":{"1":{"item_id":"229279689","video_id":"1",
+    "src":"http:\/\/www.youtube.com\/v\/Er34PbFkVGk?version=3&amp;hl=en_US&amp;rel=0",
+    "width":"420","height":"315","type":"1","vid":"Er34PbFkVGk"}}}}}
+</pre></div>
+
+                <p>The JSON response will include a list object. This object will contain all of the items that matched your retrieval request. Each item may or may not contain the following information:</p>
+                <ul>
+                <li><strong>item_id</strong> - A unique identifier matching the saved item. This id must be used to perform any actions through the <a href="/developer/docs/v3/modify">v3/modify endpoint</a>.</li>
+                <li><strong>resolved_id</strong> - A unique identifier similar to the item_id but is unique to the actual url of the saved item. The resolved_id identifies unique urls. For example a direct link to a New York Times article and a link that redirects (ex a shortened bit.ly url) to the same article will share the same resolved_id. If this value is 0, it means that Pocket has not processed the item. Normally this happens within seconds but is possible you may request the item before it has been resolved.</li>
+                <li><strong>given_url</strong> - The actual url that was saved with the item. This url should be used if the user wants to view the item.</li>
+                <li><strong>resolved_url</strong> - The final url of the item. For example if the item was a shortened bit.ly link, this will be the actual article the url linked to.</li>
+                <li><strong>given_title</strong> - The title that was saved along with the item.</li>
+                <li><strong>resolved_title</strong> - The title that Pocket found for the item when it was parsed</li>
+                <li><strong>favorite</strong> - 0 or 1 - 1 If the item is favorited</li>
+                <li><strong>status</strong> - 0, 1, 2 - 1 if the item is archived - 2 if the item should be deleted</li>
+                <li><strong>excerpt</strong> - The first few lines of the item (articles only)</li>
+                <li><strong>is_article</strong> - 0 or 1 - 1 if the item is an article</li>
+                <li><strong>has_image</strong> - 0, 1, or 2 - 1 if the item has images in it - 2 if the item is an image</li>
+                <li><strong>has_video</strong> - 0, 1, or 2 - 1 if the item has videos in it - 2 if the item is a video</li>
+                <li><strong>word_count</strong> - How many words are in the article</li>
+                <li><strong>tags</strong> - A JSON object of the user tags associated with the item</li>
+                <li><strong>authors</strong> - A JSON object listing all of the authors associated with the item</li>
+                <li><strong>images</strong> - A JSON object listing all of the images associated with the item</li>
+                <li><strong>videos</strong> - A JSON object listing all of the videos associated with the item</li>
+                </ul>
+
+                <h6>Best Practices</h6>
+                <ul>
+                <li><strong>Retrieving User's List:</strong> After retrieving a User's list, you should store the current time (which is provided along with the list response) and pass that in the next request for the list using the 'since' parameter. This way the server will only return the changes that have ocurred since the last request.</li>
+                </ul>
+
+
+                <h4>Pagination</h4>
+                <p>
+
+          </p>The maximum page size limit is 30 results. In order to retrieve more, you must paginate the result set. The <strong>count</strong>, <strong>offset</strong>, and <strong>total</strong> parameters are used for pagination. When the request is returned, if the value of <strong>total</strong> exceeds the value of <strong>count + offset</strong>, then there are still more pages of results to retrieve.<p></p>
+
+
+                <h6>Example request - First Page (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/get</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json
+
+{
+"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"access_token":"5678defg-5678-defg-5678-defg56",
+"count":"10",
+"total": "1",
+"detailType":"simple"
+}</pre></div>
+
+
+                <h6>Example response - More Results Available (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"status":1,
+"list": {...},
+"total": 13
+}
+</pre></div>
+      The value of <strong>count</strong> + <strong>offset</strong> is (10 + 0) = 10. The total value is 13, which is greater than 10. Therefore more results are available. Add the value of <strong>count</strong> to the current value of <strong>offset</strong> to get the offset you should use for your next request (10 + 0) = 10.
+
+                      <h6>Example request - Next Page (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>POST <strong>/v3/get</strong> HTTP/1.1
+Host: getpocket.com
+Content-Type: application/json
+
+{
+"consumer_key":"1234-abcd1234abcd1234abcd1234",
+"access_token":"5678defg-5678-defg-5678-defg56",
+"count":"10",
+"offset": "10",
+"total": "1",
+"detailType":"simple"
+}</pre></div>
+
+
+                <h6>Example response - No More Results (<span class="codefont">JSON</span>):</h6>
+                <div class="code"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+Status: 200 OK
+
+{"status":1,
+"list": {...},
+"total": 13
+}
+</pre></div>
+<p>
+      The value of <strong>count</strong> + <strong>offset</strong> is (10 + 10) = 20. The total value is 13, which is less than 20. Therefore all results have been received, so no more requests are necessary (incrementing offset and requesting more results will just return an empty set).
+      </p>
+
+                <h3>Error Handling</h3>
+
+                <p>
+                    View the Error and Response Headers Documentation for detailed information on how to respond to errors.
+                </p>
+
+        </div>
+
+        <div class="content">
+
+
+                <h2 class="noTopPad">Response, Status, and Error Codes</h2>
+
+                <p>
+                Each call to the API will return a number of informational headers. These headers will include information on the result of the request, errors, and rate limits.
+                </p>
+
+                <h6>Example Response Headers (for an Error):</h6>
+                <div class="code"><pre>Status: 400 Bad Request
+X-Error: Missing API Key
+X-Error-Code: 132
+X-Limit-User-Limit: 100
+X-Limit-User-Remaining: 43
+X-Limit-User-Reset: 25
+X-Limit-Key-Limit: 5000
+X-Limit-Key-Remaining: 3520
+X-Limit-Key-Reset: 25
+                </pre></div>
+
+                <h4>Error Messages:</h4>
+
+                <p>
+                    If there was an error, the <em>X-Error</em> header in the HTTP response will include a description of the problem. In most cases, it is a best practice to display this message to the user. We also include a <em>X-Error-Code</em> - this numeric code can be helpful when communicating with Pocket support about an error condition.
+                </p>
+
+
+                <h4>Status Codes:</h4>
+
+                <p>As described above, the X-Error message will describe exactly what went wrong. However, the HTTP status code will provide a basic idea of what the problem was:</p>
+
+                <ul>
+                    <li>200 - Request was successful</li>
+                    <li>400 - Invalid request, please make sure you follow the documentation for proper syntax</li>
+                    <li>401 - Problem authenticating the user</li>
+                    <li>403 - User was authenticated, but access denied due to lack of permission or rate limiting</li>
+                    <li>503 - Pocket's sync server is down for scheduled maintenance.</li>
+                </ul>
+
+
+                <h4>Rate Limits</h4>
+
+                <p>
+                    Please view the <a href="/developer/docs/rate-limits">Rate Limit Documentation</a> for a detailed look at rate limits and rate limit error responses.
+                </p>
+
+        </div>
+    </div>
+</body>
+</html>
+    
