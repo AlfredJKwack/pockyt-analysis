@@ -129,21 +129,6 @@
         });
     }
 
-    function prepTagData(data) {
-        // Process data: count occurrences of each tag
-        const tagCounts = {};
-        const itemList = [];
-        data.forEach(item => {
-            if (item.tags) {
-                item.tags.forEach(tag => {
-                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-                });
-                itemList.push(item);
-            }
-        });
-        return tagCounts;
-    }
-
     function analyzeTagCooccurrence(data) {
         const pairs = [];
         data.forEach(item => {
