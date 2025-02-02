@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
     <style>
         .container {
             flex-wrap: wrap;
@@ -16,16 +17,15 @@
             min-width: 300px;
             margin: 20px;
         }
-        .word-cloud text:hover {
-            fill: #ff4081;
-            cursor: pointer;
-        }
         #heatmap .cell:hover,
         #heatmap .cell-value {
             cursor: pointer;
         }
         #heatmap .labelHighlight{
             font-weight: bold;
+        }
+        #heatmap .y-label, #heatmap .x-label {
+            font-size: 8px;
         }
         .noselect {
             -webkit-touch-callout: none;
@@ -39,17 +39,40 @@
             font-size: 10px;
             cursor: pointer;
         }
-        .edge-bundle-node text:hover {
-            font-weight: bold;
-        } 
+        .edge-bundle-node text {
+            transition: all 0.3s ease-in-out
+        }
         .edge-bundle-link {
             cursor: pointer;
+            transition: stroke 0.3s ease; /* Add transition for smooth color change */
+            transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
         }
+        #gui {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* dat.gui specifics */
+        .dg .property-name {
+            width: 60%;
+        }
+        .dg .c {
+            width: 40%;
+        }
+        .dg .c select {
+            margin-top: 5px;
+            margin-left: -5px;
+            width: 105%;
+        }
+
     </style>
 </head>
 <body>
+    <div id="gui"></div>
     <div class="container">
-        <h1>Tag Visualizations</h1> 
+        <h1>Tag Visualizations</h1>
         <div class="visualization">
             <h2>Co-occurence heat map</h2>
             <div id="heatmap""></div>
@@ -57,7 +80,7 @@
         <div class="visualization">
             <h2>Tag Relationships</h2>
             <div id="edge-bundle"></div>
-        </div>           
+        </div>
         <div class="pocket-data my-5">
             <h2>Pocket entries</h2>
             <div id="list"></div>
@@ -66,8 +89,8 @@
             <h2>Credits</h2>
             <div>The good people of <a href="https://getpocket.com/">Pocket</a> for providing a great tool to save and organize my reading.</div>
             <div>The <a href="https://d3js.org/">D3.js</a> community for providing the tools to visualize the data.</div>
-        </div>        
-        
+        </div>
+
     </div>
 
 
@@ -97,9 +120,25 @@
      */
     function updateList(selectedTags, data) {
         // Filter items based on selected tags
-        const filteredItems = selectedTags && selectedTags.length > 0
-        ? data.filter(item => selectedTags.every(tag => item.tags.includes(tag)))
-        : data;
+        let filteredItems;
+        if (selectedTags && selectedTags.length > 0) {
+            // Check if all selected tags are the same
+            const allSameTags = selectedTags.every(tag => tag === selectedTags[0]);
+            
+            if (allSameTags && selectedTags.length > 1) {
+                // If all selected tags are the same, find items with ONLY that tag
+                filteredItems = data.filter(item => 
+                    item.tags.length === 1 && item.tags[0] === selectedTags[0]
+                );
+            } else {
+                // Original filtering logic for different tags
+                filteredItems = data.filter(item => 
+                    selectedTags.every(tag => item.tags.includes(tag))
+                );
+            }
+        } else {
+            filteredItems = data;
+        }
 
         // Update the DOM
         const listElement = d3.select("#list");
@@ -142,25 +181,39 @@
      * Analyzes tag co-occurrence in the dataset
      * @param {Object[]} data - Processed data array
      * @returns {Object[]} Array of tag pairs and their co-occurrence counts
-     */    
+     */
     function analyzeTagCooccurrence(data) {
         const pairs = [];
         data.forEach(item => {
             if (Array.isArray(item.tags)) {
                 const sortedTags = item.tags.sort();
+
+                // Add individual occurrences only if it's a single tag
+                if (sortedTags.length === 1) {
+                    pairs.push([sortedTags[0], sortedTags[0]]);
+                }
+
                 for (let i = 0; i < sortedTags.length; i++) {
                     for (let j = i + 1; j < sortedTags.length; j++) {
                         pairs.push([sortedTags[i], sortedTags[j]]);
                     }
                 }
+            } else {
+                console.error("Item tags are not an array:", item);
             }
         });
+        console.log(
+            "analyzeTagCooccurrence->Pairs (lore only):",
+            pairs.filter(pair => pair[0] === 'lore' || pair[1] === 'lore')
+        );
 
         const cooccurrenceCounts = pairs.reduce((acc, pair) => {
             const key = pair.join('|');
             acc[key] = (acc[key] || 0) + 1;
             return acc;
         }, {});
+
+        console.log("cooccurrenceCounts: ", cooccurrenceCounts);
 
         return Object.entries(cooccurrenceCounts).map(([key, count]) => {
             const [tag1, tag2] = key.split('|');
@@ -171,20 +224,44 @@
     /**
      * Generates a matrix of tag co-occurrences
      * @param {Object[]} cooccurrenceData - Co-occurrence data
+     * @param {boolean} orderByTagCount - Whether to order by tag count or tag name
      * @returns {Object} Matrix of tag co-occurrences
-     */    
-    function generateCooccurrenceMatrix(cooccurrenceData) {
+     */
+    function generateCooccurrenceMatrix(cooccurrenceData, orderByTagCount = false) {
         // Create initial matrix
         const matrix = {};
         cooccurrenceData.forEach(({ Tag1, Tag2, Cooccurrence }) => {
             if (!matrix[Tag1]) matrix[Tag1] = {};
             if (!matrix[Tag2]) matrix[Tag2] = {};
-            matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
-            matrix[Tag2][Tag1] = (matrix[Tag2][Tag1] || 0) + Cooccurrence;
+
+            // Avoid double-counting self-references in the matrix
+            if (Tag1 === Tag2) {
+                matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
+            } else {
+                matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
+                matrix[Tag2][Tag1] = (matrix[Tag2][Tag1] || 0) + Cooccurrence;
+            }
         });
+
+        let sortedTags;
+
+        if (orderByTagCount) {
+            // Order by total tag count
+            const tagCounts = {};
+            cooccurrenceData.forEach(({ Tag1, Tag2, Cooccurrence }) => {
+                tagCounts[Tag1] = (tagCounts[Tag1] || 0) + Cooccurrence;
+                if (Tag1 !== Tag2) { // Only add Tag2 count if it's not a self-reference
+                    tagCounts[Tag2] = (tagCounts[Tag2] || 0) + Cooccurrence;
+                }
+            });
+            sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]); // Sort descending
+        } else {
+            // Order alphabetically
+            sortedTags = Object.keys(matrix).sort();
+        }
+
         // Create ordered matrix
         const orderedMatrix = {};
-        const sortedTags = Object.keys(matrix).sort();
 
         sortedTags.forEach(tag1 => {
             orderedMatrix[tag1] = {};
@@ -192,9 +269,10 @@
                 orderedMatrix[tag1][tag2] = matrix[tag1][tag2] || 0;
             });
         });
-
+        console.log("orderedMatrix['lore']: ", orderedMatrix['lore']);
         return orderedMatrix;
     }
+
 
     /**
      * Creates an interactive heatmap visualization of tag co-occurrences
@@ -223,7 +301,6 @@
                 .data(labelsData)
                 .enter().append("text")
                 .attr("class", isXAxis ? "x-label" : "y-label")
-                .style("font-size", "10px")
                 .text(d => d);
 
             // stuff for x axis
@@ -253,17 +330,15 @@
         const xLabels = createAxisLabels(svg, tags, cellSize, margin, true);
         const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
 
-        // Calculate row and column sums
-        const rowSums = tags.map(tag1 =>
-            tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
-            );
-        const colSums = tags.map(tag2 =>
-            tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
+        // Count entries with the tag in preprocessedData array
+        // the matrix contains pair counts but not items with tag counts (and pairs are not triplets etc)
+        const axisSums = tags.map(tag1 => 
+            preprocessedData.filter(item => item.tags.includes(tag1)).length
         );
 
         // Create sum color scales
         const sumColorScale = d3.scaleSequential(d3.interpolateOranges)
-            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
+            .domain([0, d3.max(axisSums)]);
 
         // Create matrix color scales
         const maxValue = d3.max(tags.flatMap(tag1 =>
@@ -291,7 +366,7 @@
             ...tags.map((tag, i) => ({
                 tag1: tag,
                 tag2: 'Sum',
-                value: rowSums[i],
+                value: axisSums[i],
                 x: tags.length,
                 y: i,
                 isSum: true
@@ -300,7 +375,7 @@
             ...tags.map((tag, i) => ({
                 tag1: 'Sum',
                 tag2: tag,
-                value: colSums[i],
+                value: axisSums[i],
                 x: i,
                 y: tags.length,
                 isSum: true
@@ -309,7 +384,7 @@
             {
                 tag1: 'Sum',
                 tag2: 'Sum',
-                value: d3.sum(rowSums),
+                value: d3.sum(axisSums),
                 x: tags.length,
                 y: tags.length,
                 isSum: true
@@ -412,20 +487,37 @@
      * Creates a hierarchical edge bundle visualization of tag relationships
      * @param {Object} matrix - Co-occurrence matrix
      * @param {Object[]} preprocessedData - Processed data array
-     */    
-    function visualizeHierarchicalEdgeBundle(matrix, preprocessedData) {
+     * @param {Object} GUIparams - Parameters from dat.GUI
+     */
+    function visualizeHierarchicalEdgeBundle(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
-        const baseLinkColor = "#9BCD9B";
-        const highlightLinkColor = "#cc5500";
-        const width = 954;
+        const width = GUIparams.width;
         const radius = width / 2;
+        const clampColorScaleMax = GUIparams.clampColorScaleMax;
+        const colorScheme = GUIparams.colorScheme
+        const defaultStrokeOpacity = GUIparams.defaultStrokeOpacity;
+        const dimmedStrokeOpacity = GUIparams.dimmedStrokeOpacity;
+        const curveBundleBeta = GUIparams.curveBundleBeta;
+
+        // Define what a link line looks like
         const line = d3.lineRadial()
-            .curve(d3.curveBundle.beta(0.3))
+            .curve(d3.curveBundle.beta(curveBundleBeta))
             .radius(d => d.y)
             .angle(d => d.x);
 
+        // Create hierarchical data structure            
         const tree = d3.cluster()
             .size([2 * Math.PI, radius - 100]);
+        const root = {
+            name: "root",
+            children: tags.map(tag => ({
+                name: tag,
+                size: d3.sum(Object.values(matrix[tag]))
+            }))
+        };
+        const hierarchy = d3.hierarchy(root);
+        tree(hierarchy);
+
         // Create links data structure
         const links = [];
         tags.forEach(source => {
@@ -438,19 +530,12 @@
                     });
                 }
             });
-        });
+        });        
 
-        // Create hierarchical data structure
-        const root = {
-            name: "root",
-            children: tags.map(tag => ({
-                name: tag,
-                size: d3.sum(Object.values(matrix[tag]))
-            }))
-        };
-
-        const hierarchy = d3.hierarchy(root);
-        tree(hierarchy);
+        // Create the color palette for the links
+        const linkColorMaxValue = d3.quantile(links, clampColorScaleMax, d => d.value);
+        const linkColorScale = d3.scaleSequential(d3[colorScheme])
+            .domain([0, linkColorMaxValue]);
 
         const svg = d3.select("#edge-bundle")
             .append("svg")
@@ -464,38 +549,56 @@
             .join("g")
             .attr("class", "edge-bundle-node")
             .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
-
+        
+        // Add text labels to the nodes
         node.append("text")
             .attr("dy", "0.31em")
             .attr("x", d => d.x < Math.PI ? 6 : -6)
             .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
             .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
-            .html(d => d.x >= Math.PI
-                ? `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`
-                : `<tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan> ${d.data.name}`
-            )
+            .html(d => {
+              // For outside of the ring - show the tag name
+              if (d.x >= Math.PI) {
+                return `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`;
+              }
+              // For inside of the ring - count entries with the tag in preprocessedData array
+              // the matrix contains pair counts but not items with tag counts (and pairs are not triplets etc)
+              return `<tspan class="tag-count">[${preprocessedData.filter(entry => entry.tags.includes(d.data.name)).length}]</tspan> ${d.data.name}`;
+            })
             .on("mouseover", (event, d) => {
-                link.style("mix-blend-mode", null);
-                const relevantLinks = link.filter(l =>
-                    l.source === d.data.name || l.target === d.data.name
-                );
-                relevantLinks
-                    .style("stroke", highlightLinkColor)
+                // Bolden the hovered label and labels connected to it
+                d3.selectAll(".edge-bundle-node text")
+                    .filter(n => {
+                        const isHovered = n.data.name === d.data.name;
+                        const isConnected = links.some(l => 
+                            (l.source === d.data.name && l.target === n.data.name)
+                        );
+                        return isHovered || isConnected;
+                    })
+                    .style("font-weight", "bold");
+                // Dim all the links
+                link.style("stroke-opacity", dimmedStrokeOpacity);
+                // Now highlight only relevant links
+                link.filter(l => l.source === d.data.name || l.target === d.data.name)
                     .style("stroke-opacity", 1)
-                    .each(function() {
-                        this.parentNode.appendChild(this);
-                    });
+                    .raise(); // Bring highlighted links to front
             })
             .on("mouseout", () => {
-                link.style("mix-blend-mode", "multiply")
-                    .style("stroke", baseLinkColor)
-                    .style("stroke-opacity", 0.4);
+                // Restore original boldness
+                d3.selectAll(".edge-bundle-node text")
+                    .style("font-weight", null);
+                // Restore original link styles
+                link.style("stroke", d => linkColorScale(d.value))
+                    .style("stroke-opacity", defaultStrokeOpacity)
+                    .style("mix-blend-mode", "multiply");
             })
             .on("click", (event, d) => {
                 // Filter by tag name when clicking on a label
+                console.log("calling updateList with [d.data.name]: ", [d.data.name]);
                 updateList([d.data.name], preprocessedData);
             });
 
+        // Create the links between nodes
         const link = svg.append("g")
             .attr("fill", "none")
             .selectAll(".edge-bundle-link")
@@ -508,18 +611,20 @@
                 return line(createLinkPath(source, target));
             })
             .style("stroke-width", d => Math.sqrt(d.value))
+            .style("stroke", d => linkColorScale(d.value))            
             .style("mix-blend-mode", "multiply")
-            .style("stroke", baseLinkColor)
-            .style("stroke-opacity", 0.4)
-            .on("mouseover", function() {
+            .style("stroke-opacity", defaultStrokeOpacity)
+            .on("mouseover", function(event, d) {
+                link.style("stroke-opacity", dimmedStrokeOpacity);
                 d3.select(this)
-                    .style("stroke", highlightLinkColor)
-                    .style("stroke-opacity", 1);
+                    .style("stroke-opacity", 1)
+                    .style("mix-blend-mode", null);
             })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .style("stroke", baseLinkColor)
-                    .style("stroke-opacity", 0.4);
+            .on("mouseout", function(event, d) {
+                link.style("stroke-opacity", defaultStrokeOpacity)
+                    .style("stroke", d => linkColorScale(d.value))
+                    .style("mix-blend-mode", "multiply");
+
             })
             .on("click", (event, d) => {
                 // Filter by both connected tags when clicking on a link
@@ -538,6 +643,55 @@
             }));
         }
     }
+
+    /**
+     * Creates the dat.GUI controller to change properties of the visualization.
+     */
+     function createController(matrix, preprocessedData) {
+        const gui = new dat.GUI({ autoPlace: false });
+        const customContainer = document.getElementById('gui');
+        customContainer.appendChild(gui.domElement);
+
+        const params = {  // Initial parameter values
+            colorScheme: 'interpolateViridis',
+            width: 954,
+            clampColorScaleMax: 0.80, 
+            defaultStrokeOpacity: 0.5,
+            dimmedStrokeOpacity: 0.05,
+            curveBundleBeta: 0.3,
+            redraw: function() { // Draw the graph with updated parameters
+                d3.select("#edge-bundle svg").remove(); // Remove the old SVG
+                visualizeHierarchicalEdgeBundle(matrix, preprocessedData, params);
+            }
+        };        
+
+        const chromaticScales = [
+            'interpolateViridis', 'interpolateInferno', 'interpolateMagma', 'interpolatePlasma',
+            'interpolateCividis', 'interpolateWarm', 'interpolateCool', 'interpolateCubehelixDefault',
+            'interpolateBrBG', 'interpolatePRGn', 'interpolatePiYG', 'interpolatePuOr',
+            'interpolateRdBu', 'interpolateRdGy', 'interpolateRdYlBu', 'interpolateRdYlGn',
+            'interpolateSpectral', 'interpolateBlues', 'interpolateGreens', 'interpolateGreys',
+            'interpolateOranges', 'interpolatePurples', 'interpolateReds', 'interpolateTurbo',
+            'interpolateRainbow', 'interpolateSinebow',
+            'schemeCategory10', 'schemeAccent', 'schemeDark2', 'schemeObservable10', 'schemePaired', 
+            'schemePastel1', 'schemePastel2', 'schemeSet1', 'schemeSet2', 'schemeSet3', 'schemeTableau10',
+            // ... add more as needed from https://d3js.org/d3-scale-chromatic
+        ];
+
+        gui.add(params, 'colorScheme', chromaticScales).onChange(params.redraw);
+        gui.add(params, 'width', 600, 1200).step(1).onChange(params.redraw);
+        gui.add(params, 'clampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
+        gui.add(params, 'defaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        gui.add(params, 'dimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        gui.add(params, 'curveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
+        gui.add(params, 'redraw'); // Redraw button
+
+
+        // Initial drawing
+        params.redraw(); // Call redraw initially to draw the visualization
+
+        return gui; 
+    }  
 
     /**
      * Loads and parses a JSON file
@@ -562,17 +716,19 @@
     /**
      * Main function for this application
      */
-    window.addEventListener('load', () => {
+    window.addEventListener('load', () => {       
         loadJsonFile('pocket-data.json')
         .then(data => {
             const preprocessedData = preprocessData(data);
             updateList(null, preprocessedData); // Initialize the list with all items
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
+            console.log("cooccurrenceData: ", cooccurrenceData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
-            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);
-            visualizeHierarchicalEdgeBundle(cooccurrenceMatrix, preprocessedData);
+            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData); // Create and pass matrix/data
+            createController(cooccurrenceMatrix, preprocessedData); // Create and pass matrix/data
+
         })
-        .catch(error => console.error(error));    
+        .catch(error => console.error(error));
     });
 
     </script>
