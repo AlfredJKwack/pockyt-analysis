@@ -124,15 +124,15 @@
         if (selectedTags && selectedTags.length > 0) {
             // Check if all selected tags are the same
             const allSameTags = selectedTags.every(tag => tag === selectedTags[0]);
-            
+
             if (allSameTags && selectedTags.length > 1) {
                 // If all selected tags are the same, find items with ONLY that tag
-                filteredItems = data.filter(item => 
+                filteredItems = data.filter(item =>
                     item.tags.length === 1 && item.tags[0] === selectedTags[0]
                 );
             } else {
                 // Original filtering logic for different tags
-                filteredItems = data.filter(item => 
+                filteredItems = data.filter(item =>
                     selectedTags.every(tag => item.tags.includes(tag))
                 );
             }
@@ -505,7 +505,7 @@
             .radius(d => d.y)
             .angle(d => d.x);
 
-        // Create hierarchical data structure            
+        // Create hierarchical data structure
         const tree = d3.cluster()
             .size([2 * Math.PI, radius - 100]);
         const root = {
@@ -530,7 +530,7 @@
                     });
                 }
             });
-        });        
+        });
 
         // Create the color palette for the links
         const linkColorMaxValue = d3.quantile(links, clampColorScaleMax, d => d.value);
@@ -549,7 +549,7 @@
             .join("g")
             .attr("class", "edge-bundle-node")
             .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
-        
+
         // Add text labels to the nodes
         node.append("text")
             .attr("dy", "0.31em")
@@ -570,7 +570,7 @@
                 d3.selectAll(".edge-bundle-node text")
                     .filter(n => {
                         const isHovered = n.data.name === d.data.name;
-                        const isConnected = links.some(l => 
+                        const isConnected = links.some(l =>
                             (l.source === d.data.name && l.target === n.data.name)
                         );
                         return isHovered || isConnected;
@@ -611,7 +611,7 @@
                 return line(createLinkPath(source, target));
             })
             .style("stroke-width", d => Math.sqrt(d.value))
-            .style("stroke", d => linkColorScale(d.value))            
+            .style("stroke", d => linkColorScale(d.value))
             .style("mix-blend-mode", "multiply")
             .style("stroke-opacity", defaultStrokeOpacity)
             .on("mouseover", function(event, d) {
@@ -655,7 +655,7 @@
         const params = {  // Initial parameter values
             colorScheme: 'interpolateViridis',
             width: 954,
-            clampColorScaleMax: 0.80, 
+            clampColorScaleMax: 0.80,
             defaultStrokeOpacity: 0.5,
             dimmedStrokeOpacity: 0.05,
             curveBundleBeta: 0.3,
@@ -663,7 +663,7 @@
                 d3.select("#edge-bundle svg").remove(); // Remove the old SVG
                 visualizeHierarchicalEdgeBundle(matrix, preprocessedData, params);
             }
-        };        
+        };
 
         const chromaticScales = [
             'interpolateViridis', 'interpolateInferno', 'interpolateMagma', 'interpolatePlasma',
@@ -690,8 +690,8 @@
         // Initial drawing
         params.redraw(); // Call redraw initially to draw the visualization
 
-        return gui; 
-    }  
+        return gui;
+    }
 
     /**
      * Loads and parses a JSON file
@@ -716,7 +716,7 @@
     /**
      * Main function for this application
      */
-    window.addEventListener('load', () => {       
+    window.addEventListener('load', () => {
         loadJsonFile('pocket-data.json')
         .then(data => {
             const preprocessedData = preprocessData(data);
