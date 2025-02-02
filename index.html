@@ -35,14 +35,14 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .edge-bundle-node text {
+        .arc-diagram-node text {
             font-size: 10px;
             cursor: pointer;
         }
-        .edge-bundle-node text {
+        .arc-diagram-node text {
             transition: all 0.3s ease-in-out
         }
-        .edge-bundle-link {
+        .arc-diagram-link {
             cursor: pointer;
             transition: stroke 0.3s ease; /* Add transition for smooth color change */
             transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
@@ -66,37 +66,6 @@
             margin-left: -5px;
             width: 105%;
         }
-        .sort-header {
-            cursor: pointer;
-            user-select: none;
-        }
-        .sort-header:hover {
-            background-color: #f8f9fa;
-        }
-        .sort-icon::after {
-            content: '↕️';
-            margin-left: 5px;
-            opacity: 0.3;
-        }
-        .sort-asc::after {
-            content: '↑';
-            opacity: 1;
-        }
-        .sort-desc::after {
-            content: '↓';
-            opacity: 1;
-        }
-        .filter-box {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-        .highlighted-tag {
-            background-color: #198754 !important;
-        }
-        .regular-tag {
-            background-color: #6c757d !important;
-        }
     </style>
 </head>
 <body>
@@ -107,22 +76,22 @@
         <!-- Add Bootstrap tabs -->
         <ul class="nav nav-tabs" id="vizTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="edge-bundle-tab" data-bs-toggle="tab" data-bs-target="#edge-bundle-pane" type="button" role="tab">
+                <button class="nav-link active" id="arc-diagram-tab" data-bs-toggle="tab" data-bs-target="#arc-diagram-pane" type="button" role="tab">
                     Tag arc diagram
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="heatmap-tab" data-bs-toggle="tab" data-bs-target="#heatmap-pane" type="button" role="tab">
-                    Tag Heat map
+                    Tag heatmap
                 </button>
             </li>
         </ul>
 
         <!-- Tab content -->
         <div class="tab-content" id="vizTabContent">
-            <div class="tab-pane fade show active" id="edge-bundle-pane" role="tabpanel">
+            <div class="tab-pane fade show active" id="arc-diagram-pane" role="tabpanel">
                 <div class="visualization">
-                    <div id="edge-bundle"></div>
+                    <div id="arc-diagram"></div>
                 </div>
             </div>
             <div class="tab-pane fade" id="heatmap-pane" role="tabpanel">
@@ -191,6 +160,13 @@
             filteredItems = data;
         }
 
+        const tagFrequencies = {};
+        filteredItems.forEach(item => {
+            item.tags.forEach(tag => {
+                tagFrequencies[tag] = (tagFrequencies[tag] || 0) + 1;
+            });
+        });
+
         // Update the DOM
         const listElement = d3.select("#list");
         listElement.html("");
@@ -219,7 +195,12 @@
                     const tagContainer = div.append("div")
                         .attr("class", "col-md-4");
 
-                    item.tags.forEach(tag => {
+                    // Sort tags by frequency before adding them
+                    const sortedTags = [...item.tags].sort((a, b) => 
+                        tagFrequencies[b] - tagFrequencies[a]
+                    );
+
+                    sortedTags.forEach(tag => {
                         tagContainer.append("span")
                             .attr("class", "ms-1 badge rounded-pill text-bg-success")
                             .text(tag);
@@ -253,18 +234,12 @@
                 console.error("Item tags are not an array:", item);
             }
         });
-        console.log(
-            "analyzeTagCooccurrence->Pairs (lore only):",
-            pairs.filter(pair => pair[0] === 'lore' || pair[1] === 'lore')
-        );
 
         const cooccurrenceCounts = pairs.reduce((acc, pair) => {
             const key = pair.join('|');
             acc[key] = (acc[key] || 0) + 1;
             return acc;
         }, {});
-
-        console.log("cooccurrenceCounts: ", cooccurrenceCounts);
 
         return Object.entries(cooccurrenceCounts).map(([key, count]) => {
             const [tag1, tag2] = key.split('|');
@@ -320,7 +295,7 @@
                 orderedMatrix[tag1][tag2] = matrix[tag1][tag2] || 0;
             });
         });
-        console.log("orderedMatrix['lore']: ", orderedMatrix['lore']);
+
         return orderedMatrix;
     }
 
@@ -330,12 +305,14 @@
      * @param {Object} matrix - Co-occurrence matrix
      * @param {Object[]} preprocessedData - Processed data array
      */
-    function visualizeCooccurrenceMatrix(matrix, preprocessedData) {
+    function visualizeCooccurrenceMatrix(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
         const margin = { top: 80, right: 100, bottom: 100, left: 80 };
         const size = 800;
         const innerSize = size - margin.left - margin.right;
         const cellSize = innerSize / (tags.length + 1);
+        const heatmapSumColorScheme = GUIparams.heatmapSumColorScheme;
+        const heatmapCellColorScheme = GUIparams.heatmapCellColorScheme;
 
         const svg = d3.select("#heatmap")
             .append("svg")
@@ -383,23 +360,24 @@
 
         // Count entries with the tag in preprocessedData array
         // the matrix contains pair counts but not items with tag counts (and pairs are not triplets etc)
-        const axisSums = tags.map(tag1 => 
+        const axisSums = tags.map(tag1 =>
             preprocessedData.filter(item => item.tags.includes(tag1)).length
         );
-
-        // Create sum color scales
-        const sumColorScale = d3.scaleSequential(d3.interpolateOranges)
-            .domain([0, d3.max(axisSums)]);
 
         // Create matrix color scales
         const maxValue = d3.max(tags.flatMap(tag1 =>
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
-        const cellColorScale = d3.scaleSequential(d3.interpolateGreens)
-            .domain([0, maxValue]);
-        const highlightColorScale = d3.scaleSequential(d3.interpolateOranges)
+
+        // Update color scales to use params
+        const sumColorScale = d3.scaleSequential(d3[heatmapSumColorScheme])
+            .domain([0, d3.max(axisSums)]);
+
+        const cellColorScale = d3.scaleSequential(d3[heatmapCellColorScheme])
             .domain([0, maxValue]);
 
+        const highlightColorScale = d3.scaleSequential(d3[heatmapCellColorScheme])
+            .domain([0, maxValue]);
 
         const cellData = [
             // Original matrix data
@@ -454,7 +432,27 @@
             .attr("y", d => d.y * cellSize)
             .attr("width", d => (d.tag2 === 'Sum' && d.tag1 !== 'Sum')  ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .attr("height", d => (d.tag1 === 'Sum' && d.tag2 !== 'Sum') ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
-            .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
+            .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value))
+            .on("click", (event, d) => {
+                if (d.value > 0) {  // Only process clicks on cells with values greater than 0
+                    let selectedTags = [];
+                    if (d.tag1 === 'Sum' && d.tag2 === 'Sum') {
+                        // Clicking total sum cell shows all items
+                        selectedTags = [];
+                    } else if (d.tag1 === 'Sum') {
+                        // Clicking column sum shows items with that tag
+                        selectedTags = [d.tag2];
+                    } else if (d.tag2 === 'Sum') {
+                        // Clicking row sum shows items with that tag
+                        selectedTags = [d.tag1];
+                    } else {
+                        // Clicking regular cell shows items with both tags
+                        selectedTags = [d.tag1, d.tag2];
+                    }
+
+                    updateList(selectedTags, preprocessedData);
+                }
+            });
 
         // Add the text labels to the cells where necessary
         const texts = heatmapGroup.selectAll(".cell-value")
@@ -490,7 +488,7 @@
                         // Clicking regular cell shows items with both tags
                         selectedTags = [d.tag1, d.tag2];
                     }
-                    console.log("calling updateList with selectedTags: ", selectedTags);
+
                     updateList(selectedTags, preprocessedData);
                 }
             });
@@ -535,12 +533,12 @@
     }
 
     /**
-     * Creates a hierarchical edge bundle visualization of tag relationships
+     * Creates a hierarchical arc diagram visualization of tag relationships
      * @param {Object} matrix - Co-occurrence matrix
      * @param {Object[]} preprocessedData - Processed data array
      * @param {Object} GUIparams - Parameters from dat.GUI
      */
-    function visualizeHierarchicalEdgeBundle(matrix, preprocessedData, GUIparams) {
+    function visualizeArcDiagram(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
         const width = GUIparams.width;
         const radius = width / 2;
@@ -588,17 +586,17 @@
         const linkColorScale = d3.scaleSequential(d3[colorScheme])
             .domain([0, linkColorMaxValue]);
 
-        const svg = d3.select("#edge-bundle")
+        const svg = d3.select("#arc-diagram")
             .append("svg")
             .attr("viewBox", [-width/2, -width/2, width, width])
             .attr("width", width)
             .attr("height", width);
 
         const node = svg.append("g")
-            .selectAll(".edge-bundle-node")
+            .selectAll(".arc-diagram-node")
             .data(hierarchy.leaves())
             .join("g")
-            .attr("class", "edge-bundle-node")
+            .attr("class", "arc-diagram-node")
             .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
 
         // Add text labels to the nodes
@@ -618,7 +616,7 @@
             })
             .on("mouseover", (event, d) => {
                 // Bolden the hovered label and labels connected to it
-                d3.selectAll(".edge-bundle-node text")
+                d3.selectAll(".arc-diagram-node text")
                     .filter(n => {
                         const isHovered = n.data.name === d.data.name;
                         const isConnected = links.some(l =>
@@ -636,7 +634,7 @@
             })
             .on("mouseout", () => {
                 // Restore original boldness
-                d3.selectAll(".edge-bundle-node text")
+                d3.selectAll(".arc-diagram-node text")
                     .style("font-weight", null);
                 // Restore original link styles
                 link.style("stroke", d => linkColorScale(d.value))
@@ -645,17 +643,16 @@
             })
             .on("click", (event, d) => {
                 // Filter by tag name when clicking on a label
-                console.log("calling updateList with [d.data.name]: ", [d.data.name]);
                 updateList([d.data.name], preprocessedData);
             });
 
         // Create the links between nodes
         const link = svg.append("g")
             .attr("fill", "none")
-            .selectAll(".edge-bundle-link")
+            .selectAll(".arc-diagram-link")
             .data(links)
             .join("path")
-            .attr("class", "edge-bundle-link")
+            .attr("class", "arc-diagram-link")
             .attr("d", d => {
                 const source = hierarchy.leaves().find(node => node.data.name === d.source);
                 const target = hierarchy.leaves().find(node => node.data.name === d.target);
@@ -698,23 +695,10 @@
     /**
      * Creates the dat.GUI controller to change properties of the visualization.
      */
-     function createController(matrix, preprocessedData) {
+     function createController(params) {
         const gui = new dat.GUI({ autoPlace: false });
         const customContainer = document.getElementById('gui');
         customContainer.appendChild(gui.domElement);
-
-        const params = {  // Initial parameter values
-            colorScheme: 'interpolateViridis',
-            width: 954,
-            clampColorScaleMax: 0.80,
-            defaultStrokeOpacity: 0.5,
-            dimmedStrokeOpacity: 0.05,
-            curveBundleBeta: 0.3,
-            redraw: function() { // Draw the graph with updated parameters
-                d3.select("#edge-bundle svg").remove(); // Remove the old SVG
-                visualizeHierarchicalEdgeBundle(matrix, preprocessedData, params);
-            }
-        };
 
         const chromaticScales = [
             'interpolateViridis', 'interpolateInferno', 'interpolateMagma', 'interpolatePlasma',
@@ -729,17 +713,30 @@
             // ... add more as needed from https://d3js.org/d3-scale-chromatic
         ];
 
-        gui.add(params, 'colorScheme', chromaticScales).onChange(params.redraw);
-        gui.add(params, 'width', 600, 1200).step(1).onChange(params.redraw);
-        gui.add(params, 'clampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
-        gui.add(params, 'defaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
-        gui.add(params, 'dimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
-        gui.add(params, 'curveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
-        gui.add(params, 'redraw'); // Redraw button
+        // Create folders for different visualizations
+        const arcDiagramFolder = gui.addFolder('Tag arc diagram');
+        const heatmapFolder = gui.addFolder('Tag heatmap');
 
+        // arc diagram controls
+        arcDiagramFolder.add(params, 'colorScheme', chromaticScales).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'width', 600, 1200).step(1).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'clampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'defaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'dimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'curveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
+
+        // Heatmap controls
+        heatmapFolder.add(params, 'heatmapCellColorScheme', chromaticScales).onChange(params.redraw);
+        heatmapFolder.add(params, 'heatmapSumColorScheme', chromaticScales).onChange(params.redraw);
+
+        gui.add(params, 'redraw');
+
+        // Open folders by default
+        arcDiagramFolder.open();
+        heatmapFolder.open();
 
         // Initial drawing
-        params.redraw(); // Call redraw initially to draw the visualization
+        //params.redraw();
 
         return gui;
     }
@@ -773,10 +770,48 @@
             const preprocessedData = preprocessData(data);
             updateList(null, preprocessedData); // Initialize the list with all items
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
-            console.log("cooccurrenceData: ", cooccurrenceData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
-            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData); // Create and pass matrix/data
-            createController(cooccurrenceMatrix, preprocessedData); // Create and pass matrix/data
+
+            // Initialize controller with modified behavior
+            const params = {
+                // Arc Diagram Parameters
+                colorScheme: 'interpolateViridis',
+                width: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
+                clampColorScaleMax: 0.80,
+                defaultStrokeOpacity: 0.5,
+                dimmedStrokeOpacity: 0.05,
+                curveBundleBeta: 0.3,
+                // Heatmap Parameters
+                heatmapCellColorScheme: 'interpolateGreens',
+                heatmapSumColorScheme: 'interpolateOranges',
+                redraw: function() {
+                    const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
+                    console.log('Active tab:', activeTab);
+                    if (activeTab === 'arc-diagram-tab') {
+                        d3.select("#arc-diagram svg").remove();
+                        visualizeArcDiagram(cooccurrenceMatrix, preprocessedData, params);
+                    } else if (activeTab === 'heatmap-tab') {
+                        d3.select("#heatmap svg").remove();
+                        visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData, params);
+                    } else {
+                        console.error('Unknown tab:', activeTab);
+                    }
+                }
+            };
+
+            // Create the GUI controller
+            const gui = createController(params);
+
+            // Add Bootstrap tab event listeners
+            const tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabElements.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', (event) => {
+                    params.redraw(event.target.id);
+                });
+            });
+
+            // Initial drawing of the active tab
+            params.redraw();            
 
         })
         .catch(error => console.error(error));
