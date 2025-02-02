@@ -786,7 +786,6 @@
                 heatmapSumColorScheme: 'interpolateOranges',
                 redraw: function() {
                     const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
-                    console.log('Active tab:', activeTab);
                     if (activeTab === 'arc-diagram-tab') {
                         d3.select("#arc-diagram svg").remove();
                         visualizeArcDiagram(cooccurrenceMatrix, preprocessedData, params);
