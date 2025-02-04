@@ -85,6 +85,11 @@
                     Tag heatmap
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="streamgraph-tab" data-bs-toggle="tab" data-bs-target="#streamgraph-pane" type="button" role="tab">
+                    Tag streamgraph
+                </button>
+            </li>
         </ul>
 
         <!-- Tab content -->
@@ -97,6 +102,11 @@
             <div class="tab-pane fade" id="heatmap-pane" role="tabpanel">
                 <div class="visualization">
                     <div id="heatmap"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="streamgraph-pane" role="tabpanel">
+                <div class="visualization">
+                    <div id="streamgraph"></div>
                 </div>
             </div>
         </div>
@@ -540,13 +550,13 @@
      */
     function visualizeArcDiagram(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
-        const width = GUIparams.width;
+        const width = GUIparams.arcDiagramWidth;
         const radius = width / 2;
-        const clampColorScaleMax = GUIparams.clampColorScaleMax;
-        const colorScheme = GUIparams.colorScheme
-        const defaultStrokeOpacity = GUIparams.defaultStrokeOpacity;
-        const dimmedStrokeOpacity = GUIparams.dimmedStrokeOpacity;
-        const curveBundleBeta = GUIparams.curveBundleBeta;
+        const clampColorScaleMax = GUIparams.arcDiagramClampColorScaleMax;
+        const colorScheme = GUIparams.arcDiagramColorScheme
+        const defaultStrokeOpacity = GUIparams.arcDiagramDefaultStrokeOpacity;
+        const dimmedStrokeOpacity = GUIparams.arcDiagramDimmedStrokeOpacity;
+        const curveBundleBeta = GUIparams.arcDiagramCurveBundleBeta;
 
         // Define what a link line looks like
         const line = d3.lineRadial()
@@ -693,6 +703,151 @@
     }
 
     /**
+     * Creates a streamgraph visualization of tag usage over time
+     * @param {Object} matrix - Co-occurrence matrix (not used but kept for consistency with other viz functions)
+     * @param {Object[]} preprocessedData - Processed data array
+     * @param {Object} GUIparams - Parameters from dat.GUI
+     */
+    function visualizeStreamgraph(matrix, preprocessedData, GUIparams) {
+        const colorScheme = GUIparams.streamgraphColorScheme;
+        const margin = { top: 20, right: 20, bottom: 30, left: 60 };
+        const width = GUIparams.streamgraphWidth - margin.left - margin.right;
+        const height = GUIparams.streamgraphHeight - margin.top - margin.bottom;
+
+        // Get all unique tags and sort by total usage
+        const allTags = [...new Set(preprocessedData.flatMap(d => d.tags))]
+            .sort((a, b) => {
+                const countA = preprocessedData.filter(d => d.tags.includes(a)).length;
+                const countB = preprocessedData.filter(d => d.tags.includes(b)).length;
+                return countB - countA;
+            });
+
+        // Group data by year and count tag occurrences
+        const yearGroups = d3.group(preprocessedData, d => d3.timeYear(d.time_added));
+        
+        // Convert to array of objects with consistent structure
+        const timeData = Array.from(yearGroups, ([date, entries]) => {
+            const counts = {};
+            allTags.forEach(tag => {
+                counts[tag] = entries.filter(entry => entry.tags.includes(tag)).length;
+            });
+            return {
+                date,
+                ...counts
+            };
+        }).sort((a, b) => d3.ascending(a.date, b.date));
+
+        // Stack the data
+        const stack = d3.stack()
+            .offset(d3.stackOffsetWiggle)
+            .order(d3.stackOrderInsideOut)
+            .keys(allTags);
+
+        const series = stack(timeData);
+
+        // Create scales
+        const xScale = d3.scaleTime()
+            .domain(d3.extent(timeData, d => d.date))
+            .range([0, width]);
+
+        const yScale = d3.scaleLinear()
+            .domain(d3.extent(series.flat(2)))
+            .range([height, 0]);
+
+        // Create color scale using d3's built-in interpolators
+        const colorScale = d3.scaleSequential()
+            .domain([0, allTags.length - 1])
+            .interpolator(d3[colorScheme]);
+
+        // Create the SVG
+        const svg = d3.select("#streamgraph")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Create the area generator
+        const area = d3.area()
+            .x((d, i) => xScale(timeData[i].date))
+            .y0(d => yScale(d[0]))
+            .y1(d => yScale(d[1]))
+            .curve(d3.curveBasis);
+
+        // Add the streams
+        const paths = svg.selectAll("path")
+            .data(series)
+            .join("path")
+            .attr("d", area)
+            .attr("fill", (d, i) => colorScale(i))
+            .attr("opacity", 0.8)
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                    .attr("opacity", 1)
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 1);
+                
+                const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+                showTooltip(event, d, totalCount);
+            })
+            .on("mousemove", function(event, d) {  // Add mousemove handler
+                const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+                showTooltip(event, d, totalCount);
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                    .attr("opacity", 0.8)
+                    .attr("stroke", null);
+                
+                tooltip.style("opacity", 0);
+            })
+            .on("click", (event, d) => {
+                updateList([d.key], preprocessedData);
+            });
+
+        // Helper function to show tooltip
+        function showTooltip(event, d, totalCount) {
+            const mouseX = d3.pointer(event)[0];
+            const date = xScale.invert(mouseX);
+            const dateIndex = timeData.findIndex(t => t.date > date) - 1;
+            const currentValue = dateIndex >= 0 ? 
+                Math.round(d[dateIndex][1] - d[dateIndex][0]) : 0;
+            const year = date.getFullYear();
+            
+            tooltip.style("opacity", 1)
+                .html(`
+                    <strong>Tag:</strong> ${d.key}<br/>
+                    <strong>Total:</strong> ${totalCount}<br/>
+                    <strong>${year}:</strong> ${currentValue}
+                `)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        }        
+
+        // Define x-axis (time)
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(d3.timeYear.every(1))
+            .tickFormat(d3.timeFormat("%Y"));
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(xAxis);
+
+        // Create tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute")
+            .style("background-color", "white")
+            .style("border", "1px solid #ddd")
+            .style("border-radius", "3px")
+            .style("padding", "10px")
+            .style("pointer-events", "none")
+            .style("z-index", 1000);
+    }
+
+    /**
      * Creates the dat.GUI controller to change properties of the visualization.
      */
      function createController(params) {
@@ -716,27 +871,28 @@
         // Create folders for different visualizations
         const arcDiagramFolder = gui.addFolder('Tag arc diagram');
         const heatmapFolder = gui.addFolder('Tag heatmap');
+        const streamgraphFolder = gui.addFolder('Tag streamgraph');
 
         // arc diagram controls
-        arcDiagramFolder.add(params, 'colorScheme', chromaticScales).onChange(params.redraw);
-        arcDiagramFolder.add(params, 'width', 600, 1200).step(1).onChange(params.redraw);
-        arcDiagramFolder.add(params, 'clampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
-        arcDiagramFolder.add(params, 'defaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
-        arcDiagramFolder.add(params, 'dimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
-        arcDiagramFolder.add(params, 'curveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramColorScheme', chromaticScales).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramWidth', 600, 1200).step(1).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramClampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramDefaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramDimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramCurveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
 
         // Heatmap controls
         heatmapFolder.add(params, 'heatmapCellColorScheme', chromaticScales).onChange(params.redraw);
         heatmapFolder.add(params, 'heatmapSumColorScheme', chromaticScales).onChange(params.redraw);
 
-        gui.add(params, 'redraw');
+        // Streamgraph controls
+        streamgraphFolder.add(params, 'streamgraphColorScheme', chromaticScales).onChange(params.redraw);
+        streamgraphFolder.add(params, 'streamgraphHeight', 100, 400).step(1).onChange(params.redraw);
+        streamgraphFolder.add(params, 'streamgraphWidth', 600, 1200).step(1).onChange(params.redraw);
 
-        // Open folders by default
-        arcDiagramFolder.open();
-        heatmapFolder.open();
-
-        // Initial drawing
-        //params.redraw();
+        // some tweaks to the GUI
+        gui.close(); 
+        gui.domElement.querySelector('.close-button').innerHTML = 'Toggle visual controls';
 
         return gui;
     }
@@ -775,15 +931,19 @@
             // Initialize controller with modified behavior
             const params = {
                 // Arc Diagram Parameters
-                colorScheme: 'interpolateViridis',
-                width: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
-                clampColorScaleMax: 0.80,
-                defaultStrokeOpacity: 0.5,
-                dimmedStrokeOpacity: 0.05,
-                curveBundleBeta: 0.3,
+                arcDiagramColorScheme: 'interpolateViridis',
+                arcDiagramWidth: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
+                arcDiagramClampColorScaleMax: 0.80,
+                arcDiagramDefaultStrokeOpacity: 0.5,
+                arcDiagramDimmedStrokeOpacity: 0.05,
+                arcDiagramCurveBundleBeta: 0.3,
                 // Heatmap Parameters
                 heatmapCellColorScheme: 'interpolateGreens',
                 heatmapSumColorScheme: 'interpolateOranges',
+                // Streamgraph Parameters
+                streamgraphColorScheme: 'interpolateSpectral',
+                streamgraphWidth: Math.max(600, window.innerWidth*0.8),
+                streamgraphHeight: Math.max(600, window.innerHeight*0.8),
                 redraw: function() {
                     const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
                     if (activeTab === 'arc-diagram-tab') {
@@ -792,6 +952,9 @@
                     } else if (activeTab === 'heatmap-tab') {
                         d3.select("#heatmap svg").remove();
                         visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData, params);
+                    } else if (activeTab === 'streamgraph-tab') {
+                        d3.select("#streamgraph svg").remove();
+                        visualizeStreamgraph(cooccurrenceMatrix, preprocessedData, params);
                     } else {
                         console.error('Unknown tab:', activeTab);
                     }
