@@ -37,6 +37,7 @@
         }
         .arc-diagram-locked{
             border-radius: 50%;
+            overflow:visible;
             filter: 
                 hue-rotate(90deg) 
                 saturate(100%) 
@@ -54,7 +55,7 @@
             transition: stroke 0.3s ease; /* Add transition for smooth color change */
             transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
         }
-        .color-locked {
+        .stream-locked {
             filter: 
                 hue-rotate(180deg) 
                 saturate(130%) 
@@ -881,15 +882,15 @@
             .on("click", function(event, d) {
                 // Capture current state
                 let element = d3.select(this);
-                let isLocked = element.classed("color-locked");
+                let isLocked = element.classed("stream-locked");
                 
-                // Remove color-locked class from all paths
+                // Remove stream-locked class from all paths
                 d3.selectAll("path")
-                    .classed("color-locked", false);
+                    .classed("stream-locked", false);
                 
                 // Filter list if locking or remove list filter when unlocking.
                 if (!isLocked) {
-                    element.classed("color-locked", true);
+                    element.classed("stream-locked", true);
                     updateList([d.key], preprocessedData);
                 } else {
                     updateList([], preprocessedData); 
