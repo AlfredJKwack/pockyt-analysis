@@ -35,6 +35,13 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .arc-diagram-locked{
+            border-radius: 50%;
+            filter: 
+                hue-rotate(90deg) 
+                saturate(100%) 
+                brightness(100%);         
+        }
         .arc-diagram-node text {
             font-size: 10px;
             cursor: pointer;
@@ -609,7 +616,21 @@
             .append("svg")
             .attr("viewBox", [-width/2, -width/2, width, width])
             .attr("width", width)
-            .attr("height", width);
+            .attr("height", width)
+            .on("click", function(event) {
+            // If clicking on the background (svg itself)
+            if (event.target === this) {
+                // Remove frozen state
+                d3.select(this).classed("frozen", false);
+                // Reset all effects
+                d3.selectAll(".arc-diagram-node text")
+                    .style("font-weight", null);
+                link.style("stroke", d => linkColorScale(d.value))
+                    .style("stroke-opacity", defaultStrokeOpacity)
+                    .style("mix-blend-mode", "multiply");
+            }
+        });
+
 
         const node = svg.append("g")
             .selectAll(".arc-diagram-node")
@@ -634,36 +655,55 @@
               return `<tspan class="tag-count">[${preprocessedData.filter(entry => entry.tags.includes(d.data.name)).length}]</tspan> ${d.data.name}`;
             })
             .on("mouseover", (event, d) => {
-                // Bolden the hovered label and labels connected to it
-                d3.selectAll(".arc-diagram-node text")
-                    .filter(n => {
-                        const isHovered = n.data.name === d.data.name;
-                        const isConnected = links.some(l =>
-                            (l.source === d.data.name && l.target === n.data.name)
-                        );
-                        return isHovered || isConnected;
-                    })
-                    .style("font-weight", "bold");
-                // Dim all the links
-                link.style("stroke-opacity", dimmedStrokeOpacity);
-                // Now highlight only relevant links
-                link.filter(l => l.source === d.data.name || l.target === d.data.name)
-                    .style("stroke-opacity", 1)
-                    .raise(); // Bring highlighted links to front
+                if (!svg.classed("arc-diagram-locked")) {
+                    handleNodeMouseOver(event, d);
+                }
             })
             .on("mouseout", () => {
-                // Restore original boldness
-                d3.selectAll(".arc-diagram-node text")
-                    .style("font-weight", null);
-                // Restore original link styles
-                link.style("stroke", d => linkColorScale(d.value))
-                    .style("stroke-opacity", defaultStrokeOpacity)
-                    .style("mix-blend-mode", "multiply");
+                if (!svg.classed("arc-diagram-locked")) {
+                    // Restore original boldness
+                    d3.selectAll(".arc-diagram-node text")
+                        .style("font-weight", null);
+                    // Restore original link styles
+                    link.style("stroke", d => linkColorScale(d.value))
+                        .style("stroke-opacity", defaultStrokeOpacity)
+                        .style("mix-blend-mode", "multiply");
+                }
             })
-            .on("click", (event, d) => {
-                // Filter by tag name when clicking on a label
-                updateList([d.data.name], preprocessedData);
+            .on("click", function(event, d) {
+                if (svg.classed("arc-diagram-locked")) {
+                    // Reset filter to nil. 
+                    updateList([], preprocessedData);
+                    // Reset all styles to default
+                    resetStyles();
+                    // now act as per regular mouseover event
+                    handleNodeMouseOver(event, d)
+                } else {
+                    // Filter by tag name when clicking on a label
+                    updateList([d.data.name], preprocessedData);
+                }
+                // Toggle frozen state
+                svg.classed("arc-diagram-locked", !svg.classed("arc-diagram-locked"));
             });
+
+        function handleNodeMouseOver(event, d) {
+            // Bolden the hovered label and labels connected to it
+            d3.selectAll(".arc-diagram-node text")
+                .filter(n => {
+                    const isHovered = n.data.name === d.data.name;
+                    const isConnected = links.some(l =>
+                        (l.source === d.data.name && l.target === n.data.name)
+                    );
+                    return isHovered || isConnected;
+                })
+                .style("font-weight", "bold");
+            // Dim all the links
+            link.style("stroke-opacity", dimmedStrokeOpacity);
+            // Now highlight only relevant links
+            link.filter(l => l.source === d.data.name || l.target === d.data.name)
+                .style("stroke-opacity", 1)
+                .raise(); // Bring highlighted links to front    
+        };
 
         // Create the links between nodes
         const link = svg.append("g")
@@ -682,21 +722,49 @@
             .style("mix-blend-mode", "multiply")
             .style("stroke-opacity", defaultStrokeOpacity)
             .on("mouseover", function(event, d) {
-                link.style("stroke-opacity", dimmedStrokeOpacity);
-                d3.select(this)
-                    .style("stroke-opacity", 1)
-                    .style("mix-blend-mode", null);
+                if (!svg.classed("arc-diagram-locked")) {
+                    handleLinkMouseOver(event, d);
+                }
             })
             .on("mouseout", function(event, d) {
-                link.style("stroke-opacity", defaultStrokeOpacity)
-                    .style("stroke", d => linkColorScale(d.value))
-                    .style("mix-blend-mode", "multiply");
-
+                if (!svg.classed("arc-diagram-locked")) {
+                    link.style("stroke-opacity", defaultStrokeOpacity)
+                        .style("stroke", d => linkColorScale(d.value))
+                        .style("mix-blend-mode", "multiply");
+                }
             })
-            .on("click", (event, d) => {
-                // Filter by both connected tags when clicking on a link
-                updateList([d.source, d.target], preprocessedData);
+            .on("click", function(event, d) {
+                if (svg.classed("arc-diagram-locked")) {
+                    // Reset filter to nil. 
+                    updateList([], preprocessedData);
+                    // Reset all styles to default
+                    resetStyles();
+                    // now act as per regular mouseover event
+                    handleLinkMouseOver(event, d)
+                } else {
+                    // Filter by both connected tags when clicking on a link
+                    updateList([d.source, d.target], preprocessedData);
+                }
+                // Toggle frozen state
+                svg.classed("arc-diagram-locked", !svg.classed("arc-diagram-locked"));
+
             });
+
+        function handleLinkMouseOver(event, d){
+            link.style("stroke-opacity", dimmedStrokeOpacity);
+            d3.select(event.currentTarget)
+                .style("stroke-opacity", 1)
+                .style("mix-blend-mode", null);            
+        }
+
+        function resetStyles() {
+            // Reset all styles to default
+            d3.selectAll(".arc-diagram-node text")
+                .style("font-weight", null);                    
+            link.style("stroke-opacity", defaultStrokeOpacity)
+                .style("stroke", d => linkColorScale(d.value))
+                .style("mix-blend-mode", "multiply");
+        }
 
         function createLinkPath(source, target) {
             return [
