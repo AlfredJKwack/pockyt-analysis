@@ -47,6 +47,15 @@
             transition: stroke 0.3s ease; /* Add transition for smooth color change */
             transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
         }
+        .color-locked {
+            filter: 
+                hue-rotate(180deg) 
+                saturate(130%) 
+                brightness(130%);
+            stroke-width: 2px;
+            stroke-opacity: 1;
+            stroke: #ffffff;
+        }        
         #gui {
             position: fixed;
             top: 10px;
@@ -801,8 +810,22 @@
                 
                 tooltip.style("opacity", 0);
             })
-            .on("click", (event, d) => {
-                updateList([d.key], preprocessedData);
+            .on("click", function(event, d) {
+                // Capture current state
+                let element = d3.select(this);
+                let isLocked = element.classed("color-locked");
+                
+                // Remove color-locked class from all paths
+                d3.selectAll("path")
+                    .classed("color-locked", false);
+                
+                // Filter list if locking or remove list filter when unlocking.
+                if (!isLocked) {
+                    element.classed("color-locked", true);
+                    updateList([d.key], preprocessedData);
+                } else {
+                    updateList([], preprocessedData); 
+                }
             });
 
         // Helper function to show tooltip
