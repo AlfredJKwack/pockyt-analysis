@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
     <style>
         .container {
             flex-wrap: wrap;
@@ -16,16 +17,15 @@
             min-width: 300px;
             margin: 20px;
         }
-        .word-cloud text:hover {
-            fill: #ff4081;
-            cursor: pointer;
-        }
         #heatmap .cell:hover,
         #heatmap .cell-value {
             cursor: pointer;
         }
         #heatmap .labelHighlight{
             font-weight: bold;
+        }
+        #heatmap .y-label, #heatmap .x-label {
+            font-size: 8px;
         }
         .noselect {
             -webkit-touch-callout: none;
@@ -35,29 +35,99 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .edge-bundle-node text {
+        .arc-diagram-locked{
+            border-radius: 50%;
+            overflow:visible;
+            filter: 
+                hue-rotate(90deg) 
+                saturate(100%) 
+                brightness(100%);         
+        }
+        .arc-diagram-node text {
             font-size: 10px;
             cursor: pointer;
         }
-        .edge-bundle-node text:hover {
-            font-weight: bold;
-        } 
-        .edge-bundle-link {
+        .arc-diagram-node text {
+            transition: all 0.3s ease-in-out
+        }
+        .arc-diagram-link {
             cursor: pointer;
+            transition: stroke 0.3s ease; /* Add transition for smooth color change */
+            transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
+        }
+        .stream-locked {
+            filter: 
+                hue-rotate(180deg) 
+                saturate(130%) 
+                brightness(130%);
+            stroke-width: 2px;
+            stroke-opacity: 1;
+            stroke: #ffffff;
+        }        
+        #gui {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* dat.gui specifics */
+        .dg .property-name {
+            width: 60%;
+        }
+        .dg .c {
+            width: 40%;
+        }
+        .dg .c select {
+            margin-top: 5px;
+            margin-left: -5px;
+            width: 105%;
         }
     </style>
 </head>
 <body>
+    <div id="gui"></div>
     <div class="container">
-        <h1>Tag Visualizations</h1> 
-        <div class="visualization">
-            <h2>Co-occurence heat map</h2>
-            <div id="heatmap""></div>
+        <h1>Tag Visualizations</h1>
+
+        <!-- Add Bootstrap tabs -->
+        <ul class="nav nav-tabs" id="vizTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="arc-diagram-tab" data-bs-toggle="tab" data-bs-target="#arc-diagram-pane" type="button" role="tab">
+                    Tag arc diagram
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="heatmap-tab" data-bs-toggle="tab" data-bs-target="#heatmap-pane" type="button" role="tab">
+                    Tag heatmap
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="streamgraph-tab" data-bs-toggle="tab" data-bs-target="#streamgraph-pane" type="button" role="tab">
+                    Tag streamgraph
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="vizTabContent">
+            <div class="tab-pane fade show active" id="arc-diagram-pane" role="tabpanel">
+                <div class="visualization">
+                    <div id="arc-diagram"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="heatmap-pane" role="tabpanel">
+                <div class="visualization">
+                    <div id="heatmap"></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="streamgraph-pane" role="tabpanel">
+                <div class="visualization">
+                    <div id="streamgraph"></div>
+                </div>
+            </div>
         </div>
-        <div class="visualization">
-            <h2>Tag Relationships</h2>
-            <div id="edge-bundle"></div>
-        </div>           
+
         <div class="pocket-data my-5">
             <h2>Pocket entries</h2>
             <div id="list"></div>
@@ -66,8 +136,8 @@
             <h2>Credits</h2>
             <div>The good people of <a href="https://getpocket.com/">Pocket</a> for providing a great tool to save and organize my reading.</div>
             <div>The <a href="https://d3js.org/">D3.js</a> community for providing the tools to visualize the data.</div>
-        </div>        
-        
+        </div>
+
     </div>
 
 
@@ -97,9 +167,32 @@
      */
     function updateList(selectedTags, data) {
         // Filter items based on selected tags
-        const filteredItems = selectedTags && selectedTags.length > 0
-        ? data.filter(item => selectedTags.every(tag => item.tags.includes(tag)))
-        : data;
+        let filteredItems;
+        if (selectedTags && selectedTags.length > 0) {
+            // Check if all selected tags are the same
+            const allSameTags = selectedTags.every(tag => tag === selectedTags[0]);
+
+            if (allSameTags && selectedTags.length > 1) {
+                // If all selected tags are the same, find items with ONLY that tag
+                filteredItems = data.filter(item =>
+                    item.tags.length === 1 && item.tags[0] === selectedTags[0]
+                );
+            } else {
+                // Original filtering logic for different tags
+                filteredItems = data.filter(item =>
+                    selectedTags.every(tag => item.tags.includes(tag))
+                );
+            }
+        } else {
+            filteredItems = data;
+        }
+
+        const tagFrequencies = {};
+        filteredItems.forEach(item => {
+            item.tags.forEach(tag => {
+                tagFrequencies[tag] = (tagFrequencies[tag] || 0) + 1;
+            });
+        });
 
         // Update the DOM
         const listElement = d3.select("#list");
@@ -129,7 +222,12 @@
                     const tagContainer = div.append("div")
                         .attr("class", "col-md-4");
 
-                    item.tags.forEach(tag => {
+                    // Sort tags by frequency before adding them
+                    const sortedTags = [...item.tags].sort((a, b) => 
+                        tagFrequencies[b] - tagFrequencies[a]
+                    );
+
+                    sortedTags.forEach(tag => {
                         tagContainer.append("span")
                             .attr("class", "ms-1 badge rounded-pill text-bg-success")
                             .text(tag);
@@ -142,17 +240,25 @@
      * Analyzes tag co-occurrence in the dataset
      * @param {Object[]} data - Processed data array
      * @returns {Object[]} Array of tag pairs and their co-occurrence counts
-     */    
+     */
     function analyzeTagCooccurrence(data) {
         const pairs = [];
         data.forEach(item => {
             if (Array.isArray(item.tags)) {
                 const sortedTags = item.tags.sort();
+
+                // Add individual occurrences only if it's a single tag
+                if (sortedTags.length === 1) {
+                    pairs.push([sortedTags[0], sortedTags[0]]);
+                }
+
                 for (let i = 0; i < sortedTags.length; i++) {
                     for (let j = i + 1; j < sortedTags.length; j++) {
                         pairs.push([sortedTags[i], sortedTags[j]]);
                     }
                 }
+            } else {
+                console.error("Item tags are not an array:", item);
             }
         });
 
@@ -171,20 +277,44 @@
     /**
      * Generates a matrix of tag co-occurrences
      * @param {Object[]} cooccurrenceData - Co-occurrence data
+     * @param {boolean} orderByTagCount - Whether to order by tag count or tag name
      * @returns {Object} Matrix of tag co-occurrences
-     */    
-    function generateCooccurrenceMatrix(cooccurrenceData) {
+     */
+    function generateCooccurrenceMatrix(cooccurrenceData, orderByTagCount = false) {
         // Create initial matrix
         const matrix = {};
         cooccurrenceData.forEach(({ Tag1, Tag2, Cooccurrence }) => {
             if (!matrix[Tag1]) matrix[Tag1] = {};
             if (!matrix[Tag2]) matrix[Tag2] = {};
-            matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
-            matrix[Tag2][Tag1] = (matrix[Tag2][Tag1] || 0) + Cooccurrence;
+
+            // Avoid double-counting self-references in the matrix
+            if (Tag1 === Tag2) {
+                matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
+            } else {
+                matrix[Tag1][Tag2] = (matrix[Tag1][Tag2] || 0) + Cooccurrence;
+                matrix[Tag2][Tag1] = (matrix[Tag2][Tag1] || 0) + Cooccurrence;
+            }
         });
+
+        let sortedTags;
+
+        if (orderByTagCount) {
+            // Order by total tag count
+            const tagCounts = {};
+            cooccurrenceData.forEach(({ Tag1, Tag2, Cooccurrence }) => {
+                tagCounts[Tag1] = (tagCounts[Tag1] || 0) + Cooccurrence;
+                if (Tag1 !== Tag2) { // Only add Tag2 count if it's not a self-reference
+                    tagCounts[Tag2] = (tagCounts[Tag2] || 0) + Cooccurrence;
+                }
+            });
+            sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]); // Sort descending
+        } else {
+            // Order alphabetically
+            sortedTags = Object.keys(matrix).sort();
+        }
+
         // Create ordered matrix
         const orderedMatrix = {};
-        const sortedTags = Object.keys(matrix).sort();
 
         sortedTags.forEach(tag1 => {
             orderedMatrix[tag1] = {};
@@ -196,17 +326,20 @@
         return orderedMatrix;
     }
 
+
     /**
      * Creates an interactive heatmap visualization of tag co-occurrences
      * @param {Object} matrix - Co-occurrence matrix
      * @param {Object[]} preprocessedData - Processed data array
      */
-    function visualizeCooccurrenceMatrix(matrix, preprocessedData) {
+    function visualizeCooccurrenceMatrix(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
         const margin = { top: 80, right: 100, bottom: 100, left: 80 };
         const size = 800;
         const innerSize = size - margin.left - margin.right;
         const cellSize = innerSize / (tags.length + 1);
+        const heatmapSumColorScheme = GUIparams.heatmapSumColorScheme;
+        const heatmapCellColorScheme = GUIparams.heatmapCellColorScheme;
 
         const svg = d3.select("#heatmap")
             .append("svg")
@@ -223,7 +356,6 @@
                 .data(labelsData)
                 .enter().append("text")
                 .attr("class", isXAxis ? "x-label" : "y-label")
-                .style("font-size", "10px")
                 .text(d => d);
 
             // stuff for x axis
@@ -253,27 +385,26 @@
         const xLabels = createAxisLabels(svg, tags, cellSize, margin, true);
         const yLabels = createAxisLabels(svg, tags, cellSize, margin, false);
 
-        // Calculate row and column sums
-        const rowSums = tags.map(tag1 =>
-            tags.reduce((sum, tag2) => sum + (matrix[tag1][tag2] || 0), 0)
-            );
-        const colSums = tags.map(tag2 =>
-            tags.reduce((sum, tag1) => sum + (matrix[tag1][tag2] || 0), 0)
+        // Count entries with the tag in preprocessedData array
+        // the matrix contains pair counts but not items with tag counts (and pairs are not triplets etc)
+        const axisSums = tags.map(tag1 =>
+            preprocessedData.filter(item => item.tags.includes(tag1)).length
         );
-
-        // Create sum color scales
-        const sumColorScale = d3.scaleSequential(d3.interpolateOranges)
-            .domain([0, Math.max(d3.max(rowSums), d3.max(colSums))]);
 
         // Create matrix color scales
         const maxValue = d3.max(tags.flatMap(tag1 =>
             tags.map(tag2 => matrix[tag1][tag2] || 0)
         ));
-        const cellColorScale = d3.scaleSequential(d3.interpolateGreens)
-            .domain([0, maxValue]);
-        const highlightColorScale = d3.scaleSequential(d3.interpolateOranges)
+
+        // Update color scales to use params
+        const sumColorScale = d3.scaleSequential(d3[heatmapSumColorScheme])
+            .domain([0, d3.max(axisSums)]);
+
+        const cellColorScale = d3.scaleSequential(d3[heatmapCellColorScheme])
             .domain([0, maxValue]);
 
+        const highlightColorScale = d3.scaleSequential(d3[heatmapCellColorScheme])
+            .domain([0, maxValue]);
 
         const cellData = [
             // Original matrix data
@@ -291,7 +422,7 @@
             ...tags.map((tag, i) => ({
                 tag1: tag,
                 tag2: 'Sum',
-                value: rowSums[i],
+                value: axisSums[i],
                 x: tags.length,
                 y: i,
                 isSum: true
@@ -300,7 +431,7 @@
             ...tags.map((tag, i) => ({
                 tag1: 'Sum',
                 tag2: tag,
-                value: colSums[i],
+                value: axisSums[i],
                 x: i,
                 y: tags.length,
                 isSum: true
@@ -309,7 +440,7 @@
             {
                 tag1: 'Sum',
                 tag2: 'Sum',
-                value: d3.sum(rowSums),
+                value: d3.sum(axisSums),
                 x: tags.length,
                 y: tags.length,
                 isSum: true
@@ -328,7 +459,27 @@
             .attr("y", d => d.y * cellSize)
             .attr("width", d => (d.tag2 === 'Sum' && d.tag1 !== 'Sum')  ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
             .attr("height", d => (d.tag1 === 'Sum' && d.tag2 !== 'Sum') ? Math.max(10, Math.round(Math.log(d.value + 1) * 10)) + 'px' : cellSize)
-            .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value));
+            .style("fill", d => d.isSum ? sumColorScale(d.value) : cellColorScale(d.value))
+            .on("click", (event, d) => {
+                if (d.value > 0) {  // Only process clicks on cells with values greater than 0
+                    let selectedTags = [];
+                    if (d.tag1 === 'Sum' && d.tag2 === 'Sum') {
+                        // Clicking total sum cell shows all items
+                        selectedTags = [];
+                    } else if (d.tag1 === 'Sum') {
+                        // Clicking column sum shows items with that tag
+                        selectedTags = [d.tag2];
+                    } else if (d.tag2 === 'Sum') {
+                        // Clicking row sum shows items with that tag
+                        selectedTags = [d.tag1];
+                    } else {
+                        // Clicking regular cell shows items with both tags
+                        selectedTags = [d.tag1, d.tag2];
+                    }
+
+                    updateList(selectedTags, preprocessedData);
+                }
+            });
 
         // Add the text labels to the cells where necessary
         const texts = heatmapGroup.selectAll(".cell-value")
@@ -364,7 +515,7 @@
                         // Clicking regular cell shows items with both tags
                         selectedTags = [d.tag1, d.tag2];
                     }
-                    console.log("calling updateList with selectedTags: ", selectedTags);
+
                     updateList(selectedTags, preprocessedData);
                 }
             });
@@ -409,23 +560,40 @@
     }
 
     /**
-     * Creates a hierarchical edge bundle visualization of tag relationships
+     * Creates a hierarchical arc diagram visualization of tag relationships
      * @param {Object} matrix - Co-occurrence matrix
      * @param {Object[]} preprocessedData - Processed data array
-     */    
-    function visualizeHierarchicalEdgeBundle(matrix, preprocessedData) {
+     * @param {Object} GUIparams - Parameters from dat.GUI
+     */
+    function visualizeArcDiagram(matrix, preprocessedData, GUIparams) {
         const tags = Object.keys(matrix);
-        const baseLinkColor = "#9BCD9B";
-        const highlightLinkColor = "#cc5500";
-        const width = 954;
+        const width = GUIparams.arcDiagramWidth;
         const radius = width / 2;
+        const clampColorScaleMax = GUIparams.arcDiagramClampColorScaleMax;
+        const colorScheme = GUIparams.arcDiagramColorScheme
+        const defaultStrokeOpacity = GUIparams.arcDiagramDefaultStrokeOpacity;
+        const dimmedStrokeOpacity = GUIparams.arcDiagramDimmedStrokeOpacity;
+        const curveBundleBeta = GUIparams.arcDiagramCurveBundleBeta;
+
+        // Define what a link line looks like
         const line = d3.lineRadial()
-            .curve(d3.curveBundle.beta(0.3))
+            .curve(d3.curveBundle.beta(curveBundleBeta))
             .radius(d => d.y)
             .angle(d => d.x);
 
+        // Create hierarchical data structure
         const tree = d3.cluster()
             .size([2 * Math.PI, radius - 100]);
+        const root = {
+            name: "root",
+            children: tags.map(tag => ({
+                name: tag,
+                size: d3.sum(Object.values(matrix[tag]))
+            }))
+        };
+        const hierarchy = d3.hierarchy(root);
+        tree(hierarchy);
+
         // Create links data structure
         const links = [];
         tags.forEach(source => {
@@ -440,91 +608,164 @@
             });
         });
 
-        // Create hierarchical data structure
-        const root = {
-            name: "root",
-            children: tags.map(tag => ({
-                name: tag,
-                size: d3.sum(Object.values(matrix[tag]))
-            }))
-        };
+        // Create the color palette for the links
+        const linkColorMaxValue = d3.quantile(links, clampColorScaleMax, d => d.value);
+        const linkColorScale = d3.scaleSequential(d3[colorScheme])
+            .domain([0, linkColorMaxValue]);
 
-        const hierarchy = d3.hierarchy(root);
-        tree(hierarchy);
-
-        const svg = d3.select("#edge-bundle")
+        const svg = d3.select("#arc-diagram")
             .append("svg")
             .attr("viewBox", [-width/2, -width/2, width, width])
             .attr("width", width)
-            .attr("height", width);
+            .attr("height", width)
+            .on("click", function(event) {
+            // If clicking on the background (svg itself)
+            if (event.target === this) {
+                // Remove frozen state
+                d3.select(this).classed("frozen", false);
+                // Reset all effects
+                d3.selectAll(".arc-diagram-node text")
+                    .style("font-weight", null);
+                link.style("stroke", d => linkColorScale(d.value))
+                    .style("stroke-opacity", defaultStrokeOpacity)
+                    .style("mix-blend-mode", "multiply");
+            }
+        });
+
 
         const node = svg.append("g")
-            .selectAll(".edge-bundle-node")
+            .selectAll(".arc-diagram-node")
             .data(hierarchy.leaves())
             .join("g")
-            .attr("class", "edge-bundle-node")
+            .attr("class", "arc-diagram-node")
             .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`);
 
+        // Add text labels to the nodes
         node.append("text")
             .attr("dy", "0.31em")
             .attr("x", d => d.x < Math.PI ? 6 : -6)
             .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
             .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
-            .html(d => d.x >= Math.PI
-                ? `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`
-                : `<tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan> ${d.data.name}`
-            )
+            .html(d => {
+              // For outside of the ring - show the tag name
+              if (d.x >= Math.PI) {
+                return `${d.data.name} <tspan class="tag-count">[${d3.sum(Object.values(matrix[d.data.name]))}]</tspan>`;
+              }
+              // For inside of the ring - count entries with the tag in preprocessedData array
+              // the matrix contains pair counts but not items with tag counts (and pairs are not triplets etc)
+              return `<tspan class="tag-count">[${preprocessedData.filter(entry => entry.tags.includes(d.data.name)).length}]</tspan> ${d.data.name}`;
+            })
             .on("mouseover", (event, d) => {
-                link.style("mix-blend-mode", null);
-                const relevantLinks = link.filter(l =>
-                    l.source === d.data.name || l.target === d.data.name
-                );
-                relevantLinks
-                    .style("stroke", highlightLinkColor)
-                    .style("stroke-opacity", 1)
-                    .each(function() {
-                        this.parentNode.appendChild(this);
-                    });
+                if (!svg.classed("arc-diagram-locked")) {
+                    handleNodeMouseOver(event, d);
+                }
             })
             .on("mouseout", () => {
-                link.style("mix-blend-mode", "multiply")
-                    .style("stroke", baseLinkColor)
-                    .style("stroke-opacity", 0.4);
+                if (!svg.classed("arc-diagram-locked")) {
+                    // Restore original boldness
+                    d3.selectAll(".arc-diagram-node text")
+                        .style("font-weight", null);
+                    // Restore original link styles
+                    link.style("stroke", d => linkColorScale(d.value))
+                        .style("stroke-opacity", defaultStrokeOpacity)
+                        .style("mix-blend-mode", "multiply");
+                }
             })
-            .on("click", (event, d) => {
-                // Filter by tag name when clicking on a label
-                updateList([d.data.name], preprocessedData);
+            .on("click", function(event, d) {
+                if (svg.classed("arc-diagram-locked")) {
+                    // Reset filter to nil. 
+                    updateList([], preprocessedData);
+                    // Reset all styles to default
+                    resetStyles();
+                    // now act as per regular mouseover event
+                    handleNodeMouseOver(event, d)
+                } else {
+                    // Filter by tag name when clicking on a label
+                    updateList([d.data.name], preprocessedData);
+                }
+                // Toggle frozen state
+                svg.classed("arc-diagram-locked", !svg.classed("arc-diagram-locked"));
             });
 
+        function handleNodeMouseOver(event, d) {
+            // Bolden the hovered label and labels connected to it
+            d3.selectAll(".arc-diagram-node text")
+                .filter(n => {
+                    const isHovered = n.data.name === d.data.name;
+                    const isConnected = links.some(l =>
+                        (l.source === d.data.name && l.target === n.data.name)
+                    );
+                    return isHovered || isConnected;
+                })
+                .style("font-weight", "bold");
+            // Dim all the links
+            link.style("stroke-opacity", dimmedStrokeOpacity);
+            // Now highlight only relevant links
+            link.filter(l => l.source === d.data.name || l.target === d.data.name)
+                .style("stroke-opacity", 1)
+                .raise(); // Bring highlighted links to front    
+        };
+
+        // Create the links between nodes
         const link = svg.append("g")
             .attr("fill", "none")
-            .selectAll(".edge-bundle-link")
+            .selectAll(".arc-diagram-link")
             .data(links)
             .join("path")
-            .attr("class", "edge-bundle-link")
+            .attr("class", "arc-diagram-link")
             .attr("d", d => {
                 const source = hierarchy.leaves().find(node => node.data.name === d.source);
                 const target = hierarchy.leaves().find(node => node.data.name === d.target);
                 return line(createLinkPath(source, target));
             })
             .style("stroke-width", d => Math.sqrt(d.value))
+            .style("stroke", d => linkColorScale(d.value))
             .style("mix-blend-mode", "multiply")
-            .style("stroke", baseLinkColor)
-            .style("stroke-opacity", 0.4)
-            .on("mouseover", function() {
-                d3.select(this)
-                    .style("stroke", highlightLinkColor)
-                    .style("stroke-opacity", 1);
+            .style("stroke-opacity", defaultStrokeOpacity)
+            .on("mouseover", function(event, d) {
+                if (!svg.classed("arc-diagram-locked")) {
+                    handleLinkMouseOver(event, d);
+                }
             })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .style("stroke", baseLinkColor)
-                    .style("stroke-opacity", 0.4);
+            .on("mouseout", function(event, d) {
+                if (!svg.classed("arc-diagram-locked")) {
+                    link.style("stroke-opacity", defaultStrokeOpacity)
+                        .style("stroke", d => linkColorScale(d.value))
+                        .style("mix-blend-mode", "multiply");
+                }
             })
-            .on("click", (event, d) => {
-                // Filter by both connected tags when clicking on a link
-                updateList([d.source, d.target], preprocessedData);
+            .on("click", function(event, d) {
+                if (svg.classed("arc-diagram-locked")) {
+                    // Reset filter to nil. 
+                    updateList([], preprocessedData);
+                    // Reset all styles to default
+                    resetStyles();
+                    // now act as per regular mouseover event
+                    handleLinkMouseOver(event, d)
+                } else {
+                    // Filter by both connected tags when clicking on a link
+                    updateList([d.source, d.target], preprocessedData);
+                }
+                // Toggle frozen state
+                svg.classed("arc-diagram-locked", !svg.classed("arc-diagram-locked"));
+
             });
+
+        function handleLinkMouseOver(event, d){
+            link.style("stroke-opacity", dimmedStrokeOpacity);
+            d3.select(event.currentTarget)
+                .style("stroke-opacity", 1)
+                .style("mix-blend-mode", null);            
+        }
+
+        function resetStyles() {
+            // Reset all styles to default
+            d3.selectAll(".arc-diagram-node text")
+                .style("font-weight", null);                    
+            link.style("stroke-opacity", defaultStrokeOpacity)
+                .style("stroke", d => linkColorScale(d.value))
+                .style("mix-blend-mode", "multiply");
+        }
 
         function createLinkPath(source, target) {
             return [
@@ -537,6 +778,215 @@
                 y: node.y
             }));
         }
+    }
+
+    /**
+     * Creates a streamgraph visualization of tag usage over time
+     * @param {Object} matrix - Co-occurrence matrix (not used but kept for consistency with other viz functions)
+     * @param {Object[]} preprocessedData - Processed data array
+     * @param {Object} GUIparams - Parameters from dat.GUI
+     */
+    function visualizeStreamgraph(matrix, preprocessedData, GUIparams) {
+        const colorScheme = GUIparams.streamgraphColorScheme;
+        const margin = { top: 20, right: 20, bottom: 30, left: 60 };
+        const width = GUIparams.streamgraphWidth - margin.left - margin.right;
+        const height = GUIparams.streamgraphHeight - margin.top - margin.bottom;
+
+        // Get all unique tags and sort by total usage
+        const allTags = [...new Set(preprocessedData.flatMap(d => d.tags))]
+            .sort((a, b) => {
+                const countA = preprocessedData.filter(d => d.tags.includes(a)).length;
+                const countB = preprocessedData.filter(d => d.tags.includes(b)).length;
+                return countB - countA;
+            });
+
+        // Group data by year and count tag occurrences
+        const yearGroups = d3.group(preprocessedData, d => d3.timeYear(d.time_added));
+        
+        // Convert to array of objects with consistent structure
+        const timeData = Array.from(yearGroups, ([date, entries]) => {
+            const counts = {};
+            allTags.forEach(tag => {
+                counts[tag] = entries.filter(entry => entry.tags.includes(tag)).length;
+            });
+            return {
+                date,
+                ...counts
+            };
+        }).sort((a, b) => d3.ascending(a.date, b.date));
+
+        // Stack the data
+        const stack = d3.stack()
+            .offset(d3.stackOffsetWiggle)
+            .order(d3.stackOrderInsideOut)
+            .keys(allTags);
+
+        const series = stack(timeData);
+
+        // Create scales
+        const xScale = d3.scaleTime()
+            .domain(d3.extent(timeData, d => d.date))
+            .range([0, width]);
+
+        const yScale = d3.scaleLinear()
+            .domain(d3.extent(series.flat(2)))
+            .range([height, 0]);
+
+        // Create color scale using d3's built-in interpolators
+        const colorScale = d3.scaleSequential()
+            .domain([0, allTags.length - 1])
+            .interpolator(d3[colorScheme]);
+
+        // Create the SVG
+        const svg = d3.select("#streamgraph")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Create the area generator
+        const area = d3.area()
+            .x((d, i) => xScale(timeData[i].date))
+            .y0(d => yScale(d[0]))
+            .y1(d => yScale(d[1]))
+            .curve(d3.curveBasis);
+
+        // Add the streams
+        const paths = svg.selectAll("path")
+            .data(series)
+            .join("path")
+            .attr("d", area)
+            .attr("fill", (d, i) => colorScale(i))
+            .attr("opacity", 0.8)
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                    .attr("opacity", 1)
+                    .attr("stroke", "#000")
+                    .attr("stroke-width", 1);
+                
+                const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+                showTooltip(event, d, totalCount);
+            })
+            .on("mousemove", function(event, d) {  // Add mousemove handler
+                const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+                showTooltip(event, d, totalCount);
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                    .attr("opacity", 0.8)
+                    .attr("stroke", null);
+                
+                tooltip.style("opacity", 0);
+            })
+            .on("click", function(event, d) {
+                // Capture current state
+                let element = d3.select(this);
+                let isLocked = element.classed("stream-locked");
+                
+                // Remove stream-locked class from all paths
+                d3.selectAll("path")
+                    .classed("stream-locked", false);
+                
+                // Filter list if locking or remove list filter when unlocking.
+                if (!isLocked) {
+                    element.classed("stream-locked", true);
+                    updateList([d.key], preprocessedData);
+                } else {
+                    updateList([], preprocessedData); 
+                }
+            });
+
+        // Helper function to show tooltip
+        function showTooltip(event, d, totalCount) {
+            const mouseX = d3.pointer(event)[0];
+            const date = xScale.invert(mouseX);
+            const dateIndex = timeData.findIndex(t => t.date > date) - 1;
+            const currentValue = dateIndex >= 0 ? 
+                Math.round(d[dateIndex][1] - d[dateIndex][0]) : 0;
+            const year = date.getFullYear();
+            
+            tooltip.style("opacity", 1)
+                .html(`
+                    <strong>Tag:</strong> ${d.key}<br/>
+                    <strong>Total:</strong> ${totalCount}<br/>
+                    <strong>${year}:</strong> ${currentValue}
+                `)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        }        
+
+        // Define x-axis (time)
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(d3.timeYear.every(1))
+            .tickFormat(d3.timeFormat("%Y"));
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(xAxis);
+
+        // Create tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute")
+            .style("background-color", "white")
+            .style("border", "1px solid #ddd")
+            .style("border-radius", "3px")
+            .style("padding", "10px")
+            .style("pointer-events", "none")
+            .style("z-index", 1000);
+    }
+
+    /**
+     * Creates the dat.GUI controller to change properties of the visualization.
+     */
+     function createController(params) {
+        const gui = new dat.GUI({ autoPlace: false });
+        const customContainer = document.getElementById('gui');
+        customContainer.appendChild(gui.domElement);
+
+        const chromaticScales = [
+            'interpolateViridis', 'interpolateInferno', 'interpolateMagma', 'interpolatePlasma',
+            'interpolateCividis', 'interpolateWarm', 'interpolateCool', 'interpolateCubehelixDefault',
+            'interpolateBrBG', 'interpolatePRGn', 'interpolatePiYG', 'interpolatePuOr',
+            'interpolateRdBu', 'interpolateRdGy', 'interpolateRdYlBu', 'interpolateRdYlGn',
+            'interpolateSpectral', 'interpolateBlues', 'interpolateGreens', 'interpolateGreys',
+            'interpolateOranges', 'interpolatePurples', 'interpolateReds', 'interpolateTurbo',
+            'interpolateRainbow', 'interpolateSinebow',
+            'schemeCategory10', 'schemeAccent', 'schemeDark2', 'schemeObservable10', 'schemePaired', 
+            'schemePastel1', 'schemePastel2', 'schemeSet1', 'schemeSet2', 'schemeSet3', 'schemeTableau10',
+            // ... add more as needed from https://d3js.org/d3-scale-chromatic
+        ];
+
+        // Create folders for different visualizations
+        const arcDiagramFolder = gui.addFolder('Tag arc diagram');
+        const heatmapFolder = gui.addFolder('Tag heatmap');
+        const streamgraphFolder = gui.addFolder('Tag streamgraph');
+
+        // arc diagram controls
+        arcDiagramFolder.add(params, 'arcDiagramColorScheme', chromaticScales).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramWidth', 600, 1200).step(1).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramClampColorScaleMax', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramDefaultStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramDimmedStrokeOpacity', 0, 1).step(0.01).onChange(params.redraw);
+        arcDiagramFolder.add(params, 'arcDiagramCurveBundleBeta', 0, 1).step(0.01).onChange(params.redraw);
+
+        // Heatmap controls
+        heatmapFolder.add(params, 'heatmapCellColorScheme', chromaticScales).onChange(params.redraw);
+        heatmapFolder.add(params, 'heatmapSumColorScheme', chromaticScales).onChange(params.redraw);
+
+        // Streamgraph controls
+        streamgraphFolder.add(params, 'streamgraphColorScheme', chromaticScales).onChange(params.redraw);
+        streamgraphFolder.add(params, 'streamgraphHeight', 100, 400).step(1).onChange(params.redraw);
+        streamgraphFolder.add(params, 'streamgraphWidth', 600, 1200).step(1).onChange(params.redraw);
+
+        // some tweaks to the GUI
+        gui.close(); 
+        gui.domElement.querySelector('.close-button').innerHTML = 'Toggle visual controls';
+
+        return gui;
     }
 
     /**
@@ -569,10 +1019,56 @@
             updateList(null, preprocessedData); // Initialize the list with all items
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
-            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData);
-            visualizeHierarchicalEdgeBundle(cooccurrenceMatrix, preprocessedData);
+
+            // Initialize controller with modified behavior
+            const params = {
+                // Arc Diagram Parameters
+                arcDiagramColorScheme: 'interpolateViridis',
+                arcDiagramWidth: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
+                arcDiagramClampColorScaleMax: 0.80,
+                arcDiagramDefaultStrokeOpacity: 0.5,
+                arcDiagramDimmedStrokeOpacity: 0.05,
+                arcDiagramCurveBundleBeta: 0.3,
+                // Heatmap Parameters
+                heatmapCellColorScheme: 'interpolateGreens',
+                heatmapSumColorScheme: 'interpolateOranges',
+                // Streamgraph Parameters
+                streamgraphColorScheme: 'interpolateSpectral',
+                streamgraphWidth: Math.max(600, window.innerWidth*0.8),
+                streamgraphHeight: Math.max(600, window.innerHeight*0.8),
+                redraw: function() {
+                    const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
+                    if (activeTab === 'arc-diagram-tab') {
+                        d3.select("#arc-diagram svg").remove();
+                        visualizeArcDiagram(cooccurrenceMatrix, preprocessedData, params);
+                    } else if (activeTab === 'heatmap-tab') {
+                        d3.select("#heatmap svg").remove();
+                        visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData, params);
+                    } else if (activeTab === 'streamgraph-tab') {
+                        d3.select("#streamgraph svg").remove();
+                        visualizeStreamgraph(cooccurrenceMatrix, preprocessedData, params);
+                    } else {
+                        console.error('Unknown tab:', activeTab);
+                    }
+                }
+            };
+
+            // Create the GUI controller
+            const gui = createController(params);
+
+            // Add Bootstrap tab event listeners
+            const tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabElements.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', (event) => {
+                    params.redraw(event.target.id);
+                });
+            });
+
+            // Initial drawing of the active tab
+            params.redraw();            
+
         })
-        .catch(error => console.error(error));    
+        .catch(error => console.error(error));
     });
 
     </script>

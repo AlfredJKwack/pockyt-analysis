@@ -29,11 +29,13 @@ Since this project is dependent on **alfredjkwack/pockyt** we will assume you ha
 
 TODO
 ------------
-* [x] Tag usage frequency graph
-* [x] Tag cloud
-* [ ] Tag usage frequency graph over time
-* [ ] Tag pair heat map (what goes together and what does not)
-* [-] Filter entries by 1 or more tags
-* [ ] Clean data set to remove Null entries (not sure what those are)
-* [ ] Highlight entries with no tags somehow
+* [ ] ~~Tag usage frequency graph~~
+* [x] Tag co-occurrence graph
+* [ ] ~~Tag cloud~~
+* [x] Tag pair arc diagram
+* [x] Tag usage frequency graph over time
+* [x] Tag pair heat map (what goes together and what does not)
+* [x] Filter entries by 1 or more tags
+* [x] Clean data set to remove Null entries (not sure what those are)
+* [-] Highlight entries with no tags somehow
 * [ ] Refactor code to be more modular
