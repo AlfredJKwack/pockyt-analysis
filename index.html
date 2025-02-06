@@ -1014,61 +1014,61 @@
      */
     window.addEventListener('load', () => {
         loadJsonFile('pocket-data.json')
-        .then(data => {
-            const preprocessedData = preprocessData(data);
-            updateList(null, preprocessedData); // Initialize the list with all items
-            const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
-            const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
+            .then(data => {
+                const preprocessedData = preprocessData(data);
+                updateList(null, preprocessedData); // Initialize the list with all items
+                const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
+                const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
 
-            // Initialize controller with modified behavior
-            const params = {
-                // Arc Diagram Parameters
-                arcDiagramColorScheme: 'interpolateViridis',
-                arcDiagramWidth: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
-                arcDiagramClampColorScaleMax: 0.80,
-                arcDiagramDefaultStrokeOpacity: 0.5,
-                arcDiagramDimmedStrokeOpacity: 0.05,
-                arcDiagramCurveBundleBeta: 0.3,
-                // Heatmap Parameters
-                heatmapCellColorScheme: 'interpolateGreens',
-                heatmapSumColorScheme: 'interpolateOranges',
-                // Streamgraph Parameters
-                streamgraphColorScheme: 'interpolateSpectral',
-                streamgraphWidth: Math.max(600, window.innerWidth*0.8),
-                streamgraphHeight: Math.max(600, window.innerHeight*0.8),
-                redraw: function() {
-                    const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
-                    if (activeTab === 'arc-diagram-tab') {
-                        d3.select("#arc-diagram svg").remove();
-                        visualizeArcDiagram(cooccurrenceMatrix, preprocessedData, params);
-                    } else if (activeTab === 'heatmap-tab') {
-                        d3.select("#heatmap svg").remove();
-                        visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData, params);
-                    } else if (activeTab === 'streamgraph-tab') {
-                        d3.select("#streamgraph svg").remove();
-                        visualizeStreamgraph(cooccurrenceMatrix, preprocessedData, params);
-                    } else {
-                        console.error('Unknown tab:', activeTab);
+                // Initialize controller with modified behavior
+                const params = {
+                    // Arc Diagram Parameters
+                    arcDiagramColorScheme: 'interpolateViridis',
+                    arcDiagramWidth: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
+                    arcDiagramClampColorScaleMax: 0.80,
+                    arcDiagramDefaultStrokeOpacity: 0.5,
+                    arcDiagramDimmedStrokeOpacity: 0.05,
+                    arcDiagramCurveBundleBeta: 0.3,
+                    // Heatmap Parameters
+                    heatmapCellColorScheme: 'interpolateGreens',
+                    heatmapSumColorScheme: 'interpolateOranges',
+                    // Streamgraph Parameters
+                    streamgraphColorScheme: 'interpolateSpectral',
+                    streamgraphWidth: Math.max(600, window.innerWidth*0.8),
+                    streamgraphHeight: Math.max(600, window.innerHeight*0.8),
+                    redraw: function() {
+                        const activeTab = document.querySelector('.nav-link.active').getAttribute('id');
+                        if (activeTab === 'arc-diagram-tab') {
+                            d3.select("#arc-diagram svg").remove();
+                            visualizeArcDiagram(cooccurrenceMatrix, preprocessedData, params);
+                        } else if (activeTab === 'heatmap-tab') {
+                            d3.select("#heatmap svg").remove();
+                            visualizeCooccurrenceMatrix(cooccurrenceMatrix, preprocessedData, params);
+                        } else if (activeTab === 'streamgraph-tab') {
+                            d3.select("#streamgraph svg").remove();
+                            visualizeStreamgraph(cooccurrenceMatrix, preprocessedData, params);
+                        } else {
+                            console.error('Unknown tab:', activeTab);
+                        }
                     }
-                }
-            };
+                };
 
-            // Create the GUI controller
-            const gui = createController(params);
+                // Create the GUI controller
+                const gui = createController(params);
 
-            // Add Bootstrap tab event listeners
-            const tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
-            tabElements.forEach(tab => {
-                tab.addEventListener('shown.bs.tab', (event) => {
-                    params.redraw(event.target.id);
+                // Add Bootstrap tab event listeners
+                const tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
+                tabElements.forEach(tab => {
+                    tab.addEventListener('shown.bs.tab', (event) => {
+                        params.redraw(event.target.id);
+                    });
                 });
-            });
 
-            // Initial drawing of the active tab
-            params.redraw();            
+                // Initial drawing of the active tab
+                params.redraw();            
 
-        })
-        .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
     });
 
     </script>
