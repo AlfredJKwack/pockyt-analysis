@@ -4,10 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+
+    <!-- Primary Layout -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Add Bootstrap Icons -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+    <!-- Graphs -->
+    <script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+
+    <!-- Dev contoller panel -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+    
+
+    <!-- Bootstrap tables requires jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    -->
+
+    <!-- Bootstrap tables and extensions --
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css">
+    -->
+
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/libs/jsPDF/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+    <!-- Fresh bootstrap tables Style -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,700,300">
+    <link rel="stylesheet" type="text/css" href="css/fresh-bootstrap-table.css" />
+    -->  
+
+
+
     <style>
         .container {
             flex-wrap: wrap;
@@ -132,6 +163,18 @@
             <h2>Pocket entries</h2>
             <div id="list"></div>
         </div>
+
+        <div class="fresh-table full-color-orange">
+            <!--
+              Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+              Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+            -->
+          
+            <table id="fresh-table" class="table"></table>
+
+        </div>
+                    
+
         <div class="credits my-5">
             <h2>Credits</h2>
             <div>The good people of <a href="https://getpocket.com/">Pocket</a> for providing a great tool to save and organize my reading.</div>
@@ -165,7 +208,7 @@
      * @param {string[]} selectedTags - Array of selected tag names
      * @param {Object[]} data - Processed data array
      */
-    function updateList(selectedTags, data) {
+     function updateList(selectedTags, data) {
         // Filter items based on selected tags
         let filteredItems;
         if (selectedTags && selectedTags.length > 0) {
@@ -187,54 +230,39 @@
             filteredItems = data;
         }
 
-        const tagFrequencies = {};
-        filteredItems.forEach(item => {
-            item.tags.forEach(tag => {
-                tagFrequencies[tag] = (tagFrequencies[tag] || 0) + 1;
-            });
-        });
-
-        // Update the DOM
-        const listElement = d3.select("#list");
-        listElement.html("");
-        filteredItems.forEach((item, index) => {
-            listElement.append("div")
-                .attr("class", `row py-2 ${index % 2 === 0 ? 'bg-light' : ''}`)
-                .each(function(d) {
-                    const formattedDate = item.time_added.toLocaleDateString('en-GB', {
-                        day: 'numeric', month: 'short', year: 'numeric'
-                    }).replace(/ /g, '-');
-                    const div = d3.select(this);
-                    // Add date
-                    div.append("div")
-                        .attr("class", "date col-md-2")
-                        .text(formattedDate);
-
-                    // Add title with link
-                    div.append("div")
-                        .attr("class", "col-md-6")
-                        .append("a")
-                            .attr("href", item.link)
-                            .attr("target", "_blank")
-                            .text(item.title || "No Title");
-
-                    // Add tags
-                    const tagContainer = div.append("div")
-                        .attr("class", "col-md-4");
-
-                    // Sort tags by frequency before adding them
-                    const sortedTags = [...item.tags].sort((a, b) => 
-                        tagFrequencies[b] - tagFrequencies[a]
-                    );
-
-                    sortedTags.forEach(tag => {
-                        tagContainer.append("span")
-                            .attr("class", "ms-1 badge rounded-pill text-bg-success")
-                            .text(tag);
-                    });
-                });
-        });
+        // Update the bootstrap table with filtered data
+        $('#fresh-table').bootstrapTable('load', filteredItems);
     }
+
+    /**
+     * Visually shortens a URL to a maximum length
+     * @param {string} url - The URL to shorten
+     * @param {number} maxLength - The maximum length of the shortened URL
+     * @returns {string} - The shortened URL
+     */
+    function visuallyShortenURL(url, maxLength = 50) {
+        if (url.length <= maxLength) {
+            return url;
+        }
+
+        // Extract the domain and the end of the URL
+        const domainEndIndex = url.indexOf('/', url.indexOf('://') + 3);
+        if (domainEndIndex === -1) {
+            return url;
+        }
+
+        const domain = url.substring(0, domainEndIndex);
+        const path = url.substring(domainEndIndex);
+
+        // Shorten the path if it's too long
+        if (path.length > maxLength - domain.length - 3) {
+            const middleLength = maxLength - domain.length - 3 - 5; // 5 for ".../" at the end
+            const shortenedPath = path.substring(0, middleLength / 2) + '...' + path.substring(path.length - middleLength / 2);
+            return domain + shortenedPath;
+        }
+
+        return url;
+    }    
 
     /**
      * Analyzes tag co-occurrence in the dataset
@@ -1017,6 +1045,90 @@
             .then(data => {
                 const preprocessedData = preprocessData(data);
                 updateList(null, preprocessedData); // Initialize the list with all items
+
+                // load up the table
+                var $table = $('#fresh-table')
+                $table.bootstrapTable({
+                    data: preprocessedData,
+                    classes: 'table table-hover table-striped',
+                    search: true,
+                    searchAlign: 'left',
+                    pagination: true,
+                    striped: true,
+                    sortable: true,
+                    showExport: true,
+                    export: 'bi-download',
+                    exportDataType: 'all',
+                    exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
+                    pageSize: 10,
+                    pageList: [10, 25, 50, 100],
+                    formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                        return ''
+                    },
+                    formatRecordsPerPage: function (pageNumber) {
+                        return pageNumber + ' rows visible'
+                    },
+                    columns: [{
+                        field: 'time_added',
+                        title: 'Date Added',
+                        sortable: true,
+                        sortName: 'time_added',
+                        sorter: function(a, b) {
+                            return a.getTime() - b.getTime();
+                        },
+                        formatter: function(value) {
+                            return value.toLocaleDateString('en-GB', {
+                                day: 'numeric', 
+                                month: 'short', 
+                                year: 'numeric'
+                            }).replace(/ /g, '-');
+                        }
+                    }, {
+                        field: 'link',
+                        title: 'Link',
+                        sortable: true,
+                        formatter: function(value, row) {
+                            let displayText = row.title || "No Title";
+                            if (displayText === value) {
+                                displayText = visuallyShortenURL(value, 50);
+                            }
+                            return `<a href="${value}" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    title="${value}"
+                                    class="text-decoration-none">
+                                    ${displayText}
+                                    <i class="bi bi-box-arrow-up-right ms-1"></i>
+                                    </a>`;
+                        }
+                    }, {
+                        field: 'tags',
+                        title: 'Tags',
+                        sortable: true,
+                        formatter: function(value) {
+                            if (!Array.isArray(value)) return '';
+                            
+                            // Get tag frequencies from the current filtered data
+                            const tagFrequencies = {};
+                            $('#fresh-table').bootstrapTable('getData').forEach(item => {
+                                item.tags.forEach(tag => {
+                                    tagFrequencies[tag] = (tagFrequencies[tag] || 0) + 1;
+                                });
+                            });
+
+                            // Sort tags by frequency
+                            const sortedTags = [...value].sort((a, b) => 
+                                tagFrequencies[b] - tagFrequencies[a]
+                            );
+
+                            return sortedTags.map(tag => 
+                                `<span class="ms-1 badge rounded-pill text-bg-success">${tag}</span>`
+                            ).join('');
+                        }
+                    }]
+                });
+
+
                 const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
                 const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
 

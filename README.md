@@ -39,3 +39,9 @@ TODO
 * [x] Clean data set to remove Null entries (not sure what those are)
 * [-] Highlight entries with no tags somehow
 * [ ] Refactor code to be more modular
+* [x] Table : URL's with no title need some love to shorten
+* [x] Table : Sorting of the date column needs to be correct
+* [x] Table : Sorting of the columns should not lead to overflow
+* [ ] ~~Table : Sorting of the columns should not lead to column widths changing~~
+* [ ] Table : Tags need a nicer color to match the theme
+* [x] Table : The table head has a little too much white space
