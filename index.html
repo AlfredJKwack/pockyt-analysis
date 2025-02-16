@@ -1058,7 +1058,7 @@
                     export: 'bi-download',
                     exportDataType: 'all',
                     exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
-                    pageSize: 10,
+                    pageSize: parseInt(localStorage.getItem('pockytTablePageSize')) || 10,               
                     pageList: [10, 25, 50, 100],
                     formatShowingRows: function (pageFrom, pageTo, totalRows) {
                         return ''
@@ -1125,6 +1125,11 @@
                         }
                     }]
                 });
+
+                // Store bootstrap table page size changes
+                $table.on('page-change.bs.table', function(e, pageNumber, pageSize) {
+                    localStorage.setItem('pockytTablePageSize', pageSize);
+                });             
 
 
                 const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
