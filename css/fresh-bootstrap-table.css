@@ -99,7 +99,6 @@
   padding: 3px 20px;
   clear: both;
   font-weight: normal;
-  line-height: 1.428571429;
 }
 .bootstrap-table .fixed-table-toolbar .columns-left {
   margin-right: 5px;
@@ -296,7 +295,6 @@
 }
 .bootstrap-table .fixed-table-pagination > .pagination ul.pagination a {
   padding: 6px 12px;
-  line-height: 1.428571429;
 }
 .bootstrap-table .fixed-table-pagination > .pagination ul.pagination li.page-intermediate a {
   color: #c8c8c8;
