@@ -173,11 +173,9 @@ window.addEventListener('load', () => {
             const popup = document.querySelector('.tutorial-popup');
     
             // Only show popup if user hasn't dismissed it before
-            console.log("shouldShowPopup", shouldShowPopup());
             if (!shouldShowPopup()) {
                 popup.style.display = 'none';
             } else {
-                console.log("positionPopup");
                 positionPopup()
             }
             
