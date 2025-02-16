@@ -84,6 +84,9 @@
             transition: stroke 0.3s ease; /* Add transition for smooth color change */
             transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
         }
+        .streamgraph-path{
+            cursor: pointer;
+        }
         .stream-locked {
             filter: 
                 hue-rotate(180deg) 
@@ -166,7 +169,7 @@
             padding: 1.2rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         /* Page background */
         body {
             background-color: #f8f9fa;
@@ -921,200 +924,208 @@
      * @param {Object} GUIparams - Parameters from dat.GUI
      */
      function visualizeStreamgraph(matrix, preprocessedData, GUIparams) {
-    // Get parent container dimensions
-    const container = d3.select("#streamgraph");
-    const containerWidth = container.node().getBoundingClientRect().width;
-    
-    const margin = { 
-        top: 30, 
-        right: 30, 
-        bottom: 40, 
-        left: 70 
-    };
-    const width = containerWidth - margin.left - margin.right;
-    const height = GUIparams.streamgraphHeight - margin.top - margin.bottom;
-
-    // Get computed styles from body for consistent typography
-    const computedStyle = window.getComputedStyle(document.body);
-    const fontFamily = computedStyle.getPropertyValue('font-family');
-    const fontSize = parseInt(computedStyle.getPropertyValue('font-size'));
-
-    // Clear existing SVG
-    container.selectAll("svg").remove();
-
-    // Get all unique tags and sort by total usage
-    const allTags = [...new Set(preprocessedData.flatMap(d => d.tags))]
-        .sort((a, b) => {
-            const countA = preprocessedData.filter(d => d.tags.includes(a)).length;
-            const countB = preprocessedData.filter(d => d.tags.includes(b)).length;
-            return countB - countA;
-        });
-
-    // Group data by year and count tag occurrences
-    const yearGroups = d3.group(preprocessedData, d => d3.timeYear(d.time_added));
-    
-    // Convert to array of objects with consistent structure
-    const timeData = Array.from(yearGroups, ([date, entries]) => {
-        const counts = {};
-        allTags.forEach(tag => {
-            counts[tag] = entries.filter(entry => entry.tags.includes(tag)).length;
-        });
-        return {
-            date,
-            ...counts
-        };
-    }).sort((a, b) => d3.ascending(a.date, b.date));
-
-    // Stack the data
-    const stack = d3.stack()
-        .offset(d3.stackOffsetWiggle)
-        .order(d3.stackOrderInsideOut)
-        .keys(allTags);
-
-    const series = stack(timeData);
-
-    // Create scales
-    const xScale = d3.scaleTime()
-        .domain(d3.extent(timeData, d => d.date))
-        .range([0, width]);
-
-    const yScale = d3.scaleLinear()
-        .domain(d3.extent(series.flat(2)))
-        .range([height, 0]);
-
-    // Create color scale using d3's built-in interpolators
-    const colorScale = d3.scaleSequential()
-        .domain([0, allTags.length - 1])
-        .interpolator(d3[GUIparams.streamgraphColorScheme]);
-
-    // Create responsive SVG
-    const svg = container.append("svg")
-        .attr("width", "100%")
-        .attr("height", height + margin.top + margin.bottom)
-        .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom])
-        .attr("style", "max-width: 100%; height: auto;")
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // Create the area generator with smooth curves
-    const area = d3.area()
-        .x((d, i) => xScale(timeData[i].date))
-        .y0(d => yScale(d[0]))
-        .y1(d => yScale(d[1]))
-        .curve(d3.curveBasis);
-
-    // Add the streams
-    const paths = svg.selectAll("path")
-        .data(series)
-        .join("path")
-        .attr("d", area)
-        .attr("fill", (d, i) => colorScale(i))
-        .attr("opacity", 0.8)
-        .attr("class", "streamgraph-path")
-        .style("transition", "opacity 0.2s ease, stroke-width 0.2s ease");
-
-    // Add interaction handlers
-    paths.on("mouseover", function(event, d) {
-            if (!d3.select(this).classed("stream-locked")) {
-                d3.select(this)
-                    .attr("opacity", 1)
-                    .attr("stroke", "#000")
-                    .attr("stroke-width", 1);
-                showTooltip(event, d);
-            }
-        })
-        .on("mousemove", (event, d) => showTooltip(event, d))
-        .on("mouseout", function() {
-            if (!d3.select(this).classed("stream-locked")) {
-                d3.select(this)
-                    .attr("opacity", 0.8)
-                    .attr("stroke", null);
-                tooltip.style("opacity", 0);
-            }
-        })
-        .on("click", function(event, d) {
-            const element = d3.select(this);
-            const isLocked = element.classed("stream-locked");
-            
-            paths.classed("stream-locked", false);
-            
-            if (!isLocked) {
-                element.classed("stream-locked", true);
-                updateList([d.key], preprocessedData);
-            } else {
-                updateList([], preprocessedData);
-            }
-        });
-
-    // Create and style axes
-    const xAxis = d3.axisBottom(xScale)
-        .ticks(d3.timeYear.every(1))
-        .tickFormat(d3.timeFormat("%Y"));
-
-    svg.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0,${height})`)
-        .call(xAxis)
-        .style("font-family", fontFamily)
-        .style("font-size", `${fontSize}px`);
-
-    // Style axis lines and text
-    svg.selectAll(".x-axis path, .x-axis line")
-        .style("stroke", "#666")
-        .style("stroke-width", "1px");
-
-    // Create tooltip
-    const tooltip = d3.select("body").append("div")
-        .attr("class", "streamgraph-tooltip")
-        .style("opacity", 0)
-        .style("position", "absolute")
-        .style("background-color", "rgba(255, 255, 255, 0.95)")
-        .style("border", "1px solid #ddd")
-        .style("border-radius", "4px")
-        .style("padding", "8px 12px")
-        .style("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
-        .style("pointer-events", "none")
-        .style("font-family", fontFamily)
-        .style("font-size", `${fontSize}px`)
-        .style("z-index", 1000);
-
-    function showTooltip(event, d) {
-        const mouseX = d3.pointer(event)[0];
-        const date = xScale.invert(mouseX);
-        const dateIndex = timeData.findIndex(t => t.date > date) - 1;
-        const currentValue = dateIndex >= 0 ? 
-            Math.round(d[dateIndex][1] - d[dateIndex][0]) : 0;
-        const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+        // Get parent container dimensions
+        const container = d3.select("#streamgraph");
+        const containerWidth = container.node().getBoundingClientRect().width;
         
-        tooltip
-            .style("opacity", 1)
-            .html(`
-                <strong>${d.key}</strong><br>
-                <span>Total: ${totalCount}</span><br>
-                <span>${date.getFullYear()}: ${currentValue}</span>
-            `)
-            .style("left", `${event.pageX + 10}px`)
-            .style("top", `${event.pageY - 10}px`);
-    }
+        const margin = { 
+            top: 0, 
+            right: 20, 
+            bottom: 25, 
+            left: 20 
+        };
+        const width = containerWidth - margin.left - margin.right;
+        const height = GUIparams.streamgraphHeight - margin.top - margin.bottom;
 
-    // Add resize handler
-    const resizeObserver = new ResizeObserver(entries => {
-        for (const entry of entries) {
-            const newWidth = entry.contentRect.width;
-            if (newWidth !== width) {
-                xScale.range([0, newWidth - margin.left - margin.right]);
-                svg.attr("viewBox", [0, 0, newWidth, height + margin.top + margin.bottom]);
-                paths.attr("d", area);
-                svg.select(".x-axis").call(xAxis);
-            }
+        // Get computed styles from body for consistent typography
+        const computedStyle = window.getComputedStyle(document.body);
+        const fontFamily = computedStyle.getPropertyValue('font-family');
+        const fontSize = parseInt(computedStyle.getPropertyValue('font-size'));
+
+        // Clear existing SVG
+        container.selectAll("svg").remove();
+
+        // Get all unique tags and sort by total usage
+        const allTags = [...new Set(preprocessedData.flatMap(d => d.tags))]
+            .sort((a, b) => {
+                const countA = preprocessedData.filter(d => d.tags.includes(a)).length;
+                const countB = preprocessedData.filter(d => d.tags.includes(b)).length;
+                return countB - countA;
+            });
+
+        // Group data by year and count tag occurrences
+        const yearGroups = d3.group(preprocessedData, d => d3.timeYear(d.time_added));
+        
+        // Convert to array of objects with consistent structure
+        const timeData = Array.from(yearGroups, ([date, entries]) => {
+            const counts = {};
+            allTags.forEach(tag => {
+                counts[tag] = entries.filter(entry => entry.tags.includes(tag)).length;
+            });
+            return {
+                date,
+                ...counts
+            };
+        }).sort((a, b) => d3.ascending(a.date, b.date));
+
+        // Stack the data
+        const stack = d3.stack()
+            .offset(d3.stackOffsetWiggle)
+            .order(d3.stackOrderInsideOut)
+            .keys(allTags);
+
+        const series = stack(timeData);
+
+        // Create scales
+        const xScale = d3.scaleTime()
+            .domain(d3.extent(timeData, d => d.date))
+            .range([0, width]);
+
+        const yScale = d3.scaleLinear()
+            .domain(d3.extent(series.flat(2)))
+            .range([height, 0]);
+
+        // Create color scale using d3's built-in interpolators
+        const colorScale = d3.scaleSequential()
+            .domain([0, allTags.length - 1])
+            .interpolator(d3[GUIparams.streamgraphColorScheme]);
+
+        // Create responsive SVG
+        const svg = container.append("svg")
+            .attr("width", "100%")
+            .attr("height", height + margin.top + margin.bottom)
+            .style("display", "block") // Ensures proper sizing
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Create the area generator with smooth curves
+        const area = d3.area()
+            .x((d, i) => xScale(timeData[i].date))
+            .y0(d => yScale(d[0]))
+            .y1(d => yScale(d[1]))
+            .curve(d3.curveBasis);
+
+        // Add the streams
+        const paths = svg.selectAll("path")
+            .data(series)
+            .join("path")
+            .attr("d", area)
+            .attr("fill", (d, i) => colorScale(i))
+            .attr("opacity", 0.8)
+            .attr("class", "streamgraph-path")
+            .style("transition", "opacity 0.2s ease, stroke-width 0.2s ease");
+
+        // Add interaction handlers
+        paths.on("mouseover", function(event, d) {
+                if (!d3.select(this).classed("stream-locked")) {
+                    d3.select(this)
+                        .attr("opacity", 1)
+                        .attr("stroke", "#000")
+                        .attr("stroke-width", 1);
+                    showTooltip(event, d);
+                }
+            })
+            .on("mousemove", (event, d) => showTooltip(event, d))
+            .on("mouseout", function() {
+                if (!d3.select(this).classed("stream-locked")) {
+                    d3.select(this)
+                        .attr("opacity", 0.8)
+                        .attr("stroke", null);
+                    tooltip.style("opacity", 0);
+                }
+            })
+            .on("click", function(event, d) {
+                const element = d3.select(this);
+                const isLocked = element.classed("stream-locked");
+                
+                paths.classed("stream-locked", false);
+                
+                if (!isLocked) {
+                    element.classed("stream-locked", true);
+                    updateList([d.key], preprocessedData);
+                } else {
+                    updateList([], preprocessedData);
+                }
+            });
+
+        // Create and style axes
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(d3.timeYear.every(1))
+            .tickFormat(d3.timeFormat("%Y"));
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${height})`)
+            .call(xAxis)
+            .style("font-family", fontFamily)
+            .style("font-size", `${fontSize}px`);
+
+        // Style axis lines and text
+        svg.selectAll(".x-axis path, .x-axis line")
+            .style("stroke", "#666")
+            .style("stroke-width", "1px");
+
+        // Create tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "streamgraph-tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute")
+            .style("background-color", "rgba(255, 255, 255, 0.95)")
+            .style("border", "1px solid #ddd")
+            .style("border-radius", "4px")
+            .style("padding", "8px 12px")
+            .style("box-shadow", "0 2px 4px rgba(0,0,0,0.1)")
+            .style("pointer-events", "none")
+            .style("font-family", fontFamily)
+            .style("font-size", `${fontSize}px`)
+            .style("z-index", 1000);
+
+        function showTooltip(event, d) {
+            const mouseX = d3.pointer(event)[0];
+            const date = xScale.invert(mouseX);
+            const dateIndex = timeData.findIndex(t => t.date > date) - 1;
+            const currentValue = dateIndex >= 0 ? 
+                Math.round(d[dateIndex][1] - d[dateIndex][0]) : 0;
+            const totalCount = Math.round(d3.sum(d, layer => layer[1] - layer[0]));
+            
+            tooltip
+                .style("opacity", 1)
+                .html(`
+                    <strong>${d.key}</strong><br>
+                    <span>Total: ${totalCount}</span><br>
+                    <span>${date.getFullYear()}: ${currentValue}</span>
+                `)
+                .style("left", `${event.pageX + 10}px`)
+                .style("top", `${event.pageY - 10}px`);
         }
-    });
 
-    resizeObserver.observe(container.node());
+        // Resize observer
+        const resizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                // Get the new width of the container
+                const newWidth = entry.contentRect.width - margin.left - margin.right;
+                
+                // Update the scale
+                xScale.range([0, newWidth]);
+                
+                // Update SVG dimensions
+                svg.attr("transform", `translate(${margin.left},${margin.top})`);
+                
+                // Update the paths
+                paths.attr("d", area);
+                
+                // Update the x-axis
+                svg.select(".x-axis")
+                    .attr("transform", `translate(0,${height})`)
+                    .call(xAxis);
+            }
+        });
 
-    // Cleanup function
-    return () => resizeObserver.disconnect();
-}
+        resizeObserver.observe(container.node());
+
+        // Cleanup function
+        return () => resizeObserver.disconnect();
+    }
 
     /**
      * Creates the dat.GUI controller to change properties of the visualization.
