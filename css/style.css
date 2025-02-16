@@ -1,0 +1,184 @@
+.container {
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.visualization {
+    min-width: 300px;
+    margin: 20px;
+}
+#heatmap .cell:hover,
+#heatmap .cell-value {
+    cursor: pointer;
+}
+#heatmap .labelHighlight{
+    font-weight: bold;
+}
+#heatmap .y-label, #heatmap .x-label {
+    font-size: 8px;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.arc-diagram-locked{
+    border-radius: 50%;
+    overflow:visible;
+    filter: 
+        hue-rotate(90deg) 
+        saturate(100%) 
+        brightness(100%);         
+}
+.arc-diagram-node text {
+    font-size: 10px;
+    cursor: pointer;
+}
+.arc-diagram-node text {
+    transition: all 0.3s ease-in-out
+}
+.arc-diagram-link {
+    cursor: pointer;
+    transition: stroke 0.3s ease; /* Add transition for smooth color change */
+    transition: stroke-opacity 0.25s ease-in-out; /* Add transition for smooth opacity change */
+}
+.streamgraph-path{
+    cursor: pointer;
+}
+.stream-locked {
+    filter: 
+        hue-rotate(180deg) 
+        saturate(130%) 
+        brightness(130%);
+    stroke-width: 2px;
+    stroke-opacity: 1;
+    stroke: #ffffff;
+}        
+#gui {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+/* dat.gui specifics */
+.dg .property-name {
+    width: 60%;
+}
+.dg .c {
+    width: 40%;
+}
+.dg .c select {
+    margin-top: 5px;
+    margin-left: -5px;
+    width: 105%;
+}
+
+/* Tab styling */
+.nav-tabs {
+    border-bottom: 2px solid #f3f3f3;
+    margin-bottom: 2rem;
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -2px; /* Align with border */
+}
+
+.nav-tabs .nav-link {
+    color: #666;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.nav-tabs .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #FF9800; /* Matches the orange theme from fresh-bootstrap-table */
+    background: transparent;
+    border: none;
+}
+
+.nav-tabs .nav-link.active {
+    color: #FF9800;
+    background: transparent;
+    border: none;
+}
+
+.nav-tabs .nav-link.active::after {
+    background: #FF9800;
+}
+
+/* Tab content background */
+.tab-content {
+    background: #fff;
+    border-radius: 0.5rem;
+    padding: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Page background */
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Adjust heading to match the theme */
+h1 {
+    color: #444;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* Credits section styling */
+.credits {
+    background: #fff;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.credits h2 {
+    color: #444;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.credits a {
+    color: #FF9800;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.credits a:hover {
+    color: #F57C00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .tab-content {
+        padding: 1rem;
+    }
+}
