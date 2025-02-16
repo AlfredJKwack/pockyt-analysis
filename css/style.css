@@ -219,6 +219,7 @@ h1 {
         border: 2px solid #333;
         z-index: 1000;
         animation: float 3s ease-in-out infinite;
+        box-shadow: -15px 27px 69px rgba(0,0,0,.30);        
     }
     
     .tutorial-popup::before {
@@ -260,21 +261,25 @@ h1 {
         position: absolute;
         width: 60px;
         height: 60px;
-        fill: none;
         stroke: #333;
         stroke-width: 2;
         stroke-linecap: round;
+        stroke-width: 4px;
+        stroke-linecap: round;
+        /* Add white outline around stroke */
+        stroke-linejoin: round;
+        -webkit-filter: drop-shadow(0px 0px 1px white);
     }
     
     .arrow-up {
-        top: -60px;
-        left: 30px;
+        top: -50px;
+        left: 71px;
+     
     }
     
     .arrow-down {
         bottom: -60px;
         left: 30px;
-        transform: rotate(180deg);
     }
   
 @keyframes float {
