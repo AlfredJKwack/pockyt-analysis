@@ -7,8 +7,8 @@ export const positionPopup = () => {
     
     if (popup && arcDiagram) {
         const arcRect = arcDiagram.getBoundingClientRect();
-        popup.style.left = `${arcRect.right - 50}px`;
-        popup.style.top = `${arcRect.top + arcRect.height / 6 * 5}px`;
+        popup.style.left = `${arcRect.right - 150}px`;
+        popup.style.top = `${arcRect.bottom}px`;
     }
 };
 /**
@@ -28,5 +28,7 @@ export const dismissPopupPermanently = () => {
 
 // Function to check if popup should be shown
 export const shouldShowPopup = () => {
-    return localStorage.getItem('tutorialPopupDismissed') !== 'true';
+    // Create the GUI controller only if debug parameter is present in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    return (urlParams.has('debug') ? true : localStorage.getItem('tutorialPopupDismissed') !== 'true');    
 };

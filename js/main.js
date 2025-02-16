@@ -115,15 +115,17 @@ window.addEventListener('load', () => {
                 localStorage.setItem('pockytTablePageSize', pageSize);
             });             
 
-
             const cooccurrenceData = analyzeTagCooccurrence(preprocessedData);
             const cooccurrenceMatrix = generateCooccurrenceMatrix(cooccurrenceData);
-
+            
             // Initialize controller with modified behavior
             const params = {
                 // Arc Diagram Parameters
                 arcDiagramColorScheme: 'interpolateViridis',
-                arcDiagramWidth: Math.max(600, Math.min(window.innerWidth, window.innerHeight)),
+                arcDiagramWidth: Math.min(
+                    document.querySelector('.visualization').getBoundingClientRect().width, 
+                    window.innerHeight
+                ),
                 arcDiagramClampColorScaleMax: 0.80,
                 arcDiagramDefaultStrokeOpacity: 0.5,
                 arcDiagramDimmedStrokeOpacity: 0.05,
@@ -171,9 +173,11 @@ window.addEventListener('load', () => {
             const popup = document.querySelector('.tutorial-popup');
     
             // Only show popup if user hasn't dismissed it before
+            console.log("shouldShowPopup", shouldShowPopup());
             if (!shouldShowPopup()) {
                 popup.style.display = 'none';
             } else {
+                console.log("positionPopup");
                 positionPopup()
             }
             
@@ -186,5 +190,6 @@ window.addEventListener('load', () => {
 
 
 
-// Call on load and window resize
-window.addEventListener('resize', positionPopup);    
+// Call on window resize
+window.addEventListener('resize', positionPopup);
+

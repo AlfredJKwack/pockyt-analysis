@@ -35,7 +35,7 @@
 </head>
 <body>
     <div id="gui"></div>
-    <div class="container">
+    <div class="container col-lg-8 offset-lg-2">
         <h1>Bookmark explorer</h1>
 
         <!-- Add Bootstrap tabs -->
@@ -88,8 +88,7 @@
             -->
             <table id="fresh-table" class="table"></table>
 
-        </div>
-                    
+        </div>              
 
         <div class="credits my-5">  
             <h2>Credits</h2>
@@ -100,13 +99,16 @@
         </div>
 
         <div class="tutorial-popup">
-            <svg class="arrow arrow-up">
+            <span class="icon-background">
+                <i class="bi bi-x-circle fs-5"></i>
+            </span>
+            <svg class="popup-arrow arrow-up">
               <path d="M10,50 Q30,20 50,50" />
             </svg>
             <div class="tutorial-popup-text">
-              Click on any element of the graph to filter the list below! ✨
+              Click on graph elements to filter the list below! ✨
             </div>
-            <svg class="arrow arrow-down">
+            <svg class="popup-arrow arrow-down">
               <path d="M10,50 Q30,20 50,50" />
             </svg>
         </div>          
