@@ -115,7 +115,7 @@ h1 {
 * Tab navigation styling
 */
     .nav-tabs {
-        border-bottom: 2px solid rgba(255, 255, 255, 0.2);  
+        border-bottom: 0px solid rgba(255, 255, 255, 0.2);  
         border-radius: 8px 8px 0 0;
     }
 
