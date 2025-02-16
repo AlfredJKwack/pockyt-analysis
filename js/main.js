@@ -147,8 +147,9 @@ window.addEventListener('load', () => {
                 }
             };
 
-            // Create the GUI controller
-            const gui = createController(params);
+            // Create the GUI controller only if debug parameter is present in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const gui = urlParams.has('debug') ? createController(params) : null;
 
             // Add Bootstrap tab event listeners
             const tabElements = document.querySelectorAll('button[data-bs-toggle="tab"]');
