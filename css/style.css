@@ -171,6 +171,73 @@ h1 {
     color: #F57C00;
 }
 
+/* Tutorial section styling */
+.tutorial-popup {
+    cursor: pointer;
+    position: absolute;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 250px;
+    font-size: 0.9rem;
+    border: 2px solid #333;
+    z-index: 1000;
+    animation: float 3s ease-in-out infinite;
+}
+  
+.tutorial-popup::before {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    top: -15px;
+    left: 20px;
+    z-index: -1;
+}
+  
+.arrow {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    fill: none;
+    stroke: #333;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+  
+.arrow-up {
+    top: -60px;
+    left: 30px;
+}
+  
+.arrow-down {
+    bottom: -60px;
+    left: 30px;
+    transform: rotate(180deg);
+}
+  
+@keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+}
+  
+.tutorial-popup-text {
+    font-family: 'Comic Sans MS', cursive;
+    color: #333;
+    line-height: 1.4;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .nav-tabs .nav-link {

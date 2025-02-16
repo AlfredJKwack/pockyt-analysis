@@ -13,6 +13,11 @@ import {
     visualizeArcDiagram,
     visualizeStreamgraph
 } from "./d3-visualizations.js";
+import {
+    positionPopup,
+    dismissPopupPermanently,
+    shouldShowPopup
+} from "./tutorial.js";
 
 /**
  * Main function for this application
@@ -160,8 +165,26 @@ window.addEventListener('load', () => {
             });
 
             // Initial drawing of the active tab
-            params.redraw();            
+            params.redraw();
+
+            // Tutorial popup handling
+            const popup = document.querySelector('.tutorial-popup');
+    
+            // Only show popup if user hasn't dismissed it before
+            if (!shouldShowPopup()) {
+                popup.style.display = 'none';
+            } else {
+                positionPopup()
+            }
+            
+            // Add click handler to dismiss button/popup
+            popup.addEventListener('click', dismissPopupPermanently);        
 
         })
         .catch(error => console.error(error));
 });
+
+
+
+// Call on load and window resize
+window.addEventListener('resize', positionPopup);    
