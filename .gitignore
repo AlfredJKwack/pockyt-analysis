@@ -128,3 +128,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# MacOS spefici files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows spefici files
+Thumbs.db
+desktop.ini
