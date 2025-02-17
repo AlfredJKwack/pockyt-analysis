@@ -207,10 +207,14 @@ h1 {
 *  Tutorial section styling 
 **/
 
-
+    .pocket-data{
+        position: relative;
+    }
     .tutorial-popup {
         cursor: pointer;
         position: absolute;
+        top: -80px;
+        right: 1rem;
         background: white;
         padding: 20px;
         border-radius: 20px;

@@ -1,17 +1,4 @@
 /**
- * Positions the popup in the top right corner of the visualizations
- */
-export const positionPopup = () => {
-    const popup = document.querySelector('.tutorial-popup');
-    const arcDiagram = document.querySelector('#arc-diagram svg'); // Update with your actual selector
-    
-    if (popup && arcDiagram) {
-        const arcRect = arcDiagram.getBoundingClientRect();
-        popup.style.left = `${arcRect.right - 150}px`;
-        popup.style.top = `${arcRect.bottom}px`;
-    }
-};
-/**
  * Dismisses the popup permanently
  * @returns {void}
  */

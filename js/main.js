@@ -14,7 +14,6 @@ import {
     visualizeStreamgraph
 } from "./d3-visualizations.js";
 import {
-    positionPopup,
     dismissPopupPermanently,
     shouldShowPopup
 } from "./tutorial.js";
@@ -175,8 +174,6 @@ window.addEventListener('load', () => {
             // Only show popup if user hasn't dismissed it before
             if (!shouldShowPopup()) {
                 popup.style.display = 'none';
-            } else {
-                positionPopup()
             }
             
             // Add click handler to dismiss button/popup
@@ -185,9 +182,3 @@ window.addEventListener('load', () => {
         })
         .catch(error => console.error(error));
 });
-
-
-
-// Call on window resize
-window.addEventListener('resize', positionPopup);
-
