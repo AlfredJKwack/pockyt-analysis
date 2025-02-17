@@ -291,8 +291,8 @@ export function visualizeArcDiagram(matrix, preprocessedData, GUIparams) {
     const svg = d3.select("#arc-diagram")
         .append("svg")
         .attr("viewBox", [-width/2, -width/2, width, width])
-        .attr("width", width)
-        .attr("height", width)
+        .attr("width", "100%")
+        .attr("height", "auto")
         .on("click", function(event) {
         // If clicking on the background (svg itself)
         if (event.target === this) {
