@@ -1,5 +1,15 @@
 [
     {
+        "domain": null,
+        "excerpt": null,
+        "id": "20866",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
         "domain": "www.voxengo.com",
         "excerpt": "Overview Features & Compatibility User Testimonials Compatible 64-bit Mac OS and Windows PC VST, AudioUnit, AAX, VST3 plugin host software: Ableton Live, Cubase, Logic Pro, REAPER, Pro Tools, FL Studio, Studio One, OBS, Bitwig Studio, Nuendo, WaveLab, Vegas, SoundForge, GarageBand, Cakewalk, Adobe",
         "id": "64845519",
@@ -12,14 +22,71 @@
         "title": "Voxengo Marvel GEQ free"
     },
     {
-        "domain": null,
-        "excerpt": null,
-        "id": "2328225122",
-        "link": null,
+        "domain": "downtherabbithole.nl",
+        "excerpt": "Down The Rabbit Hole 2024: 5 t/m 7 juli, Groene Heuvels, Beuningen",
+        "id": "419510453",
+        "link": "https://downtherabbithole.nl/",
+        "tags": [
+            "todo"
+        ],
+        "time_added": "1734989086",
+        "time_updated": "1734989097",
+        "title": "4 t/m 6 juli 2025 Groene Heuvels \u2013 Beuningen"
+    },
+    {
+        "domain": "kottke.org",
+        "excerpt": "After the Civil War, the economic recovery of the southern United States hinged on trade with the North and moving goods westward via the railroad. But there was a problem.",
+        "id": "724419557",
+        "link": "https://kottke.org/14/09/the-days-they-changed-the-gauge",
         "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
+        "time_added": "1737196917",
+        "time_updated": "1737196917",
+        "title": "The Days They Changed the Gauge"
+    },
+    {
+        "domain": null,
+        "excerpt": "",
+        "id": "1034889505",
+        "link": "",
+        "tags": null,
+        "time_added": "1738968178",
+        "time_updated": "1738968178",
+        "title": ""
+    },
+    {
+        "domain": "ohshitgit.com",
+        "excerpt": "Git is hard: screwing up is easy, and figuring out how to fix your mistakes is fucking impossible.",
+        "id": "1407664471",
+        "link": "https://ohshitgit.com/",
+        "tags": [
+            "coding"
+        ],
+        "time_added": "1737585939",
+        "time_updated": "1737585951",
+        "title": "Oh Shit, Git!?!"
+    },
+    {
+        "domain": "outlook.office.com",
+        "excerpt": "",
+        "id": "2328225122",
+        "link": "https://outlook.office.com/calendar/view/workweek",
+        "tags": null,
+        "time_added": "1732269383",
+        "time_updated": "1732269383",
+        "title": "Outlook"
+    },
+    {
+        "domain": "anvaka.github.io",
+        "excerpt": "",
+        "id": "2857924005",
+        "link": "https://anvaka.github.io/city-roads/",
+        "tags": [
+            "design",
+            "map"
+        ],
+        "time_added": "1734900363",
+        "time_updated": "1734900386",
+        "title": "Draw all roads in any city at once"
     },
     {
         "domain": "diagrams.mingrammer.com",
@@ -33,6 +100,273 @@
         "time_added": "1730833405",
         "time_updated": "1731153463",
         "title": "Diagrams \u00b7 Diagram as Code"
+    },
+    {
+        "domain": "buyzero.de",
+        "excerpt": "Es besteht aus massivem, eloxiertem Aluminium und ist daher sehr stabil. Es hat schmale \u00d6ffnungen f\u00fcr alle Kabel, Steckpl\u00e4tze f\u00fcr die Pi Camera und andere Peripherieger\u00e4te sowie einen Platz f\u00fcr ein GPIO-Kabel, das aus dem Pi herausgef\u00fchrt wird.",
+        "id": "3231821559",
+        "link": "https://buyzero.de/products/aluminum-metal-heatsink-raspberry-pi-4-case-with-dual-fans",
+        "tags": [
+            "shopping"
+        ],
+        "time_added": "1734994724",
+        "time_updated": "1734994732",
+        "title": "Aluminum Metal Heatsink Raspberry Pi 4 Case with Dual Fans"
+    },
+    {
+        "domain": "interactionmagic.com",
+        "excerpt": "Piloting an ocean exploration ship or Martian research shuttle is serious business. Let's hope the control panel is up to scratch. Two studs wide and angled at 45\u00b0, the ubiquitous \"2x2 decorated slope\" is a LEGO minifigure's interface to the world.",
+        "id": "3259574969",
+        "link": "https://interactionmagic.com/UX-LEGO-Interfaces",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1733953810",
+        "time_updated": "1733953836",
+        "title": "The UX of LEGO Interface Panels"
+    },
+    {
+        "domain": "www.home-assistant.io",
+        "excerpt": "This tutorial will guide you to turn your old landline phone into the world\u2019s most private voice assistant. Pick up the phone to talk to your smart home and issue commands and get responses. Note: this procedure requires an OpenAI account.",
+        "id": "3878577605",
+        "link": "https://www.home-assistant.io/voice_control/worlds-most-private-voice-assistant/",
+        "tags": [
+            "hack"
+        ],
+        "time_added": "1735658381",
+        "time_updated": "1735658388",
+        "title": "World's most private voice assistant"
+    },
+    {
+        "domain": "ss64.com",
+        "excerpt": "Commands marked \u2022 are bash built-in commands, it runs under Darwin the open source core of macOS. In macOS Catalina the default shell will change to zsh and in time this page will be updated to include that. To scroll this page, press [ a \u2013 z ] on the keyboard, or '\\' to Search.",
+        "id": "3990014513",
+        "link": "https://ss64.com/mac/",
+        "tags": [
+            "coding",
+            "macos"
+        ],
+        "time_added": "1731089174",
+        "time_updated": "1731153685",
+        "title": "An A-Z Index of Apple macOS (bash) commands"
+    },
+    {
+        "domain": "zarar.dev",
+        "excerpt": "This post is not advice, it's what's working for me. It's easy to pick up bad habits and hard to create good ones. Writing down what's working for me helps me maintain any good habits I've worked hard to develop.",
+        "id": "4099058486",
+        "link": "https://zarar.dev/good-software-development-habits/",
+        "tags": [
+            "dev",
+            "developper"
+        ],
+        "time_added": "1732139973",
+        "time_updated": "1732139980",
+        "title": "Good software development habits"
+    },
+    {
+        "domain": "minds.md",
+        "excerpt": "The logo image was taken from Reddit. It is a living document, last update: January 2025. Your contributions are welcome!",
+        "id": "4119194576",
+        "link": "https://minds.md/zakirullin/cognitive",
+        "tags": [
+            "developper",
+            "work"
+        ],
+        "time_added": "1735373411",
+        "time_updated": "1735373432",
+        "title": "Cognitive load is what matters"
+    },
+    {
+        "domain": "GitHub",
+        "excerpt": "Play TTS sound on Home Assistant media_player #18",
+        "id": "4135315467",
+        "link": "https://github.com/rhasspy/wyoming-satellite/issues/18",
+        "tags": [
+            "dev",
+            "home automation"
+        ],
+        "time_added": "1737289283",
+        "time_updated": "1737289300",
+        "title": "Play TTS sound on Home Assistant media_player #18"
+    },
+    {
+        "domain": "maxbo.me",
+        "excerpt": "Before I start, why am I doing this? HTML's typesetting capabilities are well documented, but its capabilities as a platform for data exploration, analysis and visualisation are not.",
+        "id": "4136125979",
+        "link": "https://maxbo.me/a-html-file-is-all-you-need",
+        "tags": [
+            "design",
+            "dev",
+            "developper",
+            "ideas"
+        ],
+        "time_added": "1732140818",
+        "time_updated": "1732140846",
+        "title": "Can we build a reactive article in a single HTML file?"
+    },
+    {
+        "domain": "Dezeen",
+        "excerpt": "I love mid-century modern, but it makes me sad. In its beauty and simplicity, it speaks of postwar optimism, and a belief in a better world \u2013 one of prosperity and peace, with large homes and larger pay packets.",
+        "id": "4141433128",
+        "link": "https://www.dezeen.com/2024/10/23/love-mid-century-modern-makes-me-sad/",
+        "tags": [
+            "architecture",
+            "design",
+            "furniture",
+            "house"
+        ],
+        "time_added": "1732836999",
+        "time_updated": "1732837040",
+        "title": "\"I love mid-century modern but it makes me sad\""
+    },
+    {
+        "domain": "mcyoung.xyz",
+        "excerpt": "JSON is extremely popular but deeply flawed. This article discusses the details of JSON\u2019s design, how it\u2019s used (and misused), and how seemingly helpful \u201chuman readability\u201d features cause headaches instead.",
+        "id": "4147213129",
+        "link": "https://mcyoung.xyz/2024/12/10/json-sucks/",
+        "tags": null,
+        "time_added": "1733950830",
+        "time_updated": "1733950830",
+        "title": "Nobody Gets Fired for Picking JSON, but Maybe They Should? \u00b7 mcyoung"
+    },
+    {
+        "domain": "cp.copernicus.org",
+        "excerpt": "Climate of the Past Climate of the Past CP Multiple terms: term1 term2 red apples returns results with all terms like: Fructose levels in red and green apples Precise match in quotes: \"term1 term2\" \"red apples\" returns results matching exactly like: Anthocyanin biosynthesis in red apples Exclude a",
+        "id": "4149540808",
+        "link": "https://cp.copernicus.org/articles/19/1219/2023/",
+        "tags": [
+            "data",
+            "geography",
+            "house"
+        ],
+        "time_added": "1734263301",
+        "time_updated": "1734263324",
+        "title": "Viticulture extension in response to global climate change drivers \u2013 lessons from the past and future projections"
+    },
+    {
+        "domain": "phrack.org",
+        "excerpt": "Title : Calling All Hackers Author : cts ==Phrack Inc.",
+        "id": "4149729848",
+        "link": "https://phrack.org/issues/71/17#article",
+        "tags": [
+            "finance",
+            "opinion"
+        ],
+        "time_added": "1734295416",
+        "time_updated": "1734295439",
+        "title": ".:: Calling All Hackers ::."
+    },
+    {
+        "domain": "kottke.org",
+        "excerpt": "Back in 2016, I wrote about The Most Relaxing Song in the World, an ambient track by Marconi Union called Weightless. Today I learned the band\u2019s record label hosts a 24/7 streaming video of their music on YouTube:",
+        "id": "4161157030",
+        "link": "https://kottke.org/25/01/an-ambient-247-streaming-video-of-chill-workstudy-vibes",
+        "tags": [
+            "music"
+        ],
+        "time_added": "1737188702",
+        "time_updated": "1737188709",
+        "title": "An Ambient 24/7 Streaming Video of Chill Work/Study Vibes"
+    },
+    {
+        "domain": "www.sergey.fyi",
+        "excerpt": "Sergey Filimonov's blog",
+        "id": "4163741610",
+        "link": "https://www.sergey.fyi/articles/gemini-flash-2",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1739350276",
+        "time_updated": "1739350288",
+        "title": "Ingesting Millions of PDFs and why Gemini 2.0 Changes Everything"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "4165382536",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "4166499460",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "briankrebs",
+        "excerpt": "The payment card giant MasterCard just fixed a glaring error in its domain name server settings that could have allowed anyone to intercept or divert Internet traffic for the company by registering an unused domain name.",
+        "id": "4166902695",
+        "link": "https://krebsonsecurity.com/2025/01/mastercard-dns-error-went-unnoticed-for-years/",
+        "tags": null,
+        "time_added": "1737584939",
+        "time_updated": "1737584939",
+        "title": "MasterCard DNS Error Went Unnoticed for Years \u2013 Krebs on Security"
+    },
+    {
+        "domain": "blog.nelhage.com",
+        "excerpt": "Earlier this month, I used Claude to port (parts of) an Emacs package into Rust, shrinking the execution time by a factor of 1000 or more (in one concrete case: from 90s to about 15ms).",
+        "id": "4169301726",
+        "link": "https://blog.nelhage.com/post/personal-software-with-claude/",
+        "tags": [
+            "coding"
+        ],
+        "time_added": "1738271781",
+        "time_updated": "1738271793",
+        "title": "Building personal software with Claude"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "4171045135",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "timsh.org",
+        "excerpt": "Recently I read about a massive geolocation data leak from Gravy Analytics, which exposed more than 2000 apps, both in AppStore and Google Play, that secretly collect geolocation data without user consent. Oftentimes, even without developers` knowledge.",
+        "id": "4171554878",
+        "link": "https://timsh.org/tracking-myself-down-through-in-app-ads/",
+        "tags": [
+            "infosec"
+        ],
+        "time_added": "1738737993",
+        "time_updated": "1738738004",
+        "title": "Everyone knows your location: tracking myself down through in-app ads"
+    },
+    {
+        "domain": "readdle.com",
+        "excerpt": "Explore the ecosystem of the best-in-class productivity apps. We simplify complex things, so you can streamline workflows and enjoy the power of technology. Read about our latest updates.",
+        "id": "4171982331",
+        "link": "https://readdle.com",
+        "tags": [
+            "legalese",
+            "management",
+            "ux"
+        ],
+        "time_added": "1738491119",
+        "time_updated": "1738491161",
+        "title": "Readdle"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "237938806",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
     },
     {
         "domain": "blog.danielna.com",
@@ -87,19 +421,6 @@
         "title": "How I Built an NFC Movie Library for my Kids"
     },
     {
-        "domain": "ss64.com",
-        "excerpt": "Commands marked \u2022 are bash built-in commands, it runs under Darwin the open source core of macOS. In macOS Catalina the default shell will change to zsh and in time this page will be updated to include that. To scroll this page, press [ a \u2013 z ] on the keyboard, or '\\' to Search.",
-        "id": "3990014513",
-        "link": "https://ss64.com/mac/",
-        "tags": [
-            "coding",
-            "macos"
-        ],
-        "time_added": "1731089174",
-        "time_updated": "1731153685",
-        "title": "An A-Z Index of Apple macOS (bash) commands"
-    },
-    {
         "domain": "ralphammer.com",
         "excerpt": "First of all, what makes a thing a good thing? A good thing fulfils its unique function. Now, what makes a good human? To know what a human should be good at, we need to look at what is unique about humans: We have a soul that thinks and feels.",
         "id": "4015022002",
@@ -138,6 +459,40 @@
         "time_added": "1730752467",
         "time_updated": "1731153505",
         "title": "If you need the money, don't take the job \u2014 Bitfield Consulting"
+    },
+    {
+        "domain": "ishadeed.com",
+        "excerpt": "CSS Grid support has been widely available since March 2017 in all major browsers. Yet, here we are in 2024, and I still see few people using the grid template areas feature. It\u2019s no surprise that many avoid template areas as making sense of the grid is challenging enough.",
+        "id": "4078693637",
+        "link": "https://ishadeed.com/article/css-grid-area/",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1724182126",
+        "time_updated": "1724182136",
+        "title": "CSS Grid Areas"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "4089616699",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "mccue.dev",
+        "excerpt": "This is one part actionable advice, one part question for the audience. Advice: When you are making a new application that requires persistent storage of data, like is the case for most web applications, your default choice should be Postgres.",
+        "id": "4090067580",
+        "link": "https://mccue.dev/pages/8-16-24-just-use-postgres",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1724093347",
+        "time_updated": "1724093560",
+        "title": "Just use Postgres"
     },
     {
         "domain": "mds.gardena.com",
@@ -248,7 +603,7 @@
     },
     {
         "domain": "billwear.github.io",
-        "excerpt": "There comes a moment in life, often in the quietest of hours, when one realizes that the world will continue on its wayward course, indifferent to our desires or frustrations.",
+        "excerpt": "But how does one begin? It is not with grand declarations or bold, sweeping changes. That would miss the point entirely. Rather, it is with a gentle attention to the present, a deliberate shift in the way we move through the world.",
         "id": "4118904874",
         "link": "https://billwear.github.io/art-of-attention.html",
         "tags": [
@@ -256,7 +611,7 @@
         ],
         "time_added": "1729280286",
         "time_updated": "1731153835",
-        "title": "the quiet art of attention"
+        "title": "the quiet art of attention \u2014 billwear 1.0 documentation"
     },
     {
         "domain": "Creative Bloq",
@@ -390,16 +745,6 @@
         "time_added": "1721049709",
         "time_updated": "1731154276",
         "title": "Iconian Fonts"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "237938806",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
     },
     {
         "domain": "www.r2d3.us",
@@ -537,6 +882,20 @@
         "title": "Stripe's monorepo developer environment"
     },
     {
+        "domain": "ollama.com",
+        "excerpt": "This is a guest post from Ty Dunn, Co-founder of Continue, that covers how to set up, explore, and figure out the best way to use Continue and Ollama together. Continue enables you to easily create your own coding assistant directly inside Visual Studio Code and JetBrains with open-source LLMs.",
+        "id": "4057251336",
+        "link": "https://ollama.com/blog/continue-code-assistant",
+        "tags": [
+            "ai",
+            "developper",
+            "optimize"
+        ],
+        "time_added": "1720024231",
+        "time_updated": "1731252203",
+        "title": "An entirely open-source AI code assistant inside your editor"
+    },
+    {
         "domain": "reactormag.com",
         "excerpt": "At present, I have an alarming number of tabs open. I\u2019m absolutely not going to tell you how many, or how many are open on my phone. There are 15 pages of notes in my now-finished notebook that are about the same subject that led to all these tabs.",
         "id": "4069056115",
@@ -547,6 +906,33 @@
         "time_added": "1720632695",
         "time_updated": "1731154387",
         "title": "The Joy of Reading Books You Don&#8217;t Entirely Understand"
+    },
+    {
+        "domain": "pmarca.substack.com",
+        "excerpt": "Enjoy!",
+        "id": "4069587681",
+        "link": "https://pmarca.substack.com/p/the-true-story-as-best-i-can-remember",
+        "tags": [
+            "lore"
+        ],
+        "time_added": "1719953635",
+        "time_updated": "1731252226",
+        "title": "The true story -- as best I can remember -- of the origin of Mosaic and Netscape."
+    },
+    {
+        "domain": "mlops.systems",
+        "excerpt": "The headline for this post could well have been: finetuned models beat OpenAI, but evals were a bit painful to implement. There\u2019s a lot of hidden code here in this post and it was slow to run.",
+        "id": "4070345762",
+        "link": "https://mlops.systems/posts/2024-07-01-full-finetuned-model-evaluation.html",
+        "tags": [
+            "ai",
+            "developper",
+            "hack",
+            "optimize"
+        ],
+        "time_added": "1719953389",
+        "time_updated": "1731252248",
+        "title": "My finetuned models beat OpenAI\u2019s GPT-4"
     },
     {
         "domain": "blog.gabornyeki.com",
@@ -586,6 +972,18 @@
         "time_added": "1720208152",
         "time_updated": "1731252157",
         "title": "With Fifth Busy Beaver, Researchers Approach Computation\u2019s Limits"
+    },
+    {
+        "domain": "Reddit",
+        "excerpt": "",
+        "id": "4071175805",
+        "link": "https://www.reddit.com/r/interestingasfuck/comments/1dtqcvk/this_is_how_steve_ballmer_used_to_do_microsoft/?share_id=4l0tj2rrwsnv6cwefyuKn&utm_content=1&utm_medium=ios_app&utm_name=iossmf&utm_source=share&utm_term=22",
+        "tags": [
+            "humor"
+        ],
+        "time_added": "1719954344",
+        "time_updated": "1731252215",
+        "title": "This is how Steve Ballmer used to do Microsoft presentations when he was the CEO"
     },
     {
         "domain": "Reddit",
@@ -639,18 +1037,6 @@
         "time_added": "1721559729",
         "time_updated": "1731154248",
         "title": "https://roadway.report/testmap?lat=37.756745231&lon=-122.442857530&radius=4"
-    },
-    {
-        "domain": "ishadeed.com",
-        "excerpt": "CSS Grid support has been widely available since March 2017 in all major browsers. Yet, here we are in 2024, and I still see few people using the grid template areas feature. It\u2019s no surprise that many avoid template areas as making sense of the grid is challenging enough.",
-        "id": "4078693637",
-        "link": "https://ishadeed.com/article/css-grid-area/",
-        "tags": [
-            "design"
-        ],
-        "time_added": "1724182126",
-        "time_updated": "1724182136",
-        "title": "CSS Grid Areas"
     },
     {
         "domain": "Springer",
@@ -712,28 +1098,6 @@
         "time_added": "1723652195",
         "time_updated": "1724093594",
         "title": "Dicklesworthstone/llm_aided_ocr"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "4089616699",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "mccue.dev",
-        "excerpt": "This is one part actionable advice, one part question for the audience. Advice: When you are making a new application that requires persistent storage of data, like is the case for most web applications, your default choice should be Postgres.",
-        "id": "4090067580",
-        "link": "https://mccue.dev/pages/8-16-24-just-use-postgres",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1724093347",
-        "time_updated": "1724093560",
-        "title": "Just use Postgres"
     },
     {
         "domain": "The Marginalian",
@@ -857,6 +1221,19 @@
         "title": null
     },
     {
+        "domain": "Y Combinator",
+        "excerpt": "What else is going on that is not GPT/Diffusion/MultiModal? In theory you can also animate such scenes but how to actually do that is still a research problem.",
+        "id": "4028537722",
+        "link": "https://news.ycombinator.com/item?id=39848847",
+        "tags": [
+            "ai",
+            "inspiration"
+        ],
+        "time_added": "1711908516",
+        "time_updated": "1731252801",
+        "title": "What things are happening in ML that we can't hear oer the din of LLMs?"
+    },
+    {
         "domain": "The Cut",
         "excerpt": "All the good apartments are out of your price range, there\u2019s no room for growth in your job, and it feels like you\u2019re being left behind. You want more.",
         "id": "4028621918",
@@ -868,6 +1245,44 @@
         "time_added": "1714513105",
         "time_updated": "1731252644",
         "title": "A Finance Guide For Your Fantasies"
+    },
+    {
+        "domain": "www.thisiscolossal.com",
+        "excerpt": "",
+        "id": "4028628012",
+        "link": "https://www.thisiscolossal.com/2024/03/thibaut-derien-ghost-city/",
+        "tags": [
+            "photo"
+        ],
+        "time_added": "1711912708",
+        "time_updated": "1731252761",
+        "title": "https://www.thisiscolossal.com/2024/03/thibaut-derien-ghost-city/"
+    },
+    {
+        "domain": "Outside Magazine",
+        "excerpt": "How can I survive this? How can I escape it?What else is in here, and is it hungry?You can do this.",
+        "id": "4028650751",
+        "link": "https://www.outsideonline.com/adventure-travel/essays/dark-cave-retreat/",
+        "tags": [
+            "inspiration",
+            "self-development"
+        ],
+        "time_added": "1711911066",
+        "time_updated": "1731252783",
+        "title": "The Darkness That Blew My Mind"
+    },
+    {
+        "domain": "lutrasecurity.com",
+        "excerpt": "Anyone who has had to deal with HTML emails on a technical level has probably reached the point where they wanted to quit their job or just set fire to all the mail clients due to their inconsistent implementations.",
+        "id": "4030826527",
+        "link": "https://lutrasecurity.com/en/articles/kobold-letters/",
+        "tags": [
+            "hack",
+            "infosec"
+        ],
+        "time_added": "1712333709",
+        "time_updated": "1731252741",
+        "title": "Kobold letters \u2013 Lutra Security"
     },
     {
         "domain": "every.to",
@@ -1008,20 +1423,6 @@
         "title": "Office Systems: Designs for the Contemporary Workspace (1985)"
     },
     {
-        "domain": "ollama.com",
-        "excerpt": "This is a guest post from Ty Dunn, Co-founder of Continue, that covers how to set up, explore, and figure out the best way to use Continue and Ollama together. Continue enables you to easily create your own coding assistant directly inside Visual Studio Code and JetBrains with open-source LLMs.",
-        "id": "4057251336",
-        "link": "https://ollama.com/blog/continue-code-assistant",
-        "tags": [
-            "ai",
-            "developper",
-            "optimize"
-        ],
-        "time_added": "1720024231",
-        "time_updated": "1731252203",
-        "title": "An entirely open-source AI code assistant inside your editor"
-    },
-    {
         "domain": "applied-llms.org",
         "excerpt": "Also published on O\u2019Reilly Media in three parts: Tactical, Operational, Strategic (podcast). Also translated to Japanese (by Kazuya Kanno) It\u2019s an exciting time to build with large language models (LLMs). Over the past year, LLMs have become \u201cgood enough\u201d for real-world applications.",
         "id": "4057693430",
@@ -1068,45 +1469,6 @@
         "time_added": "1719266729",
         "time_updated": "1731252274",
         "title": "https://flip.it/q4_mVy"
-    },
-    {
-        "domain": "pmarca.substack.com",
-        "excerpt": "Enjoy!",
-        "id": "4069587681",
-        "link": "https://pmarca.substack.com/p/the-true-story-as-best-i-can-remember",
-        "tags": [
-            "lore"
-        ],
-        "time_added": "1719953635",
-        "time_updated": "1731252226",
-        "title": "The true story -- as best I can remember -- of the origin of Mosaic and Netscape."
-    },
-    {
-        "domain": "mlops.systems",
-        "excerpt": "The headline for this post could well have been: finetuned models beat OpenAI, but evals were a bit painful to implement. There\u2019s a lot of hidden code here in this post and it was slow to run.",
-        "id": "4070345762",
-        "link": "https://mlops.systems/posts/2024-07-01-full-finetuned-model-evaluation.html",
-        "tags": [
-            "ai",
-            "developper",
-            "hack",
-            "optimize"
-        ],
-        "time_added": "1719953389",
-        "time_updated": "1731252248",
-        "title": "My finetuned models beat OpenAI\u2019s GPT-4"
-    },
-    {
-        "domain": "Reddit",
-        "excerpt": "",
-        "id": "4071175805",
-        "link": "https://www.reddit.com/r/interestingasfuck/comments/1dtqcvk/this_is_how_steve_ballmer_used_to_do_microsoft/?share_id=4l0tj2rrwsnv6cwefyuKn&utm_content=1&utm_medium=ios_app&utm_name=iossmf&utm_source=share&utm_term=22",
-        "tags": [
-            "humor"
-        ],
-        "time_added": "1719954344",
-        "time_updated": "1731252215",
-        "title": "This is how Steve Ballmer used to do Microsoft presentations when he was the CEO"
     },
     {
         "domain": "cse.buffalo.edu",
@@ -1190,6 +1552,54 @@
         "time_added": "1710189180",
         "time_updated": "1710189191",
         "title": "My favourite animation trick: exponential smoothing"
+    },
+    {
+        "domain": "www.cato.org",
+        "excerpt": "",
+        "id": "3886507515",
+        "link": "https://www.cato.org/blog/why-legal-immigration-nearly-impossible",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1706558052",
+        "time_updated": "1706558058",
+        "title": "https://www.cato.org/blog/why-legal-immigration-nearly-impossible"
+    },
+    {
+        "domain": "Asterisk Magazine",
+        "excerpt": "The United States leads the world in airline safety. That\u2019s because of the way we assign blame when accidents do happen.",
+        "id": "3997652262",
+        "link": "https://asteriskmag.com/issues/05/why-you-ve-never-been-in-a-plane-crash",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1706651439",
+        "time_updated": "1706651447",
+        "title": "Why You\u2019ve Never Been In A Plane Crash"
+    },
+    {
+        "domain": "visualstudiomagazine.com",
+        "excerpt": "New research on the effect of AI-powered GitHub Copilot on software development cites some adverse results. The \"Coding on Copilot\" whitepaper from GitClear sought to investigate the quality and maintainability of AI-assisted code compared to what would have been written by a human.",
+        "id": "3999329719",
+        "link": "https://visualstudiomagazine.com/articles/2024/01/25/copilot-research.aspx",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1706555888",
+        "time_updated": "1706555897",
+        "title": "New GitHub Copilot Research Finds 'Downward Pressure on Code Quality'"
+    },
+    {
+        "domain": "gvwilson.github.io",
+        "excerpt": "1-to-1 relation A relationship between two tables in which each record from the first table matches exactly one record from the second and vice versa.",
+        "id": "4000408898",
+        "link": "https://gvwilson.github.io/sql-tutorial/",
+        "tags": [
+            "developper"
+        ],
+        "time_added": "1707510211",
+        "time_updated": "1707510219",
+        "title": "SQL for the Weary"
     },
     {
         "domain": "worktopia.substack.com",
@@ -1424,57 +1834,6 @@
         "title": "EMPATHY: THE WEB PROFESSIONAL\u2019S GREATEST SKILL"
     },
     {
-        "domain": "Y Combinator",
-        "excerpt": "What else is going on that is not GPT/Diffusion/MultiModal? In theory you can also animate such scenes but how to actually do that is still a research problem.",
-        "id": "4028537722",
-        "link": "https://news.ycombinator.com/item?id=39848847",
-        "tags": [
-            "ai",
-            "inspiration"
-        ],
-        "time_added": "1711908516",
-        "time_updated": "1731252801",
-        "title": "What things are happening in ML that we can't hear oer the din of LLMs?"
-    },
-    {
-        "domain": "www.thisiscolossal.com",
-        "excerpt": "",
-        "id": "4028628012",
-        "link": "https://www.thisiscolossal.com/2024/03/thibaut-derien-ghost-city/",
-        "tags": [
-            "photo"
-        ],
-        "time_added": "1711912708",
-        "time_updated": "1731252761",
-        "title": "https://www.thisiscolossal.com/2024/03/thibaut-derien-ghost-city/"
-    },
-    {
-        "domain": "Outside Magazine",
-        "excerpt": "How can I survive this? How can I escape it?What else is in here, and is it hungry?You can do this.",
-        "id": "4028650751",
-        "link": "https://www.outsideonline.com/adventure-travel/essays/dark-cave-retreat/",
-        "tags": [
-            "inspiration",
-            "self-development"
-        ],
-        "time_added": "1711911066",
-        "time_updated": "1731252783",
-        "title": "The Darkness That Blew My Mind"
-    },
-    {
-        "domain": "lutrasecurity.com",
-        "excerpt": "Anyone who has had to deal with HTML emails on a technical level has probably reached the point where they wanted to quit their job or just set fire to all the mail clients due to their inconsistent implementations.",
-        "id": "4030826527",
-        "link": "https://lutrasecurity.com/en/articles/kobold-letters/",
-        "tags": [
-            "hack",
-            "infosec"
-        ],
-        "time_added": "1712333709",
-        "time_updated": "1731252741",
-        "title": "Kobold letters \u2013 Lutra Security"
-    },
-    {
         "domain": "www.visual-literacy.org",
         "excerpt": "",
         "id": "150518",
@@ -1623,18 +1982,6 @@
         "title": "Etienne Jacob (@bleuje@mastodon.social)"
     },
     {
-        "domain": "www.cato.org",
-        "excerpt": "",
-        "id": "3886507515",
-        "link": "https://www.cato.org/blog/why-legal-immigration-nearly-impossible",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1706558052",
-        "time_updated": "1706558058",
-        "title": "https://www.cato.org/blog/why-legal-immigration-nearly-impossible"
-    },
-    {
         "domain": "meat-gpt.sonnet.io",
         "excerpt": "Raising the steaks since 1988",
         "id": "3888904244",
@@ -1658,6 +2005,44 @@
         "time_added": "1702764333",
         "time_updated": "1731253901",
         "title": "How Larry Gagosian Reshaped the Art World"
+    },
+    {
+        "domain": "sancarn.github.io",
+        "excerpt": "Recently, I watched a video by YouTuber ThePrimeTime which details a dev\u2019s frustrations with business culture. Prime is an ex-entrepreneur who currently works in software development at Netflix.",
+        "id": "3953498886",
+        "link": "https://sancarn.github.io/vba-articles/why-do-people-use-vba.html",
+        "tags": [
+            "management"
+        ],
+        "time_added": "1700164993",
+        "time_updated": "1700165001",
+        "title": "Why do people use VBA?"
+    },
+    {
+        "domain": "www.theregister.com",
+        "excerpt": "On Call Many a Friday arrives with a feeling that the previous four days of toil occupied more than 96 hours, which is why The Register always marks the day with a new instalment of On Call, our reader-contributed tales of fun times delivering tech support.",
+        "id": "3964381218",
+        "link": "https://www.theregister.com/2023/10/13/on_call/",
+        "tags": [
+            "management"
+        ],
+        "time_added": "1699815925",
+        "time_updated": "1699815932",
+        "title": "Workload written by student made millions, ran on unsupported hardware, with zero maintenance"
+    },
+    {
+        "domain": "The New Yorker",
+        "excerpt": "Coding has always felt to me like an endlessly deep and rich domain. Now I find myself wanting to write a eulogy for it.",
+        "id": "3964678747",
+        "link": "https://www.newyorker.com/magazine/2023/11/20/a-coder-considers-the-waning-days-of-the-craft/",
+        "tags": [
+            "ai",
+            "opinion",
+            "personal development"
+        ],
+        "time_added": "1700167304",
+        "time_updated": "1731345643",
+        "title": "A Coder Considers the Waning Days of the Craft"
     },
     {
         "domain": "pudding.cool",
@@ -1685,6 +2070,18 @@
         ],
         "time_added": "1700335389",
         "time_updated": "1731253995",
+        "title": "x.com"
+    },
+    {
+        "domain": "Twitter",
+        "excerpt": "",
+        "id": "3966069339",
+        "link": "https://twitter.com/x/migrate?tok=7b2265223a222f6d756c74696b65762f7374617475732f31373234393038313835333631303131313038222c2274223a313732343932303639307d8e5fbc4592fe11629ef75709963b84f8",
+        "tags": [
+            "developper"
+        ],
+        "time_added": "1700164437",
+        "time_updated": "1700164443",
         "title": "x.com"
     },
     {
@@ -1798,30 +2195,6 @@
         "title": "Tech Talks Weekly #1 : TDD and DDD From Ground Up, Java Virtual Threads vs Kotlin Coroutines, Design Patterns Misconceptions, Keynote by Linus Torvalds, Real World Fraud Detection, ..."
     },
     {
-        "domain": "Asterisk Magazine",
-        "excerpt": "The United States leads the world in airline safety. That\u2019s because of the way we assign blame when accidents do happen.",
-        "id": "3997652262",
-        "link": "https://asteriskmag.com/issues/05/why-you-ve-never-been-in-a-plane-crash",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1706651439",
-        "time_updated": "1706651447",
-        "title": "Why You\u2019ve Never Been In A Plane Crash"
-    },
-    {
-        "domain": "visualstudiomagazine.com",
-        "excerpt": "New research on the effect of AI-powered GitHub Copilot on software development cites some adverse results. The \"Coding on Copilot\" whitepaper from GitClear sought to investigate the quality and maintainability of AI-assisted code compared to what would have been written by a human.",
-        "id": "3999329719",
-        "link": "https://visualstudiomagazine.com/articles/2024/01/25/copilot-research.aspx",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1706555888",
-        "time_updated": "1706555897",
-        "title": "New GitHub Copilot Research Finds 'Downward Pressure on Code Quality'"
-    },
-    {
         "domain": "nishtahir.com",
         "excerpt": "I've been self-hosting for over a decade. It's freeing because I own my data, and do not depend on any platform other than my cloud host, which I can easily switch off. Self-hosting gives much insight into what it takes to run a cloud service.",
         "id": "3999947583",
@@ -1832,18 +2205,6 @@
         "time_added": "1706555232",
         "time_updated": "1706555236",
         "title": "I looked through attacks in my access logs. Here's what I found"
-    },
-    {
-        "domain": "gvwilson.github.io",
-        "excerpt": "1-to-1 relation A relationship between two tables in which each record from the first table matches exactly one record from the second and vice versa.",
-        "id": "4000408898",
-        "link": "https://gvwilson.github.io/sql-tutorial/",
-        "tags": [
-            "developper"
-        ],
-        "time_added": "1707510211",
-        "time_updated": "1707510219",
-        "title": "SQL for the Weary"
     },
     {
         "domain": null,
@@ -1866,6 +2227,18 @@
         "time_added": "1698085442",
         "time_updated": "1731346161",
         "title": "A 'beer sommelier' explains how pouring a beer the wrong way can give you a stomach ache"
+    },
+    {
+        "domain": "noyaml.com",
+        "excerpt": "# Made with \ud83d\udc96 by https://ghuntley.com after one too many CustomResourceDefinitions # Improvements welcome, mash the \u2197\ufe0f Octocat \u2197\ufe0f and share how YAML makes your life better.",
+        "id": "2230828206",
+        "link": "https://noyaml.com/",
+        "tags": [
+            "developper"
+        ],
+        "time_added": "1696579860",
+        "time_updated": "1696579868",
+        "title": "\ud83d\udea8\ud83d\udea8 That's a lot of YAML \ud83d\udea8\ud83d\udea8"
     },
     {
         "domain": "tonsky.me",
@@ -1933,6 +2306,18 @@
         "title": null
     },
     {
+        "domain": "YouTube",
+        "excerpt": "How much of this math do you know?\n\n\ud83d\udd90 ASK ME ANYTHING! \u25ba https://www.youtube.com/noogai89/join\n\n\ud83d\udc55 MERCH! \u25ba https://alanbecker.shop\n\n\ud83d\udcacDISCORD SERVER \u25ba https://discord.gg/alanbecker \n\n\ud83d\udd79\ufe0fANIMATORS VS GAMES \u25ba  @AnimatorsVSGames   \n\n\ud83d\udcf7INSTAGRAM \u25ba http://www.instagram.com/alanbec",
+        "id": "3892927402",
+        "link": "https://www.youtube.com/watch?v=B1J6Ou4q8vE",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1696274838",
+        "time_updated": "1696274844",
+        "title": "Animation vs. Math"
+    },
+    {
         "domain": "Vox",
         "excerpt": "Three mind-bendy conversations about glass later, I see the sublime in my windowpanes.",
         "id": "3933666770",
@@ -1946,6 +2331,18 @@
         "title": "The surprising scientific weirdness of glass"
     },
     {
+        "domain": "jvns.ca",
+        "excerpt": "A few weeks ago I gave a keynote at Strange Loop called Making Hard Things Easy. It\u2019s about why I think some things are hard to learn and ideas for how we can make them easier. Here\u2019s the video, as well as the slides and a transcript of (roughly) what I said in the talk.",
+        "id": "3946201592",
+        "link": "https://jvns.ca/blog/2023/10/06/new-talk--making-hard-things-easy/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1696698912",
+        "time_updated": "1696698918",
+        "title": "New talk: Making Hard Things Easy"
+    },
+    {
         "domain": "ludic.mataroa.blog",
         "excerpt": "Last week, I had a fascinating conversation with a reader around frustration and unhappiness at work.",
         "id": "3946876375",
@@ -1956,6 +2353,16 @@
         "time_added": "1696868586",
         "time_updated": "1729788704",
         "title": "Your Organization Probably Doesn't Want To Improve Things \u2014 Ludicity"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "3946981026",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
     },
     {
         "domain": "Bored Panda",
@@ -2034,18 +2441,6 @@
         "time_added": "1698089393",
         "time_updated": "1698089399",
         "title": "We have used too many levels of abstractions and now the future looks bleak"
-    },
-    {
-        "domain": "sancarn.github.io",
-        "excerpt": "Recently, I watched a video by YouTuber ThePrimeTime which details a dev\u2019s frustrations with business culture. Prime is an ex-entrepreneur who currently works in software development at Netflix.",
-        "id": "3953498886",
-        "link": "https://sancarn.github.io/vba-articles/why-do-people-use-vba.html",
-        "tags": [
-            "management"
-        ],
-        "time_added": "1700164993",
-        "time_updated": "1700165001",
-        "title": "Why do people use VBA?"
     },
     {
         "domain": "flip.it",
@@ -2165,44 +2560,6 @@
         "title": "Behind The Scenes: 30 Creative Photography Tricks Revealed By Jordi Koalitic (New Pics)"
     },
     {
-        "domain": "www.theregister.com",
-        "excerpt": "On Call Many a Friday arrives with a feeling that the previous four days of toil occupied more than 96 hours, which is why The Register always marks the day with a new instalment of On Call, our reader-contributed tales of fun times delivering tech support.",
-        "id": "3964381218",
-        "link": "https://www.theregister.com/2023/10/13/on_call/",
-        "tags": [
-            "management"
-        ],
-        "time_added": "1699815925",
-        "time_updated": "1699815932",
-        "title": "Workload written by student made millions, ran on unsupported hardware, with zero maintenance"
-    },
-    {
-        "domain": "The New Yorker",
-        "excerpt": "Coding has always felt to me like an endlessly deep and rich domain. Now I find myself wanting to write a eulogy for it.",
-        "id": "3964678747",
-        "link": "https://www.newyorker.com/magazine/2023/11/20/a-coder-considers-the-waning-days-of-the-craft/",
-        "tags": [
-            "ai",
-            "opinion",
-            "personal development"
-        ],
-        "time_added": "1700167304",
-        "time_updated": "1731345643",
-        "title": "A Coder Considers the Waning Days of the Craft"
-    },
-    {
-        "domain": "Twitter",
-        "excerpt": "",
-        "id": "3966069339",
-        "link": "https://twitter.com/x/migrate?tok=7b2265223a222f6d756c74696b65762f7374617475732f31373234393038313835333631303131313038222c2274223a313732343932303639307d8e5fbc4592fe11629ef75709963b84f8",
-        "tags": [
-            "developper"
-        ],
-        "time_added": "1700164437",
-        "time_updated": "1700164443",
-        "title": "x.com"
-    },
-    {
         "domain": "Wikipedia",
         "excerpt": "\"Cheryl's Birthday\" is a logic puzzle, specifically a knowledge puzzle.[1][2] The objective is to determine the birthday of a girl named Cheryl using a handful of clues given to her friends Albert and Bernard.",
         "id": "897716983",
@@ -2215,16 +2572,28 @@
         "title": "Cheryl's Birthday"
     },
     {
-        "domain": "noyaml.com",
-        "excerpt": "# Made with \ud83d\udc96 by https://ghuntley.com after one too many CustomResourceDefinitions # Improvements welcome, mash the \u2197\ufe0f Octocat \u2197\ufe0f and share how YAML makes your life better.",
-        "id": "2230828206",
-        "link": "https://noyaml.com/",
+        "domain": "www.developertoarchitect.com",
+        "excerpt": "Software Architecture Monday with Mark Richards is a free bi-weekly software architecture lesson containing a short video about some aspect of software architecture. These lessons contain tips, techniques, and advice to help you in your journey from developer to architect.",
+        "id": "2039649330",
+        "link": "https://www.developertoarchitect.com/lessons/",
         "tags": [
-            "developper"
+            "personal development"
         ],
-        "time_added": "1696579860",
-        "time_updated": "1696579868",
-        "title": "\ud83d\udea8\ud83d\udea8 That's a lot of YAML \ud83d\udea8\ud83d\udea8"
+        "time_added": "1679497155",
+        "time_updated": "1679497163",
+        "title": "Software Architecture Monday"
+    },
+    {
+        "domain": "ciechanow.ski",
+        "excerpt": "The dream of soaring in the sky like a bird has captivated the human mind for ages. Although many failed, some eventually succeeded in achieving that goal. These days we take air transportation for granted, but the physics of flight can still be puzzling.",
+        "id": "2444620553",
+        "link": "https://ciechanow.ski/",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1680108223",
+        "time_updated": "1680108229",
+        "title": "Bartosz Ciechanowski"
     },
     {
         "domain": "programming.guide",
@@ -2302,6 +2671,16 @@
         "title": "Bank failures"
     },
     {
+        "domain": "9G",
+        "excerpt": "",
+        "id": "3834713155",
+        "link": "https://9gag.com/gag/aYVEBo0",
+        "tags": null,
+        "time_added": "1680458219",
+        "time_updated": "1680458219",
+        "title": "The region beta paradox - Video"
+    },
+    {
         "domain": "Pocket",
         "excerpt": "A practical guide to how you can and can\u2019t use AI in your everyday life\u2014even if it feels terrifying right now.",
         "id": "3840250983",
@@ -2313,6 +2692,18 @@
         "time_added": "1681237443",
         "time_updated": "1731358494",
         "title": "How You Should Be Using ChatGPT Right Now"
+    },
+    {
+        "domain": "Inverse",
+        "excerpt": "If you want to track changes in the Amazon rainforest, see the full expanse of a hurricane, or figure out where people need help after a disaster, it\u2019s much easier to do with the view from a satellite orbiting a few hundred miles above Earth.",
+        "id": "3842557691",
+        "link": "https://www.inverse.com/science/free-satellite-visualizations",
+        "tags": [
+            "data"
+        ],
+        "time_added": "1681025645",
+        "time_updated": "1731700092",
+        "title": "These Free Tools Let You See the Earth From Space In Entirely New Ways"
     },
     {
         "domain": "samwho.dev",
@@ -2411,18 +2802,6 @@
         "time_added": null,
         "time_updated": null,
         "title": null
-    },
-    {
-        "domain": "YouTube",
-        "excerpt": "How much of this math do you know?\n\n\ud83d\udd90 ASK ME ANYTHING! \u25ba https://www.youtube.com/noogai89/join\n\n\ud83d\udc55 MERCH! \u25ba https://alanbecker.shop\n\n\ud83d\udcacDISCORD SERVER \u25ba https://discord.gg/alanbecker \n\n\ud83d\udd79\ufe0fANIMATORS VS GAMES \u25ba  @AnimatorsVSGames   \n\n\ud83d\udcf7INSTAGRAM \u25ba http://www.instagram.com/alanbec",
-        "id": "3892927402",
-        "link": "http://www.youtube.com/watch?v=B1J6Ou4q8vE",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1696274838",
-        "time_updated": "1696274844",
-        "title": "Animation vs. Math"
     },
     {
         "domain": "The Guardian",
@@ -2551,28 +2930,6 @@
         "title": "How to Round Edges of Wood (7+ Methods With & Without a Router!)"
     },
     {
-        "domain": "jvns.ca",
-        "excerpt": "A few weeks ago I gave a keynote at Strange Loop called Making Hard Things Easy. It\u2019s about why I think some things are hard to learn and ideas for how we can make them easier. Here\u2019s the video, as well as the slides and a transcript of (roughly) what I said in the talk.",
-        "id": "3946201592",
-        "link": "https://jvns.ca/blog/2023/10/06/new-talk--making-hard-things-easy/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1696698912",
-        "time_updated": "1696698918",
-        "title": "New talk: Making Hard Things Easy"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "3946981026",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
         "domain": null,
         "excerpt": null,
         "id": "34890",
@@ -2667,30 +3024,6 @@
         "title": "A little bit of slope makes up for a lot of y-intercept"
     },
     {
-        "domain": "www.developertoarchitect.com",
-        "excerpt": "Software Architecture Monday with Mark Richards is a free bi-weekly software architecture lesson containing a short video about some aspect of software architecture. These lessons contain tips, techniques, and advice to help you in your journey from developer to architect.",
-        "id": "2039649330",
-        "link": "https://www.developertoarchitect.com/lessons/",
-        "tags": [
-            "personal development"
-        ],
-        "time_added": "1679497155",
-        "time_updated": "1679497163",
-        "title": "Software Architecture Monday"
-    },
-    {
-        "domain": "ciechanow.ski",
-        "excerpt": "The dream of soaring in the sky like a bird has captivated the human mind for ages. Although many failed, some eventually succeeded in achieving that goal. These days we take air transportation for granted, but the physics of flight can still be puzzling.",
-        "id": "2444620553",
-        "link": "https://ciechanow.ski/",
-        "tags": [
-            "design"
-        ],
-        "time_added": "1680108223",
-        "time_updated": "1680108229",
-        "title": "Bartosz Ciechanowski"
-    },
-    {
         "domain": "engineering.squarespace.com",
         "excerpt": "\u201cTech debt\u201d is a dirty word in the software engineering world. It\u2019s often said with an air of regret; a past mistake that will eventually need to be atoned for with refactoring. Financial debt isn\u2019t universally reviled in the same way.",
         "id": "2523002149",
@@ -2716,6 +3049,18 @@
         "title": "Email"
     },
     {
+        "domain": "longform.asmartbear.com",
+        "excerpt": "How do you come up with fresh, transformative ideas? Or the modern version, seventeen pointers flying around a Miro board, zooming to 2000% to read that auto-scaled-down text in each standard-sized virtual sticky-note.",
+        "id": "3582546559",
+        "link": "https://longform.asmartbear.com/extreme-questions/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1673293088",
+        "time_updated": "1673293095",
+        "title": "Extreme brainstorming questions to trigger new, better ideas"
+    },
+    {
         "domain": "www.joshwcomeau.com",
         "excerpt": "Should I use pixels or ems/rems?! This is a question I hear a lot. Often with a dollop of anxiety or frustration behind the words. \ud83d\ude05 It's an emotionally-charged question because there are a lot of conflicting opinions out there, and it can be overwhelming.",
         "id": "3619903542",
@@ -2739,6 +3084,44 @@
         "time_added": "1674215491",
         "time_updated": "1674215497",
         "title": "Command K Bars"
+    },
+    {
+        "domain": "www.benkuhn.net",
+        "excerpt": "Recently I\u2019ve been thinking about how all my favorite people are great at a skill I\u2019ve labeled in my head as \u201cstaring into the abyss.",
+        "id": "3771470104",
+        "link": "https://www.benkuhn.net/abyss/",
+        "tags": [
+            "self-development"
+        ],
+        "time_added": "1671864274",
+        "time_updated": "1731359126",
+        "title": "Staring into the abyss as a core life skill"
+    },
+    {
+        "domain": "tynan.com",
+        "excerpt": "A teacher friend of mine told me that this year students were different. If she asked to see a hall pass from a freshman, they\u2019d give her the finger. They swore at her and were generally rude. The behavior was so out of line that seniors would step in and tell them not to talk to her like that.",
+        "id": "3776491221",
+        "link": "https://tynan.com/letstalk/",
+        "tags": [
+            "self-development"
+        ],
+        "time_added": "1672775416",
+        "time_updated": "1731358926",
+        "title": "Conversation Skills Essentials"
+    },
+    {
+        "domain": "ntdotdev.wordpress.com",
+        "excerpt": "Hello and happy new year! It\u2019s 2023, and Windows 11 is finally a mature operating system that most people would be happy to use. Sun Valley has finally arrived, and it\u2019s all about a long overdue reinvestment in design under Panos Panay\u2019s leadership. But is it enough? Let\u2019s take a look.",
+        "id": "3777939385",
+        "link": "https://ntdev.blog/2023/01/01/state-of-the-windows-how-many-layers-of-ui-inconsistencies-are-in-windows-11/",
+        "tags": [
+            "design",
+            "developper",
+            "lore"
+        ],
+        "time_added": "1672774093",
+        "time_updated": "1731358969",
+        "title": "State of the Windows: How many layers of UI inconsistencies are in Windows 11?"
     },
     {
         "domain": "www.epochalypse.today",
@@ -2905,28 +3288,6 @@
         "title": "x.com"
     },
     {
-        "domain": "9G",
-        "excerpt": "",
-        "id": "3834713155",
-        "link": "https://9gag.com/gag/aYVEBo0",
-        "tags": null,
-        "time_added": "1680458219",
-        "time_updated": "1680458219",
-        "title": "The region beta paradox - Video"
-    },
-    {
-        "domain": "Inverse",
-        "excerpt": "If you want to track changes in the Amazon rainforest, see the full expanse of a hurricane, or figure out where people need help after a disaster, it\u2019s much easier to do with the view from a satellite orbiting a few hundred miles above Earth.",
-        "id": "3842557691",
-        "link": "https://www.inverse.com/science/free-satellite-visualizations",
-        "tags": [
-            "data"
-        ],
-        "time_added": "1681025645",
-        "time_updated": "1731700092",
-        "title": "These Free Tools Let You See the Earth From Space In Entirely New Ways"
-    },
-    {
         "domain": null,
         "excerpt": null,
         "id": "374210813",
@@ -2987,18 +3348,6 @@
         "title": "BishopFox/unredacter"
     },
     {
-        "domain": "longform.asmartbear.com",
-        "excerpt": "How do you come up with fresh, transformative ideas? Or the modern version, seventeen pointers flying around a Miro board, zooming to 2000% to read that auto-scaled-down text in each standard-sized virtual sticky-note.",
-        "id": "3582546559",
-        "link": "https://longform.asmartbear.com/extreme-questions/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1673293088",
-        "time_updated": "1673293095",
-        "title": "Extreme brainstorming questions to trigger new, better ideas"
-    },
-    {
         "domain": null,
         "excerpt": null,
         "id": "3584083713",
@@ -3046,6 +3395,42 @@
         "title": "https://wix-ux.com/when-life-gives-you-lemons-write-better-error-messages-46c5223e1a2f"
     },
     {
+        "domain": "blog.cotten.io",
+        "excerpt": "Ultima Online is celebrating its 25th anniversary! You know what that means, right? Story time!",
+        "id": "3716345715",
+        "link": "https://blog.cotten.io/that-time-we-burned-down-players-houses-in-ultima-online-7e556618c8f0",
+        "tags": [
+            "developper",
+            "humor",
+            "lore"
+        ],
+        "time_added": "1664918856",
+        "time_updated": "1731359269",
+        "title": "That Time We Burned Down Players\u2019 Houses in Ultima Online"
+    },
+    {
+        "domain": "chan.co.za",
+        "excerpt": "",
+        "id": "3716865935",
+        "link": "https://chan.co.za/how-fateful#The_Answer",
+        "tags": [
+            "developper"
+        ],
+        "time_added": "1664912929",
+        "time_updated": "1664912935",
+        "title": "https://chan.co.za/how-fateful#The_Answer"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "3720575232",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
         "domain": "safedelusion.com",
         "excerpt": "Now that Agile passed the early adopter stage, there are many companies interested in adopting it, and many practitioners interested in learning it. Yet those companies and practitioners without extensive Agile experience have a hard time evaluating what will bring them value and what not.",
         "id": "3720637976",
@@ -3056,6 +3441,18 @@
         "time_added": "1667254060",
         "time_updated": "1667254069",
         "title": "The SAFe Delusion"
+    },
+    {
+        "domain": "3dwarehouse.sketchup.com",
+        "excerpt": "",
+        "id": "3724371463",
+        "link": "https://3dwarehouse.sketchup.com/model/0086e149-9a32-4720-8329-43e7a876a4fa/Interior-design-brownstone-house",
+        "tags": [
+            "dead-link"
+        ],
+        "time_added": "1665782586",
+        "time_updated": "1731359195",
+        "title": "3D Warehouse"
     },
     {
         "domain": "iamkate.com",
@@ -3248,42 +3645,14 @@
         "title": "Why using just console.log in 2023 is a big no-no \ud83d\ude80"
     },
     {
-        "domain": "www.benkuhn.net",
-        "excerpt": "Recently I\u2019ve been thinking about how all my favorite people are great at a skill I\u2019ve labeled in my head as \u201cstaring into the abyss.",
-        "id": "3771470104",
-        "link": "https://www.benkuhn.net/abyss/",
-        "tags": [
-            "self-development"
-        ],
-        "time_added": "1671864274",
-        "time_updated": "1731359126",
-        "title": "Staring into the abyss as a core life skill"
-    },
-    {
-        "domain": "tynan.com",
-        "excerpt": "A teacher friend of mine told me that this year students were different. If she asked to see a hall pass from a freshman, they\u2019d give her the finger. They swore at her and were generally rude. The behavior was so out of line that seniors would step in and tell them not to talk to her like that.",
-        "id": "3776491221",
-        "link": "https://tynan.com/letstalk/",
-        "tags": [
-            "self-development"
-        ],
-        "time_added": "1672775416",
-        "time_updated": "1731358926",
-        "title": "Conversation Skills Essentials"
-    },
-    {
-        "domain": "ntdotdev.wordpress.com",
-        "excerpt": "Hello and happy new year! It\u2019s 2023, and Windows 11 is finally a mature operating system that most people would be happy to use. Sun Valley has finally arrived, and it\u2019s all about a long overdue reinvestment in design under Panos Panay\u2019s leadership. But is it enough? Let\u2019s take a look.",
-        "id": "3777939385",
-        "link": "https://ntdev.blog/2023/01/01/state-of-the-windows-how-many-layers-of-ui-inconsistencies-are-in-windows-11/",
-        "tags": [
-            "design",
-            "developper",
-            "lore"
-        ],
-        "time_added": "1672774093",
-        "time_updated": "1731358969",
-        "title": "State of the Windows: How many layers of UI inconsistencies are in Windows 11?"
+        "domain": null,
+        "excerpt": null,
+        "id": "50585512",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
     },
     {
         "domain": "www.kalzumeus.com",
@@ -3347,6 +3716,18 @@
         "title": "Blue Zones"
     },
     {
+        "domain": "increment.com",
+        "excerpt": "I\u2019ve been laughing at that meme since I first saw it back in . . . 2013? It\u2019s more than funny. It\u2019s\u00a0hilarious!",
+        "id": "2705737615",
+        "link": "https://increment.com/testing/i-test-in-production/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1637789238",
+        "time_updated": "1637789245",
+        "title": "I test in prod"
+    },
+    {
         "domain": "algorithmsbook.com",
         "excerpt": "",
         "id": "3225126312",
@@ -3382,6 +3763,28 @@
         "time_added": "1656075876",
         "time_updated": "1656075886",
         "title": "Dabbawalas: How India's 130-year-old food delivery system works"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "3489473444",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "GitLab",
+        "excerpt": "",
+        "id": "3532143833",
+        "link": "https://gitlab.com/oauth/authorize?client_id=5059a88907e1b093c23df47d996183b101a862a5e53e099b563120d1308db2c1&redirect_uri=https://projects.gitlab.io/auth&response_type=code&state=s4dDI0oib-jqi9i0iGqg8w==&scope=api",
+        "tags": [
+            "infosec"
+        ],
+        "time_added": "1642712195",
+        "time_updated": "1731700428",
+        "title": "https://about.gitlab.com/handbook/marketing/community-relations/developer-evangelism/hacker-news/"
     },
     {
         "domain": "johnnyrodgers.is",
@@ -3600,64 +4003,6 @@
         "title": "James Stanley"
     },
     {
-        "domain": "blog.cotten.io",
-        "excerpt": "Ultima Online is celebrating its 25th anniversary! You know what that means, right? Story time!",
-        "id": "3716345715",
-        "link": "https://blog.cotten.io/that-time-we-burned-down-players-houses-in-ultima-online-7e556618c8f0",
-        "tags": [
-            "developper",
-            "humor",
-            "lore"
-        ],
-        "time_added": "1664918856",
-        "time_updated": "1731359269",
-        "title": "That Time We Burned Down Players\u2019 Houses in Ultima Online"
-    },
-    {
-        "domain": "chan.co.za",
-        "excerpt": "",
-        "id": "3716865935",
-        "link": "https://chan.co.za/how-fateful#The_Answer",
-        "tags": [
-            "developper"
-        ],
-        "time_added": "1664912929",
-        "time_updated": "1664912935",
-        "title": "https://chan.co.za/how-fateful#The_Answer"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "3720575232",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "3dwarehouse.sketchup.com",
-        "excerpt": "",
-        "id": "3724371463",
-        "link": "https://3dwarehouse.sketchup.com/model/0086e149-9a32-4720-8329-43e7a876a4fa/Interior-design-brownstone-house",
-        "tags": [
-            "dead-link"
-        ],
-        "time_added": "1665782586",
-        "time_updated": "1731359195",
-        "title": "3D Warehouse"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "50585512",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
         "domain": "briankrebs",
         "excerpt": "Computer crooks and spammers are abusing a little-known encoding method that makes it easy to disguise malicious executable files (.exe) as relatively harmless documents, such as text or Microsoft Word files.",
         "id": "105911596",
@@ -3705,18 +4050,6 @@
         "time_added": "1618399640",
         "time_updated": "1618399649",
         "title": "Product funding and the burden of agility"
-    },
-    {
-        "domain": "increment.com",
-        "excerpt": "I\u2019ve been laughing at that meme since I first saw it back in . . . 2013? It\u2019s more than funny. It\u2019s\u00a0hilarious!",
-        "id": "2705737615",
-        "link": "https://increment.com/testing/i-test-in-production/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1637789238",
-        "time_updated": "1637789245",
-        "title": "I test in prod"
     },
     {
         "domain": "gankra.github.io",
@@ -3792,6 +4125,42 @@
         "title": "No, We Won\u2019t Have a Video Call for That!"
     },
     {
+        "domain": "Nature Publishing Group",
+        "excerpt": "Some of scientists\u2019 most rewarding moments come when we confront a hard problem or a difficult task.",
+        "id": "3282196884",
+        "link": "https://www.nature.com/articles/d41586-021-00606-x",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1616051288",
+        "time_updated": "1616051297",
+        "title": "Tips from neuroscience to keep you focused on hard tasks"
+    },
+    {
+        "domain": "Quanta Magazine",
+        "excerpt": "Enter the world of perfect numbers and explore the mystery mathematicians have spent thousands of years trying to solve.",
+        "id": "3282197780",
+        "link": "https://www.quantamagazine.org/the-mysterious-math-of-perfect-numbers-20210315/",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1616049289",
+        "time_updated": "1616049318",
+        "title": "The Mysterious Math of Perfection"
+    },
+    {
+        "domain": "BuzzFeed",
+        "excerpt": "We all face stressful or emotional situations in our everyday lives \u2014 whether it's an argument with a friend or partner, or a toxic colleague bringing everything down. And if you're lucky, you might have a surefire tip or trick to deal with these scenarios.",
+        "id": "3291680050",
+        "link": "https://www.buzzfeed.com/michelleno/effective-psychological-tricks",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1616862076",
+        "time_updated": "1616862081",
+        "title": "People Are Sharing Effective Psychological Tricks They Use In Everyday Life, And I'm Blown Away By Some"
+    },
+    {
         "domain": "Quartz",
         "excerpt": "Some of us are just not that funny. But writer James Geary shares how to cultivate wit, turning communication into play.",
         "id": "3294476910",
@@ -3803,6 +4172,19 @@
         "time_added": "1618429972",
         "time_updated": "1731701016",
         "title": "The Secret to Being Witty, Revealed"
+    },
+    {
+        "domain": "Substack",
+        "excerpt": "Find great things to read on Substack. Browse top publications, find writers you follow, or search by topic.",
+        "id": "3299068268",
+        "link": "https://substack.com/p/writing-tools-i-learned-from-the",
+        "tags": [
+            "ideas",
+            "reading"
+        ],
+        "time_added": "1618000230",
+        "time_updated": "1731701054",
+        "title": "Find great things to read"
     },
     {
         "domain": "businessagility.institute",
@@ -3907,16 +4289,16 @@
     },
     {
         "domain": "commoncog.com",
-        "excerpt": "I built my first organisation when I was in high school. It was a debate club, and it died the instant I graduated and left for university. I remember looking back on the experience and thinking to myself: \u201cHmm, this is interesting. How do you build an org that outlasts you?\u201d",
+        "excerpt": "M88 Mansion \u0e04\u0e37\u0e2d\u0e40\u0e27\u0e47\u0e1a\u0e44\u0e0b\u0e15\u0e4c\u0e1e\u0e19\u0e31\u0e19\u0e2d\u0e2d\u0e19\u0e44\u0e25\u0e19\u0e4c\u0e0a\u0e31\u0e49\u0e19\u0e19\u0e33\u0e17\u0e35\u0e48\u0e44\u0e14\u0e49\u0e23\u0e31\u0e1a\u0e04\u0e27\u0e32\u0e21\u0e19\u0e34\u0e22\u0e21\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e41\u0e1e\u0e23\u0e48\u0e2b\u0e25\u0e32\u0e22\u0e43\u0e19\u0e40\u0e2d\u0e40\u0e0a\u0e35\u0e22 M88TH \u0e21\u0e35\u0e08\u0e38\u0e14\u0e40\u0e14\u0e48\u0e19\u0e43\u0e19\u0e14\u0e49\u0e32\u0e19\u0e01\u0e32\u0e23\u0e43\u0e2b\u0e49\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23",
         "id": "3449310746",
-        "link": "https://commoncog.com/org-design-skill/",
+        "link": "https://betinthai88.com/ss/c/DMfKibboC_ZTmX8uI5IvEFtiZR09JqggVC8WAtoKJrB3fZoWASP8feBvjqyQ6XpRBXycswiRKp13iRdByDzc9oQZO3WfSOcBCyzkCGhFLBS1OtyMz6MQ1VGlnERWwji6nDmA02mTcvwW3_vKKB94iqkLSWpbBp3AXJKjzf4o5wA/3gt/RLAVcLSCTc6ybgInR6kAJg/h16/JNh8qDl_eT_8WyB643w2CsCxDbZYv8FpN714ir496hI",
         "tags": [
             "design",
             "work"
         ],
         "time_added": "1633760234",
         "time_updated": "1633760247",
-        "title": "The Skill of Org Design"
+        "title": "M88 \u0e04\u0e37\u0e2d\u0e43\u0e04\u0e23 \u0e17\u0e33\u0e04\u0e27\u0e32\u0e21\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01\u0e01\u0e31\u0e1a\u0e40\u0e27\u0e47\u0e1a\u0e44\u0e0b\u0e15\u0e4c\u0e1e\u0e19\u0e31\u0e19\u0e2d\u0e2d\u0e19\u0e44\u0e25\u0e19\u0e4c\u0e0a\u0e31\u0e49\u0e19\u0e19\u0e33\u0e02\u0e2d\u0e07\u0e40\u0e2d\u0e40\u0e0a\u0e35\u0e22"
     },
     {
         "domain": "maheshba.bitbucket.io",
@@ -4000,28 +4382,6 @@
     {
         "domain": null,
         "excerpt": null,
-        "id": "3489473444",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "GitLab",
-        "excerpt": "",
-        "id": "3532143833",
-        "link": "https://gitlab.com/oauth/authorize?client_id=5059a88907e1b093c23df47d996183b101a862a5e53e099b563120d1308db2c1&redirect_uri=https://projects.gitlab.io/auth&response_type=code&state=SYrm1J5p0kVCGwnTbSN01A==&scope=api",
-        "tags": [
-            "infosec"
-        ],
-        "time_added": "1642712195",
-        "time_updated": "1731700428",
-        "title": "https://about.gitlab.com/handbook/marketing/community-relations/developer-evangelism/hacker-news/"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
         "id": "646297463",
         "link": null,
         "tags": null,
@@ -4079,6 +4439,18 @@
         "time_added": "1599137066",
         "time_updated": "1731701195",
         "title": "Understanding Wi-Fi 4/5/6/6E/7 (802.11 n/ac/ax/be) Make your own educated Wi-Fi upgrade decisions Version 10.8y (updated August 17, 2024)"
+    },
+    {
+        "domain": "www.spektrumrc.com",
+        "excerpt": "",
+        "id": "2269746603",
+        "link": "https://www.spektrumrc.com/ProdInfo/Files/SPM1000-manual-MULTI.pdf",
+        "tags": [
+            "drone"
+        ],
+        "time_added": "1595923460",
+        "time_updated": "1595923466",
+        "title": "https://www.spektrumrc.com/ProdInfo/Files/SPM1000-manual-MULTI.pdf"
     },
     {
         "domain": "apenwarr.ca",
@@ -4168,6 +4540,18 @@
         "title": "Send an email message based on a template"
     },
     {
+        "domain": "noxudesign.com",
+        "excerpt": "",
+        "id": "3021819818",
+        "link": "https://noxudesign.com/products/kona-floor-lamp",
+        "tags": [
+            "shopping"
+        ],
+        "time_added": "1598391107",
+        "time_updated": "1598391121",
+        "title": "https://noxudesign.com/products/kona-floor-lamp"
+    },
+    {
         "domain": "www.zainrizvi.io",
         "excerpt": "\u201cWhat would you say if I asked you to design me a service capable of responding to thousands of user requests every second and latency was critical?\u201d \u201cUmm...that you have to solve this problem at work.",
         "id": "3062829011",
@@ -4180,16 +4564,38 @@
         "title": "Interview advice that got me offers from Google, Microsoft, and Stripe"
     },
     {
-        "domain": "Andreessen Horowitz",
-        "excerpt": "Matt Bornstein, Jennifer Li, and Martin Casado",
+        "domain": "www.living-shop.eu",
+        "excerpt": "Have you seen a product on our webshop and would you like to see this in the showroom? Please contact us first. We are happy to assist you.",
+        "id": "3096457475",
+        "link": "https://www.living-shop.eu/en/products/furniture/beds-and-night-tables/wardrobe-louvered-cabinet-3-doors-oak-aged-grey-timeless-living",
+        "tags": [
+            "house"
+        ],
+        "time_added": "1598822561",
+        "time_updated": "1598822581",
+        "title": "Wardrobe cabinet louvered doors oak by Timeless Living online @ LIVING-shop webshop"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "3096458567",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "a16z.com",
+        "excerpt": "M88 Mansion \u0e04\u0e37\u0e2d\u0e40\u0e27\u0e47\u0e1a\u0e44\u0e0b\u0e15\u0e4c\u0e1e\u0e19\u0e31\u0e19\u0e2d\u0e2d\u0e19\u0e44\u0e25\u0e19\u0e4c\u0e0a\u0e31\u0e49\u0e19\u0e19\u0e33\u0e17\u0e35\u0e48\u0e44\u0e14\u0e49\u0e23\u0e31\u0e1a\u0e04\u0e27\u0e32\u0e21\u0e19\u0e34\u0e22\u0e21\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e41\u0e1e\u0e23\u0e48\u0e2b\u0e25\u0e32\u0e22\u0e43\u0e19\u0e40\u0e2d\u0e40\u0e0a\u0e35\u0e22 M88TH \u0e21\u0e35\u0e08\u0e38\u0e14\u0e40\u0e14\u0e48\u0e19\u0e43\u0e19\u0e14\u0e49\u0e32\u0e19\u0e01\u0e32\u0e23\u0e43\u0e2b\u0e49\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23",
         "id": "3142824995",
-        "link": "https://a16z.com/emerging-architectures-for-modern-data-infrastructure/",
+        "link": "https://betinthai88.com/ss/c/PokiEE_-mfzzxUfuaCbVcMP_b-k6NnfawTSakbHg62xtGnIsNllB1aDGPSzfGttTz59oGj1vLdCKIHfdKyc4fOoXUAgHVIK0SjSpP1rVcJXFOp7GcE8QEdgl626__xJPSCuMmRA_oH9iyrp1DHcloW623BHMpUYI2clQeJqYJ9kB35FgbsKZVVgdGFqkEH5BydTCSINvIPVbRTMLnsklXfYJiLt7lxQtyWgHCttnbgJ5d0kZmAgdUFwQYnT8Bnzt/36b/kgb3vwRiTBK7fJ4o8JWc6Q/h4/R08yOVkXykZ_Wz12qj-dgdyj4iCU7GzLdA7cBvNmZxo",
         "tags": [
             "work"
         ],
         "time_added": "1603136538",
         "time_updated": "1603136545",
-        "title": "Emerging Architectures for Modern Data Infrastructure"
+        "title": "M88 \u0e04\u0e37\u0e2d\u0e43\u0e04\u0e23 \u0e17\u0e33\u0e04\u0e27\u0e32\u0e21\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01\u0e01\u0e31\u0e1a\u0e40\u0e27\u0e47\u0e1a\u0e44\u0e0b\u0e15\u0e4c\u0e1e\u0e19\u0e31\u0e19\u0e2d\u0e2d\u0e19\u0e44\u0e25\u0e19\u0e4c\u0e0a\u0e31\u0e49\u0e19\u0e19\u0e33\u0e02\u0e2d\u0e07\u0e40\u0e2d\u0e40\u0e0a\u0e35\u0e22"
     },
     {
         "domain": "Harvard Business Review",
@@ -4333,53 +4739,16 @@
         "title": "https://www.thisiscolossal.com/2021/03/ryosuke-kosuge-photographs/"
     },
     {
-        "domain": "Nature Publishing Group",
-        "excerpt": "Some of scientists\u2019 most rewarding moments come when we confront a hard problem or a difficult task.",
-        "id": "3282196884",
-        "link": "https://www.nature.com/articles/d41586-021-00606-x",
+        "domain": "www.kalzumeus.com",
+        "excerpt": "If there was one course I could add to every engineering education, it wouldn\u2019t involve compilers or gates or time complexity. \u00a0It would be Realities Of Your Industry 101, because we don\u2019t teach them and this results in lots of unnecessary pain and suffering. \u00a0This post aspires to be README.",
+        "id": "112804981",
+        "link": "https://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/",
         "tags": [
             "work"
         ],
-        "time_added": "1616051288",
-        "time_updated": "1616051297",
-        "title": "Tips from neuroscience to keep you focused on hard tasks"
-    },
-    {
-        "domain": "Quanta Magazine",
-        "excerpt": "Enter the world of perfect numbers and explore the mystery mathematicians have spent thousands of years trying to solve.",
-        "id": "3282197780",
-        "link": "https://www.quantamagazine.org/the-mysterious-math-of-perfect-numbers-20210315/",
-        "tags": [
-            "design"
-        ],
-        "time_added": "1616049289",
-        "time_updated": "1616049318",
-        "title": "The Mysterious Math of Perfection"
-    },
-    {
-        "domain": "BuzzFeed",
-        "excerpt": "We all face stressful or emotional situations in our everyday lives \u2014 whether it's an argument with a friend or partner, or a toxic colleague bringing everything down. And if you're lucky, you might have a surefire tip or trick to deal with these scenarios.",
-        "id": "3291680050",
-        "link": "https://www.buzzfeed.com/michelleno/effective-psychological-tricks",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1616862076",
-        "time_updated": "1616862081",
-        "title": "People Are Sharing Effective Psychological Tricks They Use In Everyday Life, And I'm Blown Away By Some"
-    },
-    {
-        "domain": "Substack",
-        "excerpt": "Find great things to read on Substack. Browse top publications, find writers you follow, or search by topic.",
-        "id": "3299068268",
-        "link": "https://substack.com/p/writing-tools-i-learned-from-the",
-        "tags": [
-            "ideas",
-            "reading"
-        ],
-        "time_added": "1618000230",
-        "time_updated": "1731701054",
-        "title": "Find great things to read"
+        "time_added": "1571698757",
+        "time_updated": "1582059967",
+        "title": "Don't Call Yourself A Programmer, And Other Career Advice"
     },
     {
         "domain": "klinger.io",
@@ -4405,18 +4774,6 @@
         "time_added": "1577543003",
         "time_updated": "1731702215",
         "title": "Grumpy Website"
-    },
-    {
-        "domain": "www.spektrumrc.com",
-        "excerpt": "",
-        "id": "2269746603",
-        "link": "https://www.spektrumrc.com/ProdInfo/Files/SPM1000-manual-MULTI.pdf",
-        "tags": [
-            "drone"
-        ],
-        "time_added": "1595923460",
-        "time_updated": "1595923466",
-        "title": "https://www.spektrumrc.com/ProdInfo/Files/SPM1000-manual-MULTI.pdf"
     },
     {
         "domain": "GitHub",
@@ -4465,6 +4822,42 @@
         "time_added": "1573854483",
         "time_updated": "1573854491",
         "title": "xkcd styled chart lib"
+    },
+    {
+        "domain": "essentialcomm.com",
+        "excerpt": "Who does it well? Barbara\u2019s coaching had barely begun when she was promoted to senior vice-president. Because she had worked in many divisions of her global packaged goods company, and had always been viewed as a high performer, her promotion had been only a matter of time.",
+        "id": "2774257367",
+        "link": "https://essentialcomm.com/podcast/managing-up/",
+        "tags": [
+            "personal development"
+        ],
+        "time_added": "1572355168",
+        "time_updated": "1572355174",
+        "title": "The Look & Sound of Leadership Podcast"
+    },
+    {
+        "domain": "coachingforleaders.com",
+        "excerpt": "",
+        "id": "2774257532",
+        "link": "https://coachingforleaders.com/how-to-start-managing-up/",
+        "tags": [
+            "personal development"
+        ],
+        "time_added": "1572355178",
+        "time_updated": "1572355184",
+        "title": "https://coachingforleaders.com/how-to-start-managing-up/"
+    },
+    {
+        "domain": "testing.googleblog.com",
+        "excerpt": "DON\u2019T: Criticize the person. Instead, discuss the code. Even the perception that a comment is about a person (e.g., due to using \u201cyou\u201d or \u201cyour\u201d) distracts from the goal of improving the code. Reviewer Don\u2019t: Why are you using this approach? You\u2019re adding unnecessary complexity.",
+        "id": "2783102268",
+        "link": "https://testing.googleblog.com/2019/11/code-health-respectful-reviews-useful.html",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1573420105",
+        "time_updated": "1573420116",
+        "title": "Code Health: Respectful Reviews == Useful Reviews"
     },
     {
         "domain": "lexi-lambda.github.io",
@@ -4634,18 +5027,6 @@
         "title": "Why does DARPA work?"
     },
     {
-        "domain": "noxudesign.com",
-        "excerpt": "",
-        "id": "3021819818",
-        "link": "https://noxudesign.com/products/kona-floor-lamp",
-        "tags": [
-            "shopping"
-        ],
-        "time_added": "1598391107",
-        "time_updated": "1598391121",
-        "title": "https://noxudesign.com/products/kona-floor-lamp"
-    },
-    {
         "domain": "YouTube",
         "excerpt": "",
         "id": "3027377275",
@@ -4719,28 +5100,6 @@
         "title": "Tiny Tech - How to Fix a BeeBrain That Won't Arm"
     },
     {
-        "domain": "www.living-shop.eu",
-        "excerpt": "Have you seen a product on our webshop and would you like to see this in the showroom? Please contact us first. We are happy to assist you.",
-        "id": "3096457475",
-        "link": "https://www.living-shop.eu/en/products/furniture/beds-and-night-tables/wardrobe-louvered-cabinet-3-doors-oak-aged-grey-timeless-living",
-        "tags": [
-            "house"
-        ],
-        "time_added": "1598822561",
-        "time_updated": "1598822581",
-        "title": "Wardrobe cabinet louvered doors oak by Timeless Living online @ LIVING-shop webshop"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "3096458567",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
         "domain": "apple.stackexchange.com",
         "excerpt": "Stack Exchange network consists of 183 Q&A communities including Stack Overflow, the largest, most trusted online community for developers to learn, share their knowledge, and build their careers. One tip or trick per answer.",
         "id": "97817489",
@@ -4751,18 +5110,6 @@
         "time_added": "1571613368",
         "time_updated": "1571613376",
         "title": "Got any tips or tricks for Terminal in Mac OS X?"
-    },
-    {
-        "domain": "www.kalzumeus.com",
-        "excerpt": "If there was one course I could add to every engineering education, it wouldn\u2019t involve compilers or gates or time complexity. \u00a0It would be Realities Of Your Industry 101, because we don\u2019t teach them and this results in lots of unnecessary pain and suffering. \u00a0This post aspires to be README.",
-        "id": "112804981",
-        "link": "https://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1571698757",
-        "time_updated": "1582059967",
-        "title": "Don't Call Yourself A Programmer, And Other Career Advice"
     },
     {
         "domain": "Harvard Business Review",
@@ -4778,6 +5125,18 @@
         "title": "Getting People to Believe in Something They Can\u2019t Yet Imagine"
     },
     {
+        "domain": "OZY",
+        "excerpt": "",
+        "id": "926138449",
+        "link": "https://www.ozy.com/rising-stars/shubhendu-sharma-urban-forest-guru/6333",
+        "tags": [
+            "house"
+        ],
+        "time_added": "1559511021",
+        "time_updated": "1559511027",
+        "title": "https://www.ozy.com/rising-stars/shubhendu-sharma-urban-forest-guru/6333"
+    },
+    {
         "domain": "apple.stackexchange.com",
         "excerpt": "Stack Exchange network consists of 183 Q&A communities including Stack Overflow, the largest, most trusted online community for developers to learn, share their knowledge, and build their careers.",
         "id": "1369945885",
@@ -4788,6 +5147,18 @@
         "time_added": "1571613521",
         "time_updated": "1571613526",
         "title": "Please share your hidden macOS features or tips and tricks"
+    },
+    {
+        "domain": "fellowsblog.ted.com",
+        "excerpt": "Back in 2008, I was an industrial engineer at Toyota in India, helping prepare assembly lines and dispatch systems for car manufacture. One day, a scientist named Akira Miyawaki came to the factory to plant a forest on Toyota\u2019s campus.",
+        "id": "1494214064",
+        "link": "https://fellowsblog.ted.com/how-to-grow-a-forest-really-really-fast-d27df202ba09",
+        "tags": [
+            "house"
+        ],
+        "time_added": "1559511003",
+        "time_updated": "1559511011",
+        "title": "How to Grow a Forest Really, Really Fast"
     },
     {
         "domain": "The New York Times",
@@ -4826,6 +5197,30 @@
         "time_added": "1567714226",
         "time_updated": "1567714233",
         "title": "How open-source software took over the world"
+    },
+    {
+        "domain": "The Guardian",
+        "excerpt": "In most rich countries, inequality is rising, and has been rising for some time. Many people believe this is a problem, but, equally, many think there\u2019s not much we can do about it.",
+        "id": "2617105881",
+        "link": "https://www.theguardian.com/inequality/2019/jun/06/socialism-for-the-rich-the-evils-of-bad-economics",
+        "tags": [
+            "opinion"
+        ],
+        "time_added": "1560159287",
+        "time_updated": "1560159316",
+        "title": "\u2018Socialism for the rich\u2019: the evils of bad economics"
+    },
+    {
+        "domain": "Bored Panda",
+        "excerpt": "Journey through funny pun jokes and discover the true wonder of laughter! These timeless puns will leave even your dad speechless.",
+        "id": "2627329516",
+        "link": "https://www.boredpanda.com/funny-pun-jokes/",
+        "tags": [
+            "humor"
+        ],
+        "time_added": "1560612632",
+        "time_updated": "1561796374",
+        "title": "80 Funny Pun Jokes To Make Everyone Laugh At The Table"
     },
     {
         "domain": "techbeacon.com",
@@ -4876,10 +5271,10 @@
         "title": "The Art Of Warez"
     },
     {
-        "domain": "Medium",
+        "domain": "medium.com",
         "excerpt": "",
         "id": "2681563590",
-        "link": "https://medium.com/@bellmar/all-the-best-engineering-advice-i-stole-from-non-technical-people-eb7f90ca2f5f?utm_source=The+Crunch&utm_campaign=50978a7494-THE_CRUNCH_55_COPY_03&utm_medium=email&utm_term=0_aa18ea5b4e-50978a7494-",
+        "link": "https://rsci.app.link/6L6orKKRTY?_p=c31029c09a047af6e4038d",
         "tags": [
             "work"
         ],
@@ -5072,42 +5467,6 @@
         "title": "This is the best answer I ever received to 'Tell me about yourself'\u2014after 20 years of interviewing"
     },
     {
-        "domain": "essentialcomm.com",
-        "excerpt": "Who does it well? Barbara\u2019s coaching had barely begun when she was promoted to senior vice-president. Because she had worked in many divisions of her global packaged goods company, and had always been viewed as a high performer, her promotion had been only a matter of time.",
-        "id": "2774257367",
-        "link": "https://essentialcomm.com/podcast/managing-up/",
-        "tags": [
-            "personal development"
-        ],
-        "time_added": "1572355168",
-        "time_updated": "1572355174",
-        "title": "The Look & Sound of Leadership Podcast"
-    },
-    {
-        "domain": "coachingforleaders.com",
-        "excerpt": "",
-        "id": "2774257532",
-        "link": "https://coachingforleaders.com/how-to-start-managing-up/",
-        "tags": [
-            "personal development"
-        ],
-        "time_added": "1572355178",
-        "time_updated": "1572355184",
-        "title": "https://coachingforleaders.com/how-to-start-managing-up/"
-    },
-    {
-        "domain": "testing.googleblog.com",
-        "excerpt": "DON\u2019T: Criticize the person. Instead, discuss the code. Even the perception that a comment is about a person (e.g., due to using \u201cyou\u201d or \u201cyour\u201d) distracts from the goal of improving the code. Reviewer Don\u2019t: Why are you using this approach? You\u2019re adding unnecessary complexity.",
-        "id": "2783102268",
-        "link": "https://testing.googleblog.com/2019/11/code-health-respectful-reviews-useful.html",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1573420105",
-        "time_updated": "1573420116",
-        "title": "Code Health: Respectful Reviews == Useful Reviews"
-    },
-    {
         "domain": null,
         "excerpt": null,
         "id": "25311657",
@@ -5118,28 +5477,18 @@
         "title": null
     },
     {
-        "domain": "OZY",
-        "excerpt": "",
-        "id": "926138449",
-        "link": "https://www.ozy.com/rising-stars/shubhendu-sharma-urban-forest-guru/6333",
+        "domain": "alienryderflex.com",
+        "excerpt": "Big | Circular Maze Inspired by David Eck\u2019s Java Maze page. | Send me an e-mail.",
+        "id": "291817383",
+        "link": "http://alienryderflex.com/overlappingmaze/",
         "tags": [
-            "house"
+            "coding",
+            "design",
+            "developper"
         ],
-        "time_added": "1559511021",
-        "time_updated": "1559511027",
-        "title": "https://www.ozy.com/rising-stars/shubhendu-sharma-urban-forest-guru/6333"
-    },
-    {
-        "domain": "fellowsblog.ted.com",
-        "excerpt": "Back in 2008, I was an industrial engineer at Toyota in India, helping prepare assembly lines and dispatch systems for car manufacture. One day, a scientist named Akira Miyawaki came to the factory to plant a forest on Toyota\u2019s campus.",
-        "id": "1494214064",
-        "link": "https://fellowsblog.ted.com/how-to-grow-a-forest-really-really-fast-d27df202ba09",
-        "tags": [
-            "house"
-        ],
-        "time_added": "1559511003",
-        "time_updated": "1559511011",
-        "title": "How to Grow a Forest Really, Really Fast"
+        "time_added": "1544565897",
+        "time_updated": "1544565920",
+        "title": "Overlapping (Weave) Maze Generator \u2014 Example of Animation In HTML5"
     },
     {
         "domain": "www.joelonsoftware.com",
@@ -5192,7 +5541,7 @@
         "domain": "Shane Parrish",
         "excerpt": "",
         "id": "2287617313",
-        "link": "https://www.fs.blog/2016/04/second-level-thinking/",
+        "link": "https://fs.blog/2016/04/second-order-thinking/?utm_source=hackernewsletter&utm_medium=email&utm_term=fav",
         "tags": [
             "learning",
             "self-development"
@@ -5232,13 +5581,50 @@
         "domain": "YouTube",
         "excerpt": "Subscribe for new Motivational Speeches and videos from the greatest minds every day:  https://bit.ly/motivationhubofficial\n\nTry Audible and Get 1 Free Audiobook: https://amzn.to/2VIYuZ2\n(#affiliate)\n\nThanks for watching! If you know someone who could use this video, share it with them!\n____________",
         "id": "2396600279",
-        "link": "http://www.youtube.com/watch?v=oEVnq6LIKOM",
+        "link": "https://www.youtube.com/watch?v=oEVnq6LIKOM",
         "tags": [
             "motivation"
         ],
         "time_added": "1546188661",
         "time_updated": "1546188669",
         "title": "Dwayne \"The Rock\" Johnson's Speech Will Leave You SPEECHLESS - One of the Most Eye Opening Speeches"
+    },
+    {
+        "domain": "blog.npmjs.org",
+        "excerpt": "This is an analysis of the event-stream incident of which many of you became aware earlier this week.",
+        "id": "2401838777",
+        "link": "https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident",
+        "tags": [
+            "coding",
+            "developper",
+            "hack",
+            "work"
+        ],
+        "time_added": "1543406472",
+        "time_updated": "1543406494",
+        "title": "Details about the event-stream incident"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "2404821613",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "Ars Technica",
+        "excerpt": "A half century ago, computer history took a giant leap when Douglas Engelbart\u2014then a mid-career 43-year-old engineer at Stanford Research Institute in the heart of Silicon Valley\u2014gave what has come to be known as the \"\"mother of all demos.",
+        "id": "2415498769",
+        "link": "https://arstechnica.com/information-technology/2018/12/50-years-on-were-living-the-reality-first-shown-at-the-mother-of-all-demos/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1544468663",
+        "time_updated": "1544877897",
+        "title": "50 years on, we\u2019re living the reality first shown at the \u201cMother of All Demos\u201d"
     },
     {
         "domain": "Harvard Business Review",
@@ -5455,30 +5841,6 @@
         "title": "I create presentations at Microsoft. Here\u2019s how I avoid \u201cDeath by PowerPoint\u201d"
     },
     {
-        "domain": "The Guardian",
-        "excerpt": "In most rich countries, inequality is rising, and has been rising for some time. Many people believe this is a problem, but, equally, many think there\u2019s not much we can do about it.",
-        "id": "2617105881",
-        "link": "https://www.theguardian.com/inequality/2019/jun/06/socialism-for-the-rich-the-evils-of-bad-economics",
-        "tags": [
-            "opinion"
-        ],
-        "time_added": "1560159287",
-        "time_updated": "1560159316",
-        "title": "\u2018Socialism for the rich\u2019: the evils of bad economics"
-    },
-    {
-        "domain": "Bored Panda",
-        "excerpt": "Journey through funny pun jokes and discover the true wonder of laughter! These timeless puns will leave even your dad speechless.",
-        "id": "2627329516",
-        "link": "https://www.boredpanda.com/funny-pun-jokes/",
-        "tags": [
-            "humor"
-        ],
-        "time_added": "1560612632",
-        "time_updated": "1561796374",
-        "title": "80 Funny Pun Jokes To Make Everyone Laugh At The Table"
-    },
-    {
         "domain": "dhemery.com",
         "excerpt": "Originally published in Cutter IT Journal Vol. 14 No. 10, October 2001. Imagine this scene. For months, you have been trying to solve a sticky problem in your organization. Finally, after much study, experiment, and thought, you have devised a solution.",
         "id": "45085394",
@@ -5489,20 +5851,6 @@
         "time_added": "1539198635",
         "time_updated": "1539250866",
         "title": "Resistance as a Resource"
-    },
-    {
-        "domain": "alienryderflex.com",
-        "excerpt": "Big | Circular Maze Inspired by David Eck\u2019s Java Maze page. | Send me an e-mail.",
-        "id": "291817383",
-        "link": "http://alienryderflex.com/overlappingmaze/",
-        "tags": [
-            "coding",
-            "design",
-            "developper"
-        ],
-        "time_added": "1544565897",
-        "time_updated": "1544565920",
-        "title": "Overlapping (Weave) Maze Generator \u2014 Example of Animation In HTML5"
     },
     {
         "domain": "apple.stackexchange.com",
@@ -5516,6 +5864,44 @@
         "time_added": "1534799686",
         "time_updated": "1534799712",
         "title": "Is it possible to wipe an entire iCloud Photo Library?"
+    },
+    {
+        "domain": "inspiring.online",
+        "excerpt": "Chesses is a brilliant series of chess variants by game designer/developer Pippin Barr that will challenge how you play the game by twisting the rules, the board, the pieces\u2026 more or less everything.",
+        "id": "1083969754",
+        "link": "https://theindieweb.com/",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1525797685",
+        "time_updated": "1525797695",
+        "title": "The Indie Web"
+    },
+    {
+        "domain": "FlowingData",
+        "excerpt": "",
+        "id": "1134210279",
+        "link": "http://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/",
+        "tags": [
+            "design",
+            "developper",
+            "work"
+        ],
+        "time_added": "1525766184",
+        "time_updated": "1544878931",
+        "title": "https://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/"
+    },
+    {
+        "domain": "yiwenl.github.io",
+        "excerpt": "",
+        "id": "1311144431",
+        "link": "http://yiwenl.github.io/Sketches/",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1525815637",
+        "time_updated": "1525815645",
+        "title": "Sketches | Yi-Wen Lin"
     },
     {
         "domain": "kadata.kadaster.nl",
@@ -5540,6 +5926,20 @@
         "time_added": "1543316887",
         "time_updated": "1543316895",
         "title": "The Greatest Sales Deck I\u2019ve Ever Seen"
+    },
+    {
+        "domain": "FlowingData",
+        "excerpt": "",
+        "id": "1746912394",
+        "link": "http://flowingdata.com/2017/05/17/american-workday/",
+        "tags": [
+            "design",
+            "developper",
+            "work"
+        ],
+        "time_added": "1525766209",
+        "time_updated": "1544878899",
+        "title": "https://flowingdata.com/2017/05/17/american-workday/"
     },
     {
         "domain": "blog.crisp.se",
@@ -5813,43 +6213,6 @@
         "title": "https://anaxi.com/blog/2018/11/25/do-not-measure-developers-measure-projects/"
     },
     {
-        "domain": "blog.npmjs.org",
-        "excerpt": "This is an analysis of the event-stream incident of which many of you became aware earlier this week.",
-        "id": "2401838777",
-        "link": "https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident",
-        "tags": [
-            "coding",
-            "developper",
-            "hack",
-            "work"
-        ],
-        "time_added": "1543406472",
-        "time_updated": "1543406494",
-        "title": "Details about the event-stream incident"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "2404821613",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "Ars Technica",
-        "excerpt": "A half century ago, computer history took a giant leap when Douglas Engelbart\u2014then a mid-career 43-year-old engineer at Stanford Research Institute in the heart of Silicon Valley\u2014gave what has come to be known as the \"\"mother of all demos.",
-        "id": "2415498769",
-        "link": "https://arstechnica.com/information-technology/2018/12/50-years-on-were-living-the-reality-first-shown-at-the-mother-of-all-demos/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1544468663",
-        "time_updated": "1544877897",
-        "title": "50 years on, we\u2019re living the reality first shown at the \u201cMother of All Demos\u201d"
-    },
-    {
         "domain": "wpcom-themes.svn.automattic.com",
         "excerpt": "",
         "id": "103476687",
@@ -5887,6 +6250,18 @@
         "title": "http://www.thefunctionalart.com/"
     },
     {
+        "domain": "500px",
+        "excerpt": "",
+        "id": "236378018",
+        "link": "https://500px.com/catmacbride",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1508600084",
+        "time_updated": "1508600093",
+        "title": "500px"
+    },
+    {
         "domain": "blackfire.io",
         "excerpt": "It's critical to identify and quickly resolve application performance issues\u2014before there's business impact. Blackfire gives control back to you by accelerating the discovery process and enabling long-term performance optimization, even in the event of a crisis.",
         "id": "744791708",
@@ -5909,44 +6284,6 @@
         "time_added": "1522304849",
         "time_updated": "1544879046",
         "title": "How to Send Better Email: 7 Ways To Level Up Your Email Skills Today"
-    },
-    {
-        "domain": "inspiring.online",
-        "excerpt": "Chesses is a brilliant series of chess variants by game designer/developer Pippin Barr that will challenge how you play the game by twisting the rules, the board, the pieces\u2026 more or less everything.",
-        "id": "1083969754",
-        "link": "https://theindieweb.com/",
-        "tags": [
-            "design"
-        ],
-        "time_added": "1525797685",
-        "time_updated": "1525797695",
-        "title": "The Indie Web"
-    },
-    {
-        "domain": "FlowingData",
-        "excerpt": "",
-        "id": "1134210279",
-        "link": "http://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/",
-        "tags": [
-            "design",
-            "developper",
-            "work"
-        ],
-        "time_added": "1525766184",
-        "time_updated": "1544878931",
-        "title": "https://flowingdata.com/2015/12/15/a-day-in-the-life-of-americans/"
-    },
-    {
-        "domain": "yiwenl.github.io",
-        "excerpt": "",
-        "id": "1311144431",
-        "link": "http://yiwenl.github.io/Sketches/",
-        "tags": [
-            "design"
-        ],
-        "time_added": "1525815637",
-        "time_updated": "1525815645",
-        "title": "Sketches | Yi-Wen Lin"
     },
     {
         "domain": "GitHub",
@@ -6000,7 +6337,7 @@
     },
     {
         "domain": "YouTube",
-        "excerpt": "InfoQ Dev Summit Boston, a two-day conference of actionable advice from senior software developers hosted by InfoQ, will take place on June 24-25, 2024 Boston, Massachusetts. \n\nDeep-dive into 20+ talks from senior software developers over 2 days with parallel breakout sessions. Clarify your immediat",
+        "excerpt": "QCon San Francisco, the international software conference, returns November 17-21, 2025. Join senior software practitioners from early adopter companies as they share real-world insights and actionable advice to help you adopt the right technologies and practices.\n\nGain exposure to innovative approa",
         "id": "1621762073",
         "link": "https://www.youtube.com/watch?v=CZ3wIuvmHeM",
         "tags": [
@@ -6024,18 +6361,17 @@
         "title": "https://sidewaysdictionary.com/#/"
     },
     {
-        "domain": "FlowingData",
+        "domain": "Medium",
         "excerpt": "",
-        "id": "1746912394",
-        "link": "http://flowingdata.com/2017/05/17/american-workday/",
+        "id": "1720304108",
+        "link": "https://medium.com/@mbostock/a-better-way-to-code-2b1d2876a3a0",
         "tags": [
-            "design",
-            "developper",
-            "work"
+            "coding",
+            "design"
         ],
-        "time_added": "1525766209",
-        "time_updated": "1544878899",
-        "title": "https://flowingdata.com/2017/05/17/american-workday/"
+        "time_added": "1500720518",
+        "time_updated": "1521153349",
+        "title": "https://medium.com/@mbostock/a-better-way-to-code-2b1d2876a3a0"
     },
     {
         "domain": "www.visualnews.com",
@@ -6048,6 +6384,31 @@
         "time_added": "1509097976",
         "time_updated": "1509097986",
         "title": "http://www.visualnews.com/2017/07/04/pick-best-data-visualization-format-story/"
+    },
+    {
+        "domain": "spandan-madan.github.io",
+        "excerpt": "In the fall of 2016, I was a Teaching Fellow (Harvard's version of TA) for the graduate class on \"Advanced Topics in Data Science (CS209/109)\" at Harvard University.",
+        "id": "1820228654",
+        "link": "https://spandan-madan.github.io/DeepLearningProject/",
+        "tags": [
+            "design",
+            "developper"
+        ],
+        "time_added": "1500237513",
+        "time_updated": "1500237528",
+        "title": "Deep_Learning_Project"
+    },
+    {
+        "domain": "www.toomas.net",
+        "excerpt": "",
+        "id": "1824987067",
+        "link": "http://www.toomas.net/2017/07/18/reverse-engineering-a-successful-lifestyle-business-heres-everything-ive-learned-from-reading-indiehackers-com/",
+        "tags": [
+            "ideas"
+        ],
+        "time_added": "1500484613",
+        "time_updated": "1500484626",
+        "title": "http://www.toomas.net/2017/07/18/reverse-engineering-a-successful-lifestyle-business-heres-everything-ive-learned-from-reading-indiehackers-com/"
     },
     {
         "domain": "GitHub",
@@ -6242,16 +6603,16 @@
         "title": "P01\u2728 CREATIVE CODER & TECHNICAL SPEAKER \u2014 @p01"
     },
     {
-        "domain": "500px",
+        "domain": "Google",
         "excerpt": "",
-        "id": "236378018",
-        "link": "https://500px.com/catmacbride",
+        "id": "364006560",
+        "link": "http://www.google.com/trends/hottrends/visualize?pn=p1",
         "tags": [
-            "design"
+            "useless"
         ],
-        "time_added": "1508600084",
-        "time_updated": "1508600093",
-        "title": "500px"
+        "time_added": "1479938282",
+        "time_updated": "1731702827",
+        "title": "Google Trends - Hot Searches"
     },
     {
         "domain": null,
@@ -6262,6 +6623,18 @@
         "time_added": null,
         "time_updated": null,
         "title": null
+    },
+    {
+        "domain": "lifehacker.com",
+        "excerpt": "",
+        "id": "560705050",
+        "link": "http://lifehac.kr/GbzQr9K",
+        "tags": [
+            "rom"
+        ],
+        "time_added": "1483175754",
+        "time_updated": "1483175758",
+        "title": "https://lifehacker.com/5789397/the-always-up-to-date-guide-to-rooting-any-android-phone"
     },
     {
         "domain": "www.gartner.com",
@@ -6424,6 +6797,18 @@
         "title": "Click click click"
     },
     {
+        "domain": "forum.xda-developers.com",
+        "excerpt": "The one I flashed was Iphone 6 plus clone (MTK6572)MTK DROID TOOLS.rar and the phone now boots with display and everything. SIM card / phone and data connection also works now! When I first received the phone, it would not connect to my carrier.",
+        "id": "1506945147",
+        "link": "https://xdaforums.com/t/resolved-fake-iphone-6-plus-mtk65xx-phone-identifying-help.3304762/",
+        "tags": [
+            "rom"
+        ],
+        "time_added": "1483175740",
+        "time_updated": "1483175746",
+        "title": "[Resolved] [Resolved] Fake iPhone 6 Plus - MTK65xx phone identifying HELP"
+    },
+    {
         "domain": "lines.chromeexperiments.com",
         "excerpt": "Satellite images provide a wealth of visual data from which we can visualize in interesting ways. Land Lines is an experiment that lets you explore Google Earth satellite imagery through gesture.",
         "id": "1519679309",
@@ -6434,6 +6819,18 @@
         "time_added": "1484904969",
         "time_updated": "1484904976",
         "title": "Land Lines"
+    },
+    {
+        "domain": "Dezeen",
+        "excerpt": "One end of this larch-clad retirement residence in the English countryside by Str\u00f6m Architects cantilevers over a wall to protect a parking spot for a vintage Aston Martin.",
+        "id": "1549073888",
+        "link": "https://www.dezeen.com/2017/01/05/strom-architects-retirement-house-the-quest-cantilever-bungalow-dorset-england/",
+        "tags": [
+            "house"
+        ],
+        "time_added": "1483807841",
+        "time_updated": "1599027828",
+        "title": "Str\u00f6m Architects completes contemporary bungalow for retired couple"
     },
     {
         "domain": "static.dezeen.com",
@@ -6510,19 +6907,6 @@
         "title": "13 British Castles You Can Rent For Under $100 Per Night"
     },
     {
-        "domain": "Medium",
-        "excerpt": "",
-        "id": "1720304108",
-        "link": "https://medium.com/@mbostock/a-better-way-to-code-2b1d2876a3a0",
-        "tags": [
-            "coding",
-            "design"
-        ],
-        "time_added": "1500720518",
-        "time_updated": "1521153349",
-        "title": "https://medium.com/@mbostock/a-better-way-to-code-2b1d2876a3a0"
-    },
-    {
         "domain": "Inhabitat",
         "excerpt": "",
         "id": "1733845214",
@@ -6559,31 +6943,6 @@
         "title": "https://careers.fedex.com/services/jobs/26087-261383/Director+IT"
     },
     {
-        "domain": "spandan-madan.github.io",
-        "excerpt": "In the fall of 2016, I was a Teaching Fellow (Harvard's version of TA) for the graduate class on \"Advanced Topics in Data Science (CS209/109)\" at Harvard University.",
-        "id": "1820228654",
-        "link": "https://spandan-madan.github.io/DeepLearningProject/",
-        "tags": [
-            "design",
-            "developper"
-        ],
-        "time_added": "1500237513",
-        "time_updated": "1500237528",
-        "title": "Deep_Learning_Project"
-    },
-    {
-        "domain": "www.toomas.net",
-        "excerpt": "",
-        "id": "1824987067",
-        "link": "http://www.toomas.net/2017/07/18/reverse-engineering-a-successful-lifestyle-business-heres-everything-ive-learned-from-reading-indiehackers-com/",
-        "tags": [
-            "ideas"
-        ],
-        "time_added": "1500484613",
-        "time_updated": "1500484626",
-        "title": "http://www.toomas.net/2017/07/18/reverse-engineering-a-successful-lifestyle-business-heres-everything-ive-learned-from-reading-indiehackers-com/"
-    },
-    {
         "domain": null,
         "excerpt": null,
         "id": "87198",
@@ -6607,16 +6966,16 @@
     },
     {
         "domain": "addyosmani.com",
-        "excerpt": "",
+        "excerpt": "StumbleUpon Stumble! \u00ae For the best of the web, one click at a time TopicsAbout Stumble! \u00ae Log in",
         "id": "55507692",
-        "link": "https://j.mp/zcQ4RP",
+        "link": "https://www.stumbleupon.com/",
         "tags": [
             "coding",
             "learning"
         ],
         "time_added": "1471467704",
         "time_updated": "1731702935",
-        "title": "https://addyosmani.com/resources/essentialjsdesignpatterns/book/"
+        "title": "Expand your mind"
     },
     {
         "domain": "soulwire.co.uk",
@@ -6683,28 +7042,16 @@
         "title": "http://codepen.io/soulwire/pen/Ffvlo"
     },
     {
-        "domain": "Google",
-        "excerpt": "",
-        "id": "364006560",
-        "link": "http://www.google.com/trends/hottrends/visualize?pn=p1",
+        "domain": "davidwalsh.name",
+        "excerpt": "You've probably heard the talk around the water cooler about how promises are the future. All of the cool kids are using them, but you don't see what makes them so special.",
+        "id": "593774995",
+        "link": "https://davidwalsh.name/write-javascript-promises",
         "tags": [
-            "useless"
+            "work"
         ],
-        "time_added": "1479938282",
-        "time_updated": "1731702827",
-        "title": "Google Trends - Hot Searches"
-    },
-    {
-        "domain": "lifehacker.com",
-        "excerpt": "",
-        "id": "560705050",
-        "link": "http://lifehac.kr/GbzQr9K",
-        "tags": [
-            "rom"
-        ],
-        "time_added": "1483175754",
-        "time_updated": "1483175758",
-        "title": "https://lifehacker.com/5789397/the-always-up-to-date-guide-to-rooting-any-android-phone"
+        "time_added": "1469293744",
+        "time_updated": "1469523180",
+        "title": "Write Better JavaScript with Promises"
     },
     {
         "domain": "CodePen",
@@ -6729,6 +7076,19 @@
         "time_added": "1471181549",
         "time_updated": "1471181556",
         "title": "WordPress Agentur in Berlin \u2013 Websites, die performen"
+    },
+    {
+        "domain": "Medium",
+        "excerpt": "Even better: assign the $.ajax() method to a variable, for which you can chain promise callbacks to. Chaining has always been a hallmark of jQuery, which allows one to reuse a cached selector, for example. In this case, the $.",
+        "id": "791849021",
+        "link": "https://medium.com/coding-design/writing-better-ajax-8ee4a7fb95f",
+        "tags": [
+            "developper",
+            "learning"
+        ],
+        "time_added": "1469523211",
+        "time_updated": "1731702959",
+        "title": "Writing better AJAX"
     },
     {
         "domain": "www.addtoany.com",
@@ -6767,6 +7127,29 @@
         "time_added": "1479937861",
         "time_updated": "1548327148",
         "title": "https://codepen.io/ykob/full/zGpjeK/"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "1362035452",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "Smashing Magazine",
+        "excerpt": "28 min read Tools, Coding, SVG Share on Twitter, LinkedIn Start with $100 Credits! Smart Interface Design Checklists 11 Habits of Highly Effective Developers Try monday dev for free! Smart Interface Design Patterns, 10h video + UX training Click here to kickstart your project for free in a matter of",
+        "id": "1362080671",
+        "link": "https://www.smashingmagazine.com/2016/07/an-svg-animation-case-study/",
+        "tags": [
+            "design",
+            "developper"
+        ],
+        "time_added": "1470215066",
+        "time_updated": "1470215077",
+        "title": "The Illusion Of Life: An SVG Animation Case Study"
     },
     {
         "domain": "benfrain.com",
@@ -6925,30 +7308,6 @@
         "title": "RandomStreetView.com shows random streetview images from around the world. An extraordinarily addictive and fun site."
     },
     {
-        "domain": "forum.xda-developers.com",
-        "excerpt": "The one I flashed was Iphone 6 plus clone (MTK6572)MTK DROID TOOLS.rar and the phone now boots with display and everything. SIM card / phone and data connection also works now! When I first received the phone, it would not connect to my carrier.",
-        "id": "1506945147",
-        "link": "https://xdaforums.com/t/resolved-fake-iphone-6-plus-mtk65xx-phone-identifying-help.3304762/",
-        "tags": [
-            "rom"
-        ],
-        "time_added": "1483175740",
-        "time_updated": "1483175746",
-        "title": "[Resolved] [Resolved] Fake iPhone 6 Plus - MTK65xx phone identifying HELP"
-    },
-    {
-        "domain": "Dezeen",
-        "excerpt": "One end of this larch-clad retirement residence in the English countryside by Str\u00f6m Architects cantilevers over a wall to protect a parking spot for a vintage Aston Martin.",
-        "id": "1549073888",
-        "link": "https://www.dezeen.com/2017/01/05/strom-architects-retirement-house-the-quest-cantilever-bungalow-dorset-england/",
-        "tags": [
-            "house"
-        ],
-        "time_added": "1483807841",
-        "time_updated": "1599027828",
-        "title": "Str\u00f6m Architects completes contemporary bungalow for retired couple"
-    },
-    {
         "domain": "www.heathersolomon.com",
         "excerpt": "Homecoming, special events, parties and more. Home or office, every doorway needs some pizazz.",
         "id": "6611716",
@@ -7043,18 +7402,6 @@
         "title": null
     },
     {
-        "domain": "davidwalsh.name",
-        "excerpt": "You've probably heard the talk around the water cooler about how promises are the future. All of the cool kids are using them, but you don't see what makes them so special.",
-        "id": "593774995",
-        "link": "https://davidwalsh.name/write-javascript-promises",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1469293744",
-        "time_updated": "1469523180",
-        "title": "Write Better JavaScript with Promises"
-    },
-    {
         "domain": "msdn.microsoft.com",
         "excerpt": "Summary: Learn how to use Microsoft SharePoint Designer 2010 to modify the look and feel of Web Part headers in Microsoft SharePoint 2010 by using CSS only, or by using background images.",
         "id": "622333507",
@@ -7067,6 +7414,16 @@
         "title": "Customizing SharePoint 2010 Web Part User Interfaces (Wrox)"
     },
     {
+        "domain": null,
+        "excerpt": null,
+        "id": "625723723",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
         "domain": "msdn.microsoft.com",
         "excerpt": "",
         "id": "736962813",
@@ -7077,19 +7434,6 @@
         "time_added": "1467314646",
         "time_updated": "1469442238",
         "title": "JavaScript Class Library"
-    },
-    {
-        "domain": "Medium",
-        "excerpt": "Even better: assign the $.ajax() method to a variable, for which you can chain promise callbacks to. Chaining has always been a hallmark of jQuery, which allows one to reuse a cached selector, for example. In this case, the $.",
-        "id": "791849021",
-        "link": "https://medium.com/coding-design/writing-better-ajax-8ee4a7fb95f",
-        "tags": [
-            "developper",
-            "learning"
-        ],
-        "time_added": "1469523211",
-        "time_updated": "1731702959",
-        "title": "Writing better AJAX"
     },
     {
         "domain": "www.houseplans.com",
@@ -7163,6 +7507,36 @@
         "time_added": "1466853157",
         "time_updated": "1466853157",
         "title": "4 Beds 5.5 Baths 3878 Sq/Ft Plan #92"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "1303410140",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "1303447599",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "1303451647",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
     },
     {
         "domain": null,
@@ -7282,29 +7656,6 @@
         "title": "http://www.fubiz.net/2016/07/19/stunning-pictures-of-budapest-buildings-from-the-floor/?utm_source=feedly&utm_medium=webfeeds"
     },
     {
-        "domain": null,
-        "excerpt": null,
-        "id": "1362035452",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "Smashing Magazine",
-        "excerpt": "28 min read Tools, Coding, SVG Share on Twitter, LinkedIn Start with $100 Credits! Smart Interface Design Checklists 11 Habits of Highly Effective Developers Try monday dev for free! Smart Interface Design Patterns, 10h video + UX training Click here to kickstart your project for free in a matter of",
-        "id": "1362080671",
-        "link": "https://www.smashingmagazine.com/2016/07/an-svg-animation-case-study/",
-        "tags": [
-            "design",
-            "developper"
-        ],
-        "time_added": "1470215066",
-        "time_updated": "1470215077",
-        "title": "The Illusion Of Life: An SVG Animation Case Study"
-    },
-    {
         "domain": "killercoversoftheweek.blogspot.com",
         "excerpt": "Hot Lips, by Jack Hanley (Intimate, 1952). As to the cover of Hot Lips, it was painted by Warren King (1916-1968). In addition to creating magazine illustrations and book covers, King was a longtime editorial cartoonist for the New York Daily News and a comic-book artist.",
         "id": "18296502",
@@ -7355,16 +7706,6 @@
         "title": "Side Trips in Memphis"
     },
     {
-        "domain": null,
-        "excerpt": null,
-        "id": "625723723",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
         "domain": "www.nerdpix.com",
         "excerpt": "",
         "id": "756755942",
@@ -7375,6 +7716,18 @@
         "time_added": "1450876742",
         "time_updated": "1450876756",
         "title": "nerdpix.com is coming soon"
+    },
+    {
+        "domain": "anna.vc",
+        "excerpt": "",
+        "id": "862304166",
+        "link": "https://docky.ly/park/anna.vc/post/112863438962/how-to-think-using-visual-analogies",
+        "tags": [
+            "design"
+        ],
+        "time_added": "1441129908",
+        "time_updated": "1731250869",
+        "title": "http://anna.vc/post/112863438962/how-to-think-using-visual-analogies"
     },
     {
         "domain": "Thrillist",
@@ -7414,6 +7767,18 @@
         "title": "impress/impress.js"
     },
     {
+        "domain": "Digital Photography School",
+        "excerpt": "This article was updated in December 2023 with contributions from Darren Rowse, Andrew Suryono, Yauhen Zaremba, Simon Bond, Nicholas Moeggenberg, and Christina N Dickson. Photography contests are a wonderful way to improve your photography.",
+        "id": "1019027589",
+        "link": "https://digital-photography-school.com/?p=2050",
+        "tags": [
+            "photo"
+        ],
+        "time_added": "1440355115",
+        "time_updated": "1441085175",
+        "title": "How to Win a Photography Contest (11 Expert Tips)"
+    },
+    {
         "domain": "Smashing Magazine",
         "excerpt": "22 min read CSS, JavaScript, Techniques Share on Twitter, LinkedIn How To Measure UX and Design Impact, with Vitaly Friedman 11 Habits of Highly Effective Developers Smart Interface Design Checklists Click here to kickstart your project for free in a matter of minutes.",
         "id": "1022131087",
@@ -7424,6 +7789,31 @@
         "time_added": "1455991872",
         "time_updated": "1455991888",
         "title": "99 Powerful New CSS- and JavaScript Techniques"
+    },
+    {
+        "domain": "flip.it",
+        "excerpt": "",
+        "id": "1026751256",
+        "link": "http://flip.it/cS8Yu",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1440947024",
+        "time_updated": "1544879029",
+        "title": "http://flip.it/cS8Yu"
+    },
+    {
+        "domain": "www.coolinfographics.com",
+        "excerpt": "What Exactly Is The \"Internet of Things\"? is a good infographic primer of the coming storm we call the IoT. Designed in partnership by both Postscapes and Harbor Research.",
+        "id": "1027509120",
+        "link": "https://coolinfographics.com/blog/2015/8/31/what-exactly-is-the-internet-of-things.html",
+        "tags": [
+            "design",
+            "hardware"
+        ],
+        "time_added": "1441130091",
+        "time_updated": "1731250906",
+        "title": "What Exactly Is The \"Internet of Things\"? \u2014 Cool Infographics"
     },
     {
         "domain": "Lifehacker",
@@ -7442,7 +7832,7 @@
         "domain": "www.suissemania.ch",
         "excerpt": "Commandez en ligne et gagnez du temps - nous vous livrons vos courses \u00e0 votre porte. 12'500 produits Migros \u00e0 prix Migros et articles de marque",
         "id": "1034141852",
-        "link": "https://www.migros.ch/",
+        "link": "https://www.migros.ch",
         "tags": [
             "design",
             "kids"
@@ -7628,36 +8018,6 @@
         "title": null
     },
     {
-        "domain": null,
-        "excerpt": null,
-        "id": "1303410140",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "1303447599",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "1303451647",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
         "domain": "www.freemaptools.com",
         "excerpt": "",
         "id": "32434152",
@@ -7680,6 +8040,18 @@
         "time_added": "1431696303",
         "time_updated": "1431696312",
         "title": "23. Gap Analysis"
+    },
+    {
+        "domain": "www.gartner.com",
+        "excerpt": "",
+        "id": "320421466",
+        "link": "http://www.gartner.com/technology/topics/information-security.jsp",
+        "tags": [
+            "infosec"
+        ],
+        "time_added": "1431457585",
+        "time_updated": "1431954945",
+        "title": "http://www.gartner.com/technology/topics/information-security.jsp"
     },
     {
         "domain": null,
@@ -7716,6 +8088,18 @@
         "title": "http://cybersecurity.ieee.org/center-for-secure-design/earn-or-give-but-never-assume-trust.html"
     },
     {
+        "domain": "CIO",
+        "excerpt": "",
+        "id": "787380220",
+        "link": "http://www.cio.com/article/2857673/security0/5-information-security-trends-that-will-dominate-2015.html",
+        "tags": [
+            "infosec"
+        ],
+        "time_added": "1431456616",
+        "time_updated": "1431525174",
+        "title": "http://www.cio.com/article/2857673/security0/5-information-security-trends-that-will-dominate-2015.html"
+    },
+    {
         "domain": "gohighbrow.com",
         "excerpt": "Our lives are built around conversations. Our friendships, our acquaintances\u2014all our relationships, including how we\u2026 There are many daily journal methods out there. Most people find that they don\u2019t stick\u2026.",
         "id": "795200062",
@@ -7728,16 +8112,29 @@
         "title": "Highbrow | Learn Something New Every Day. Join for Free!"
     },
     {
-        "domain": "anna.vc",
-        "excerpt": "",
-        "id": "862304166",
-        "link": "https://docky.ly/park/anna.vc/post/112863438962/how-to-think-using-visual-analogies",
+        "domain": "digitalguardian.com",
+        "excerpt": "Cloud computing is quickly becoming a mainstay for many technology companies today because of its superior flexibility, accessibility, and capacity compared to traditional online computing and storage methods.",
+        "id": "795838251",
+        "link": "https://www.digitalguardian.com/blog/27-data-security-experts-reveal-1-information-security-issue-most-companies-face-cloud",
         "tags": [
+            "infosec"
+        ],
+        "time_added": "1431458194",
+        "time_updated": "1431525160",
+        "title": "27 Data Security Experts Reveal The #1 Information Security Issue Most Companies Face With Cloud Computing & Storage"
+    },
+    {
+        "domain": "content.lib.utah.edu",
+        "excerpt": "",
+        "id": "922576771",
+        "link": "https://collections.lib.utah.edu/details?id=204451",
+        "tags": [
+            "books",
             "design"
         ],
-        "time_added": "1441129908",
-        "time_updated": "1731250869",
-        "title": "http://anna.vc/post/112863438962/how-to-think-using-visual-analogies"
+        "time_added": "1431466665",
+        "time_updated": "1431525237",
+        "title": "Wasmuth Portfolio - Volume 1 | Rare Books Collection"
     },
     {
         "domain": "www.cigital.com",
@@ -7984,43 +8381,6 @@
         "title": "http://flowingdata.com/2015/08/20/lessons-in-statistical-significance-uncertainty-and-their-role-in-science/"
     },
     {
-        "domain": "Digital Photography School",
-        "excerpt": "This article was updated in December 2023 with contributions from Darren Rowse, Andrew Suryono, Yauhen Zaremba, Simon Bond, Nicholas Moeggenberg, and Christina N Dickson. Photography contests are a wonderful way to improve your photography.",
-        "id": "1019027589",
-        "link": "https://digital-photography-school.com/?p=2050",
-        "tags": [
-            "photo"
-        ],
-        "time_added": "1440355115",
-        "time_updated": "1441085175",
-        "title": "How to Win a Photography Contest (11 Expert Tips)"
-    },
-    {
-        "domain": "flip.it",
-        "excerpt": "",
-        "id": "1026751256",
-        "link": "http://flip.it/cS8Yu",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1440947024",
-        "time_updated": "1544879029",
-        "title": "http://flip.it/cS8Yu"
-    },
-    {
-        "domain": "www.coolinfographics.com",
-        "excerpt": "What Exactly Is The \"Internet of Things\"? is a good infographic primer of the coming storm we call the IoT. Designed in partnership by both Postscapes and Harbor Research.",
-        "id": "1027509120",
-        "link": "https://coolinfographics.com/blog/2015/8/31/what-exactly-is-the-internet-of-things.html",
-        "tags": [
-            "design",
-            "hardware"
-        ],
-        "time_added": "1441130091",
-        "time_updated": "1731250906",
-        "title": "What Exactly Is The \"Internet of Things\"? \u2014 Cool Infographics"
-    },
-    {
         "domain": "blogs.forrester.com",
         "excerpt": "",
         "id": "122405954",
@@ -8031,42 +8391,6 @@
         "time_added": "1431456283",
         "time_updated": "1431954626",
         "title": "http://blogs.forrester.com/edward_ferrara/11-12-10-infosec_enterprise_architecture_building_codes"
-    },
-    {
-        "domain": "www.gartner.com",
-        "excerpt": "",
-        "id": "320421466",
-        "link": "http://www.gartner.com/technology/topics/information-security.jsp",
-        "tags": [
-            "infosec"
-        ],
-        "time_added": "1431457585",
-        "time_updated": "1431954945",
-        "title": "http://www.gartner.com/technology/topics/information-security.jsp"
-    },
-    {
-        "domain": "CIO",
-        "excerpt": "",
-        "id": "787380220",
-        "link": "http://www.cio.com/article/2857673/security0/5-information-security-trends-that-will-dominate-2015.html",
-        "tags": [
-            "infosec"
-        ],
-        "time_added": "1431456616",
-        "time_updated": "1431525174",
-        "title": "http://www.cio.com/article/2857673/security0/5-information-security-trends-that-will-dominate-2015.html"
-    },
-    {
-        "domain": "digitalguardian.com",
-        "excerpt": "Cloud computing is quickly becoming a mainstay for many technology companies today because of its superior flexibility, accessibility, and capacity compared to traditional online computing and storage methods.",
-        "id": "795838251",
-        "link": "https://www.digitalguardian.com/blog/27-data-security-experts-reveal-1-information-security-issue-most-companies-face-cloud",
-        "tags": [
-            "infosec"
-        ],
-        "time_added": "1431458194",
-        "time_updated": "1431525160",
-        "title": "27 Data Security Experts Reveal The #1 Information Security Issue Most Companies Face With Cloud Computing & Storage"
     },
     {
         "domain": "www.thebrusselstimes.com",
@@ -8083,12 +8407,62 @@
     {
         "domain": null,
         "excerpt": null,
+        "id": "831882289",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "www.fubiz.net",
+        "excerpt": "",
+        "id": "841341757",
+        "link": "http://www.fubiz.net/2015/02/11/the-ostberg-bench/",
+        "tags": [
+            "design",
+            "furniture",
+            "house"
+        ],
+        "time_added": "1423909301",
+        "time_updated": "1731244560",
+        "title": "http://www.fubiz.net/2015/02/11/the-ostberg-bench/"
+    },
+    {
+        "domain": "www.fubiz.net",
+        "excerpt": "",
+        "id": "843861582",
+        "link": "http://www.fubiz.net/2015/02/14/container-house/",
+        "tags": [
+            "design",
+            "house"
+        ],
+        "time_added": "1424027500",
+        "time_updated": "1731244571",
+        "title": "http://www.fubiz.net/2015/02/14/container-house/"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
         "id": "844513705",
         "link": null,
         "tags": null,
         "time_added": null,
         "time_updated": null,
         "title": null
+    },
+    {
+        "domain": "www.fubiz.net",
+        "excerpt": "",
+        "id": "847846718",
+        "link": "http://www.fubiz.net/2015/02/19/the-atlas-of-beauty-photography/",
+        "tags": [
+            "inspiration",
+            "photo"
+        ],
+        "time_added": "1424813299",
+        "time_updated": "1731244606",
+        "title": "http://www.fubiz.net/2015/02/19/the-atlas-of-beauty-photography/"
     },
     {
         "domain": "www.visualnews.com",
@@ -8337,19 +8711,6 @@
         "title": "https://www.kickstarter.com/projects/1598272670/chip-the-worlds-first-9-computer/description"
     },
     {
-        "domain": "content.lib.utah.edu",
-        "excerpt": "",
-        "id": "922576771",
-        "link": "https://collections.lib.utah.edu/details?id=204451",
-        "tags": [
-            "books",
-            "design"
-        ],
-        "time_added": "1431466665",
-        "time_updated": "1431525237",
-        "title": "Wasmuth Portfolio - Volume 1 | Rare Books Collection"
-    },
-    {
         "domain": "www.pascalcampion.com",
         "excerpt": "Your shopping cart is empty. Your shopping cart is empty.",
         "id": "88479",
@@ -8375,6 +8736,18 @@
         "title": "http://www.canadianmountainholidays.com/"
     },
     {
+        "domain": "Google",
+        "excerpt": "",
+        "id": "173388743",
+        "link": "http://www.google.com/producer/editions/CAowlacC/fast_company/CAIiEET9dr1g4zBGGPv8bfJBWLoqFQgEKg0IACoGCAowlacCMKBPMIGfAg/why_good_enough_is_better_lessons_in_sim",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1409918813",
+        "time_updated": "1544879025",
+        "title": "http://www.fastcoexist.com/1679885/why-good-enough-is-better-lessons-in-simplicity-from-emerging-markets"
+    },
+    {
         "domain": "nosigner.com",
         "excerpt": "",
         "id": "233618944",
@@ -8385,6 +8758,18 @@
         "time_added": "1417367252",
         "time_updated": "1420807132",
         "title": "http://nosigner.com/case/the-moon/"
+    },
+    {
+        "domain": "www.tlnt.com",
+        "excerpt": "",
+        "id": "337664458",
+        "link": "http://www.tlnt.com/2013/04/17/think-we-have-skills-shortages-now-just-wait-until-2020/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1409918826",
+        "time_updated": "1544878982",
+        "title": "http://www.tlnt.com/2013/04/17/think-we-have-skills-shortages-now-just-wait-until-2020/"
     },
     {
         "domain": null,
@@ -8417,6 +8802,30 @@
         "time_added": "1423386715",
         "time_updated": "1731244492",
         "title": "http://www.esquire.co.uk/culture/article/6024/50-songs-that-make-us-feel-like-men/"
+    },
+    {
+        "domain": "Fortune",
+        "excerpt": "For most of the past 20 years trade has raced ahead of global economic growth, usually at about double its pace. GDP grew by 3.5% in 2006, the last healthy, pre-crisis year, and trade at 8%. This was, it seemed, a golden ratchet binding the planet ever closer.",
+        "id": "707381379",
+        "link": "https://fortune.com/2012/11/20/globalism-goes-backward/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1409918790",
+        "time_updated": "1544879017",
+        "title": "Globalism goes backward"
+    },
+    {
+        "domain": "Fortune",
+        "excerpt": "No one can predict if Ghosn\u2019s new vision will work. His previous rethinking of the business, the all-electric Leaf, hasn\u2019t amounted to much so far. But applaud Ghosn for this: He is trying to develop the most crucial competency for every company today, innovating the business model.",
+        "id": "707381519",
+        "link": "https://fortune.com/2013/02/25/your-business-model-is-obsolete/",
+        "tags": [
+            "work"
+        ],
+        "time_added": "1409918802",
+        "time_updated": "1544879021",
+        "title": "Your business model is obsolete"
     },
     {
         "domain": "blog.lastpass.com",
@@ -8657,68 +9066,6 @@
         "title": "Prototyping iOS And Android Apps With Sketch (With A Freebie!)"
     },
     {
-        "domain": null,
-        "excerpt": null,
-        "id": "831882289",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "www.fubiz.net",
-        "excerpt": "",
-        "id": "841341757",
-        "link": "http://www.fubiz.net/2015/02/11/the-ostberg-bench/",
-        "tags": [
-            "design",
-            "furniture",
-            "house"
-        ],
-        "time_added": "1423909301",
-        "time_updated": "1731244560",
-        "title": "http://www.fubiz.net/2015/02/11/the-ostberg-bench/"
-    },
-    {
-        "domain": "www.fubiz.net",
-        "excerpt": "",
-        "id": "843861582",
-        "link": "http://www.fubiz.net/2015/02/14/container-house/",
-        "tags": [
-            "design",
-            "house"
-        ],
-        "time_added": "1424027500",
-        "time_updated": "1731244571",
-        "title": "http://www.fubiz.net/2015/02/14/container-house/"
-    },
-    {
-        "domain": "www.fubiz.net",
-        "excerpt": "",
-        "id": "847846718",
-        "link": "http://www.fubiz.net/2015/02/19/the-atlas-of-beauty-photography/",
-        "tags": [
-            "inspiration",
-            "photo"
-        ],
-        "time_added": "1424813299",
-        "time_updated": "1731244606",
-        "title": "http://www.fubiz.net/2015/02/19/the-atlas-of-beauty-photography/"
-    },
-    {
-        "domain": "Google",
-        "excerpt": "",
-        "id": "173388743",
-        "link": "http://www.google.com/producer/editions/CAowlacC/fast_company/CAIiEET9dr1g4zBGGPv8bfJBWLoqFQgEKg0IACoGCAowlacCMKBPMIGfAg/why_good_enough_is_better_lessons_in_sim",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1409918813",
-        "time_updated": "1544879025",
-        "title": "http://www.fastcoexist.com/1679885/why-good-enough-is-better-lessons-in-simplicity-from-emerging-markets"
-    },
-    {
         "domain": "Forbes",
         "excerpt": "A Great American Rethink is well underway. The technological, informational and inspirational barriers to changing any and everything about our lives, our careers, our families and our businesses have evaporated.",
         "id": "189877658",
@@ -8729,18 +9076,6 @@
         "time_added": "1409918771",
         "time_updated": "1544879008",
         "title": "The Transformational Consumer: The $300 Billion-plus Opportunity Most Entrepreneurs Have Never Heard Of"
-    },
-    {
-        "domain": "www.tlnt.com",
-        "excerpt": "",
-        "id": "337664458",
-        "link": "http://www.tlnt.com/2013/04/17/think-we-have-skills-shortages-now-just-wait-until-2020/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1409918826",
-        "time_updated": "1544878982",
-        "title": "http://www.tlnt.com/2013/04/17/think-we-have-skills-shortages-now-just-wait-until-2020/"
     },
     {
         "domain": "canopy.co",
@@ -8775,6 +9110,53 @@
         "time_added": null,
         "time_updated": null,
         "title": null
+    },
+    {
+        "domain": "feedproxy.google.com",
+        "excerpt": "",
+        "id": "570463224",
+        "link": "http://feedproxy.google.com/~r/ILoveTypography/~3/3UTlJ4utI3M/",
+        "tags": [
+            "design",
+            "developper"
+        ],
+        "time_added": "1396181846",
+        "time_updated": "1420806076",
+        "title": "http://feedproxy.google.com/~r/ILoveTypography/~3/3UTlJ4utI3M/"
+    },
+    {
+        "domain": "Digital Photography School",
+        "excerpt": "Without experience, looking at the endless functions and dials on a camera can seem daunting, and it is at first, especially with many of the newer digital cameras that have about 5,000 functions (I\u2019m looking at you Nikon).",
+        "id": "579463252",
+        "link": "https://digital-photography-school.com/new-photographers-guide-camera-settings/",
+        "tags": [
+            "photo"
+        ],
+        "time_added": "1396773649",
+        "time_updated": "1420806229",
+        "title": "A New Photographer\u2019s Guide to Camera Settings"
+    },
+    {
+        "domain": null,
+        "excerpt": null,
+        "id": "580053650",
+        "link": null,
+        "tags": null,
+        "time_added": null,
+        "time_updated": null,
+        "title": null
+    },
+    {
+        "domain": "feedproxy.google.com",
+        "excerpt": "",
+        "id": "581221941",
+        "link": "http://feedproxy.google.com/~r/DigitalPhotographySchool/~3/gZRitiQ6Wns/",
+        "tags": [
+            "photo"
+        ],
+        "time_added": "1396772776",
+        "time_updated": "1420806220",
+        "title": "http://feedproxy.google.com/~r/DigitalPhotographySchool/~3/gZRitiQ6Wns/"
     },
     {
         "domain": "www.dwell.com",
@@ -9022,30 +9404,6 @@
         "title": null
     },
     {
-        "domain": "Fortune",
-        "excerpt": "For most of the past 20 years trade has raced ahead of global economic growth, usually at about double its pace. GDP grew by 3.5% in 2006, the last healthy, pre-crisis year, and trade at 8%. This was, it seemed, a golden ratchet binding the planet ever closer.",
-        "id": "707381379",
-        "link": "https://fortune.com/2012/11/20/globalism-goes-backward/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1409918790",
-        "time_updated": "1544879017",
-        "title": "Globalism goes backward"
-    },
-    {
-        "domain": "Fortune",
-        "excerpt": "No one can predict if Ghosn\u2019s new vision will work. His previous rethinking of the business, the all-electric Leaf, hasn\u2019t amounted to much so far. But applaud Ghosn for this: He is trying to develop the most crucial competency for every company today, innovating the business model.",
-        "id": "707381519",
-        "link": "https://fortune.com/2013/02/25/your-business-model-is-obsolete/",
-        "tags": [
-            "work"
-        ],
-        "time_added": "1409918802",
-        "time_updated": "1544879021",
-        "title": "Your business model is obsolete"
-    },
-    {
         "domain": "www.planecrashinfo.com",
         "excerpt": "HM>}6W82FdHC q6HL`:'lak-$C<&in%GLj++N' &uB`3Ev\u007f[Y{/<()\"k P|(yEF\u007fsRu$J<3e\"8=5#?wg,!Jf$)!xRyD)mi|0(i:Dxf vJyCM{2tjkjY3GP'p 8pV &9A>Je4!nIVCCXUt &xWA@7:qS'~r*yI7sVuVn * $>vB Fv: NaNEeFJQ6Cm<\"PR{Dv`*\\tFwtmj3 &J2NK+ R\\u*gWY-mK--O\"0h{5Tj{{A8tpX wx.G EfO`[++-lMfl T1F?wq k C1< $TF7$nF.",
         "id": "3245445",
@@ -9272,52 +9630,5 @@
         "time_added": "1394520147",
         "time_updated": "1420807276",
         "title": "30 Animes That Are Perfect For Binge-Watching And Definitely Not For Kids"
-    },
-    {
-        "domain": "feedproxy.google.com",
-        "excerpt": "",
-        "id": "570463224",
-        "link": "http://feedproxy.google.com/~r/ILoveTypography/~3/3UTlJ4utI3M/",
-        "tags": [
-            "design",
-            "developper"
-        ],
-        "time_added": "1396181846",
-        "time_updated": "1420806076",
-        "title": "http://feedproxy.google.com/~r/ILoveTypography/~3/3UTlJ4utI3M/"
-    },
-    {
-        "domain": "Digital Photography School",
-        "excerpt": "Without experience, looking at the endless functions and dials on a camera can seem daunting, and it is at first, especially with many of the newer digital cameras that have about 5,000 functions (I\u2019m looking at you Nikon).",
-        "id": "579463252",
-        "link": "https://digital-photography-school.com/new-photographers-guide-camera-settings/",
-        "tags": [
-            "photo"
-        ],
-        "time_added": "1396773649",
-        "time_updated": "1420806229",
-        "title": "A New Photographer\u2019s Guide to Camera Settings"
-    },
-    {
-        "domain": null,
-        "excerpt": null,
-        "id": "580053650",
-        "link": null,
-        "tags": null,
-        "time_added": null,
-        "time_updated": null,
-        "title": null
-    },
-    {
-        "domain": "feedproxy.google.com",
-        "excerpt": "",
-        "id": "581221941",
-        "link": "http://feedproxy.google.com/~r/DigitalPhotographySchool/~3/gZRitiQ6Wns/",
-        "tags": [
-            "photo"
-        ],
-        "time_added": "1396772776",
-        "time_updated": "1420806220",
-        "title": "http://feedproxy.google.com/~r/DigitalPhotographySchool/~3/gZRitiQ6Wns/"
     }
 ]
