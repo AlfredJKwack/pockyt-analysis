@@ -218,7 +218,6 @@ h1 {
         font-size: 0.9rem;
         border: 2px solid #333;
         z-index: 1000;
-        animation: float 3s ease-in-out infinite;
         box-shadow: -15px 27px 69px rgba(0,0,0,.30);        
     }
     
@@ -281,18 +280,37 @@ h1 {
         bottom: -60px;
         left: 30px;
     }
-  
-@keyframes float {
-    0% {
-      transform: translateY(0px);
+
+/**
+*  Tutorial section animations 
+**/
+
+    .tutorial-popup {
+        animation: float 3s ease-in-out infinite;
     }
-    50% {
-      transform: translateY(-10px);
+    @keyframes float {
+        0% {transform: translateY(-10px)}
+        50% {transform: translateY(0px)}
+        100% {transform: translateY(-10px)}
     }
-    100% {
-      transform: translateY(0px);
+
+    #upArrowLine {
+        animation: upArrowAnimation 3000ms linear infinite normal forwards;
     }
-}
+    @keyframes upArrowAnimation { 
+        0% {transform: translate(182.65858px,298.439135px) scale(1,0.875533)} 
+        50% {transform: translate(182.65858px,298.439135px) scale(1,1)} 
+        100% {transform: translate(182.65858px,298.439135px) scale(1,0.872553)}
+    }
+
+    #downArrowLine {
+        animation: downArrowAnimation 3000ms linear infinite normal forwards;
+    }
+    @keyframes downArrowAnimation { 
+        0% {transform: translate(225.7159px,384.389646px) scale(1,1)} 
+        50% {transform: translate(225.7159px,384.389646px) scale(1,0.895848)} 
+        100% {transform: translate(225.7159px,384.389646px) scale(1,1)}
+    }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
