@@ -190,6 +190,7 @@ h1 {
         color: #444;
         margin-bottom: 1rem;
         font-weight: 500;
+        margin-top: 0;
     }
 
     .credits a {
